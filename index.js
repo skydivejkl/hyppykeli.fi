@@ -1,14 +1,16 @@
 
 var fs = require("fs");
 var hyperquest = require("hyperquest");
-var concat = require('concat-stream')
-var cheerio = require("cheerio")
+var concat = require('concat-stream');
+var express = require("express");
+var memoize = require("memoize");
 
 var config = require("./config.json");
+var parseObservations = require("./parse_observations");
 
 // http://ilmatieteenlaitos.fi/tallennetut-kyselyt
 
-function fmiObservationsStream(place, cb) {
+function fmiObservationsStream(place) {
 
     return fs.createReadStream("./test.xml");
 
@@ -23,25 +25,23 @@ function fmiObservationsStream(place, cb) {
     ].join("");
 
     console.log("sending request to", url);
-    return hyperquest(url)
+
+    return hyperquest(url);
 }
 
-fmiObservationsStream("Tikkakoski").pipe(concat(function(data) {
 
-    var $ = cheerio.load(data.toString(), {
-        xmlMode: true
-    });
+var app = express();
 
-    var gusts = $("wml2\\:MeasurementTimeseries[gml\\:id=\"obs-obs-1-1-wg_10min\"] wml2\\:MeasurementTVP").map(function(){
-        var time = $(this).find("wml2\\:time").text();
-        var value = $(this).find("wml2\\:value").text();
-        return {
-            time: new Date(time),
-            value: value
-        };
-    });
+app.use(express.static(__dirname + '/public'));
 
-    console.log(gusts);
+app.get("/api/:place/observations", function(req, res) {
+    console.log("Requesting", req.params.place);
 
-}));
+    fmiObservationsStream(req.params.place).pipe(concat(function(data) {
+        res.json(parseObservations(data.toString()));
+    }));
+
+});
+
+app.listen(8080);
 
