@@ -1,0 +1,20 @@
+{
+  "name": "skydive-fmi",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:epeli/skydive-fmi.git"
+  },
+  "keywords": [
+    "fmi"
+  ],
+  "author": "Esa-Matti Suuronen",
+  "license": "MIT",
+  "dependencies": {
+    "hyperquest": "~0.1.6",
+    "cheerio": "~0.11.0",
+    "concat-stream": "~1.0.0"
+  }
+}
