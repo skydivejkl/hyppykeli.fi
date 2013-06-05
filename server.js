@@ -12,7 +12,7 @@ var parseObservations = require("./parse_observations");
 
 function fmiObservationsStream(place) {
 
-    return fs.createReadStream("./test.xml");
+    // return fs.createReadStream("./test.xml");
 
     var url = [
         "http://data.fmi.fi/fmi-apikey/",

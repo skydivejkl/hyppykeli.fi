@@ -18,6 +18,13 @@
     "concat-stream": "~1.0.0",
     "express": "~3.2.6",
     "memoize": "~0.1.1",
-    "browserify": "~2.17.3"
+    "browserify": "~2.17.3",
+    "underscore": "~1.4.4",
+    "bean": "~1.0.3",
+    "moment": "~2.0.0",
+    "backbone": "~1.0.0",
+    "handlebars-runtime": "~1.0.1",
+    "hbsfy": "~0.1.2",
+    "viewmaster": "~1.1.2"
   }
 }
