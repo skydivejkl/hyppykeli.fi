@@ -94,7 +94,6 @@ var WindGraph = ViewMaster.extend({
 
         Flotr.draw(el, data, {
             xaxis: {
-                minorTickFreq: 4,
                 mode: "time",
                 tickFormatter: function(time) {
                     return moment(time).fromNow();
@@ -103,8 +102,9 @@ var WindGraph = ViewMaster.extend({
             yaxis: {
                 title: "m/s"
             },
-            grid: {
-                minorVerticalLines: true
+            legend: {
+                show: true,
+                container: this.$(".legend")
             }
         });
 
@@ -115,6 +115,7 @@ var WindGraph = ViewMaster.extend({
     template: function() {
         return h("div.dummy",
             h("div.wind-graph"),
+            h("div.legend"),
             h("div.options-container")
         );
     },
