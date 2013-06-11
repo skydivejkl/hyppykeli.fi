@@ -25,6 +25,7 @@
     "backbone": "~1.0.0",
     "handlebars-runtime": "~1.0.1",
     "hbsfy": "~0.1.2",
-    "viewmaster": "~1.1.2"
+    "viewmaster": "~1.1.2",
+    "hyperscript": "~1.1.1"
   }
 }

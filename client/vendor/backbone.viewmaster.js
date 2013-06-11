@@ -126,6 +126,7 @@
       opts.detached = true;
 
       this.$el.html(this.template(this.context()));
+      this.afterTemplate();
 
       // Set element properties from this.elements
       var key, selector;
@@ -143,6 +144,7 @@
       return this;
     },
 
+    afterTemplate: function() {},
 
     /**
      * Refresh any child view changes made with `setView`, `appendView`,
