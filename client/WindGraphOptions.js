@@ -9,9 +9,15 @@ var WindGraphOptions = ViewMaster.extend({
     },
 
     getHourOptions: function() {
-        return this.model.mapHours(function(hour) {
-            return h("option", hour, " tuntia", { value: hour });
-        });
+        var hours = parseInt(this.model.getTimeScale() / 1000 / 60 / 60, 10);
+        var options = [];
+        for (var i = 1; i <= hours; i += 1) {
+          options.push(h("option", i, " tuntia", {
+            value: i,
+            selected: i === this.settings.get("limit")
+          }));
+        }
+        return options;
     },
 
     template: function() {

@@ -30,10 +30,14 @@ var WindGraph = ViewMaster.extend({
             settings: this.settings
         }));
 
-        this.listenTo(this.settings, "change", function() {
-            console.log(12312);
-        });
+        this.listenTo(this.settings, "change", this.render.bind(this));
+    },
 
+    filterOld: function(point) {
+        var t = new Date(point.time).getTime();
+        var diff = new Date().getTime() - t;
+        var hoursAgo = diff / 1000 / 60 / 60;
+        return this.settings.get("limit") > hoursAgo;
     },
 
     windSpeeds: function() {
@@ -41,7 +45,9 @@ var WindGraph = ViewMaster.extend({
             label: "Tuulen keskinopeus",
             color: this.colors.speeds,
             lines: { fill: true },
-            data: this.model.get("windSpeeds").data.map(flotrFormat)
+            data: this.model.get("windSpeeds").data
+                .filter(this.filterOld.bind(this))
+                .map(flotrFormat)
         };
     },
 
@@ -50,18 +56,20 @@ var WindGraph = ViewMaster.extend({
             label: "Puuskat",
             color: this.colors.gusts,
             lines: { fill: true },
-            data: this.model.get("windGusts").data.map(flotrFormat)
+            data: this.model.get("windGusts").data
+                .filter(this.filterOld.bind(this))
+                .map(flotrFormat)
         };
     },
 
     drawYline: function(label, color, ypos) {
-        var gusts = this.model.get("windGusts").data;
+        var gusts = this.windGusts().data;
         return {
             label: label,
             color: color,
             data: [
-                [new Date(gusts[0].time), ypos],
-                [new Date(gusts[gusts.length - 1].time), ypos]
+                [gusts[0][0], ypos],
+                [gusts[gusts.length-1][0], ypos]
             ]
         };
     },

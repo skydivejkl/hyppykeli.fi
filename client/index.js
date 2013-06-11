@@ -24,7 +24,7 @@ var apiUrl = url.format({
 });
 
 
-var settings = new Backbone.Model();
+var settings = new Backbone.Model({ limit: 3 });
 
 
 console.log("API requesto to", apiUrl);
