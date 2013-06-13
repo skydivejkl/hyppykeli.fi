@@ -37,13 +37,17 @@ module.exports = Backbone.Model.extend({
     autoUpdate: function() {
         var next = this.nextUpdateIn();
         console.log("Next update in", next/1000/60, "minutes");
-        setTimeout(this.fetch.bind(this), next);
+
+        var recur = this.autoUpdate.bind(this);
+        setTimeout(function() {
+            this.fetch({success: recur, error: recur});
+        }.bind(this), next);
     },
 
     getTimeScale: function() {
         var gusts = this.get("windGusts").data;
-        var first = new Date(gusts[0].time);
-        var last =  new Date(gusts[gusts.length-1].time);
+        var first = new Date(_.first(gusts).time);
+        var last =  new Date(_.last(gusts).time);
         return last.getTime() - first.getTime();
     },
 

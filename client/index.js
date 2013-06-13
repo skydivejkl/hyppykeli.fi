@@ -9,6 +9,9 @@ if (!console) {
 var $ = require("./vendor/jquery");
 window.jQuery = $; // Set for Backbone
 var Backbone = require("backbone");
+require("./vendor/moment_fi");
+
+
 var Layout = require("./Layout");
 var Weather = require("./Weather");
 

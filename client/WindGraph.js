@@ -30,8 +30,11 @@ var WindGraph = ViewMaster.extend({
             settings: this.settings
         }));
 
-        this.listenTo(this.settings, "change", this.render.bind(this));
-        this.listenTo(this.model, "change", this.render.bind(this));
+        this.listenTo(this.settings, "change", this.render, this);
+        this.listenTo(this.model, "change", this.render, this);
+        this.model.once("change", function() {
+            setInterval(this.render.bind(this), 1000 * 60);
+        }, this);
     },
 
     filterOld: function(point) {
@@ -117,6 +120,11 @@ var WindGraph = ViewMaster.extend({
         return h("div.dummy",
             h("div.wind-graph"),
             h("div.legend"),
+            h("div.info", h("p",
+                "Seuraava päivitys ",
+                moment.duration(this.model.nextUpdateIn()).humanize(),
+                " päästä"
+            )),
             h("div.options-container")
         );
     },
