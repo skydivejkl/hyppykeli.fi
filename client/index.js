@@ -6,35 +6,23 @@ if (!console) {
     };
 }
 
-var url = require("url");
 var $ = require("./vendor/jquery");
 window.jQuery = $; // Set for Backbone
 var Backbone = require("backbone");
 var Layout = require("./Layout");
 var Weather = require("./Weather");
 
-
-var pathParts = window.location.pathname.split("/");
-var apiQuery = {};
-// assumes /searchkey/searchvalue
-apiQuery[pathParts[1]] = pathParts[2];
-var apiUrl = url.format({
-    pathname: "/api/observations",
-    query: apiQuery
-});
-
-
 var settings = new Backbone.Model({ limit: 3 });
-
-
-console.log("API requesto to", apiUrl);
-$.getJSON(apiUrl, function(data) {
-    var weather = new Weather(data);
-    var layout = new Layout({
-        settings: settings,
-        model: weather
-    });
-
-    $("body").append(layout.el);
-    layout.render();
+var weather = new Weather();
+var layout = new Layout({
+    model: weather,
+    settings: settings
 });
+
+$("body").append(layout.el);
+
+weather.once("change", function() {
+    layout.render();
+    weather.autoUpdate();
+});
+weather.fetch();

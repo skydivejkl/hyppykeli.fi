@@ -31,6 +31,7 @@ var WindGraph = ViewMaster.extend({
         }));
 
         this.listenTo(this.settings, "change", this.render.bind(this));
+        this.listenTo(this.model, "change", this.render.bind(this));
     },
 
     filterOld: function(point) {
