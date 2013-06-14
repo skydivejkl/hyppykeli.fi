@@ -1,6 +1,6 @@
 export PATH := node_modules/.bin:$(PATH)
 
-all: npm build min
+all: npm build-dev
 
 npm:
 	npm install
@@ -18,6 +18,14 @@ min:
 
 build-dev:
 	$(MAKE) build DEV=-d
+
+deploy: build min
+	git checkout -b heroku-tmp
+	git add -f config.json public/bundle.js
+	git commit -m "deploy"
+	git push git@heroku.com:morning-garden-2851.git heroku-tmp:master
+	git checkout master
+	git branch -D heroku-tmp
 
 watch:
 	./watch.sh make build-dev
