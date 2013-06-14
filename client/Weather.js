@@ -55,6 +55,10 @@ module.exports = Backbone.Model.extend({
         return this.get("windGusts").stationName;
     },
 
+    getLastUpdateTime: function() {
+        return _.last(this.get("windGusts").data).time;
+    },
+
     getDataAge: function() {
         var last = _.last(this.get("windGusts").data);
         return Date.now() - new Date(last.time).getTime();

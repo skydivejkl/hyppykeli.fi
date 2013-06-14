@@ -12,6 +12,40 @@ function flotrFormat(point) {
     ];
 }
 
+
+var DataAge = ViewMaster.extend({
+
+    tagName: "span",
+    className: "data-age",
+
+    constructor: function() {
+        ViewMaster.prototype.constructor.apply(this, arguments);
+        this.interval = setInterval(this.render.bind(this) , 30 * 100);
+        this.listenTo(this.model, "change", this.render, this);
+    },
+
+    remove: function() {
+        ViewMaster.prototype.remove.apply(this, arguments);
+        clearInterval(this.interval);
+    },
+
+    getHumanAge: function() {
+        return moment(this.model.getLastUpdateTime()).fromNow();
+    },
+
+    getHumanUpdateTime: function() {
+        return moment.duration(this.model.nextUpdateIn()).humanize();
+    },
+
+    template: function() {
+        return h("p",
+            "Data päivitetty ", this.getHumanAge(), ". ",
+            "Seuraava päivitys ", this.getHumanUpdateTime(), " päästä."
+        );
+    }
+
+});
+
 var WindGraph = ViewMaster.extend({
 
     colors: {
@@ -30,11 +64,12 @@ var WindGraph = ViewMaster.extend({
             settings: this.settings
         }));
 
+        this.setView(".data-age-container", new DataAge({
+            model: this.model
+        }));
+
         this.listenTo(this.settings, "change", this.render, this);
         this.listenTo(this.model, "change", this.render, this);
-        this.model.once("change", function() {
-            setInterval(this.render.bind(this), 1000 * 60);
-        }, this);
     },
 
     filterOld: function(point) {
@@ -118,13 +153,9 @@ var WindGraph = ViewMaster.extend({
 
     template: function() {
         return h("div.dummy",
+            h("div.data-age-container"),
             h("div.wind-graph"),
             h("div.legend"),
-            h("div.info", h("p",
-                "Seuraava päivitys ",
-                moment.duration(this.model.nextUpdateIn()).humanize(),
-                " päästä"
-            )),
             h("div.options-container")
         );
     },
