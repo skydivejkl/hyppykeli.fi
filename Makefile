@@ -1,5 +1,11 @@
 
+all: npm build
+
+npm:
+	npm install
+
 build:
+	mkdir -p public
 	node_modules/.bin/browserify -d \
 		--noparse ./client/vendor/jquery.js \
 		--noparse ./client/vendor/Chart.js \
