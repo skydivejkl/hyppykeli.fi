@@ -25,6 +25,7 @@ var layout = new Layout({
 $("body").append(layout.el);
 
 weather.once("change", function() {
+    $(".loading").remove();
     layout.render();
     weather.autoUpdate();
 });
