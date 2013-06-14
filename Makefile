@@ -32,7 +32,8 @@ deploy: production
 	git add -f config.json public/bundle.js public/styles/index.css
 	git commit -m "deploy"
 	git push -f git@heroku.com:morning-garden-2851.git heroku-tmp:master
-	git reset --hard master
+	git reset --soft master
+	git reset HEAD
 	git checkout master
 	git branch -D heroku-tmp
 
