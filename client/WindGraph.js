@@ -2,6 +2,8 @@ var Flotr = require("./vendor/flotr2.shim");
 var moment = require("moment");
 var ViewMaster = require("./vendor/backbone.viewmaster");
 var h = require("hyperscript");
+var $ = require("./vendor/jquery");
+var _ = require("underscore");
 
 var WindGraphOptions = require("./WindGraphOptions");
 
@@ -72,6 +74,9 @@ var WindGraph = ViewMaster.extend({
 
         this.listenTo(this.settings, "change", this.render, this);
         this.listenTo(this.model, "change", this.render, this);
+
+        var debouncedRender = _.debounce(this.render.bind(this), 400);
+        $(window).on("resize", debouncedRender);
     },
 
     filterOld: function(point) {
