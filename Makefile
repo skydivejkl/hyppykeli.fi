@@ -2,6 +2,10 @@ export PATH := node_modules/.bin:$(PATH)
 
 all: css npm js-dev
 
+production: npm css js min
+
+dev: css js-dev
+
 npm:
 	npm install
 
@@ -23,15 +27,15 @@ js-dev:
 css:
 	stylus client/styl/index.styl --out public/styles/
 
-deploy: css js min
+deploy: production
 	git checkout -b heroku-tmp
 	git add -f config.json public/bundle.js public/styles/index.css
 	git commit -m "deploy"
 	git push -f git@heroku.com:morning-garden-2851.git heroku-tmp:master
+	git reset --hard master
 	git checkout master
 	git branch -D heroku-tmp
 
-dev: css js-dev
 
 watch:
 	./watch.sh make dev
