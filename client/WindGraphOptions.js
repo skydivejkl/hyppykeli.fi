@@ -21,7 +21,7 @@ var WindGraphOptions = ViewMaster.extend({
     },
 
     template: function() {
-        return h("label", "Näytä",
+        return h("label", "Näytä ",
             h("select", this.getHourOptions())
         );
     },

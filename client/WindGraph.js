@@ -48,6 +48,8 @@ var DataAge = ViewMaster.extend({
 
 var WindGraph = ViewMaster.extend({
 
+    className: "bb-wind-graph",
+
     colors: {
         speeds: "#6379ff",
         gusts: "#91a1ff",
@@ -114,7 +116,7 @@ var WindGraph = ViewMaster.extend({
     },
 
     drawGraph: function() {
-        var el = this.$(".wind-graph").get(0);
+        var el = this.$(".graph").get(0);
 
         var data = [
             this.windSpeeds(),
@@ -154,9 +156,12 @@ var WindGraph = ViewMaster.extend({
     template: function() {
         return h("div.dummy",
             h("div.data-age-container"),
-            h("div.wind-graph"),
-            h("div.legend"),
-            h("div.options-container")
+            h("div.options-container"),
+            h("div.graph-wrap",
+                h("h2", "Keskituuli ja puuskat"),
+                h("div.graph"),
+                h("div.legend")
+             )
         );
     },
 
