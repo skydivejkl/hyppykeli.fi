@@ -127,12 +127,12 @@ var WindGraph = ViewMaster.extend({
             this.windSpeeds(),
             this.windGusts(),
             this.drawYline(
-                "Oppilaiden ja A-lisenssien raja",
+                "Oppilaiden ja A-lisenssien raja 8 m/s",
                 this.colors.students,
                 8
             ),
             this.drawYline(
-                "Muiden lisenssien raja",
+                "Muiden lisenssien raja 11 m/s",
                 this.colors.licensed,
                 11
             )
@@ -163,7 +163,9 @@ var WindGraph = ViewMaster.extend({
             h("div.data-age-container"),
             h("div.options-container"),
             h("div.graph-wrap",
-                h("h2", "Keskituuli ja puuskat"),
+                h("p", "Keskituuli ", this.model.getLatestWindSpeed(), " m/s, ",
+                   "puuska ", this.model.getLatestGust(), " m/s"
+                ),
                 h("div.graph"),
                 h("div.legend")
              )
