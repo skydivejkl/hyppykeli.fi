@@ -2,7 +2,7 @@ export PATH := node_modules/.bin:$(PATH)
 
 all: css npm js-dev
 
-production: npm css js min
+production: npm css js
 
 dev: css js-dev
 
