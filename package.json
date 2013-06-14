@@ -27,5 +27,8 @@
     "viewmaster": "~1.1.2",
     "hyperscript": "~1.1.1",
     "q": "~0.9.6"
+  },
+  "devDependencies": {
+    "uglify-js": "~2.3.6"
   }
 }
