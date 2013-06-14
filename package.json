@@ -29,6 +29,7 @@
     "q": "~0.9.6"
   },
   "devDependencies": {
-    "uglify-js": "~2.3.6"
+    "uglify-js": "~2.3.6",
+    "stylus": "~0.32.1"
   }
 }

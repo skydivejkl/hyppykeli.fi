@@ -1,11 +1,11 @@
 export PATH := node_modules/.bin:$(PATH)
 
-all: npm build-dev
+all: css npm js-dev
 
 npm:
 	npm install
 
-build:
+js:
 	mkdir -p public
 	browserify $(DEV) \
 		--noparse ./client/vendor/jquery.js \
@@ -16,16 +16,22 @@ build:
 min:
 	uglifyjs public/bundle.js -o public/bundle.js --mangle
 
-build-dev:
-	$(MAKE) build DEV=-d
+js-dev:
+	$(MAKE) js DEV=-d
 
-deploy: build min
+
+css:
+	stylus client/styl/index.styl --out public/styles/
+
+deploy: css js min
 	git checkout -b heroku-tmp
 	git add -f config.json public/bundle.js
 	git commit -m "deploy"
-	git push git@heroku.com:morning-garden-2851.git heroku-tmp:master
+	git push -f git@heroku.com:morning-garden-2851.git heroku-tmp:master
 	git checkout master
 	git branch -D heroku-tmp
 
+dev: css js-dev
+
 watch:
-	./watch.sh make build-dev
+	./watch.sh make dev
