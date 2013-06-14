@@ -5,6 +5,8 @@ var h = require("hyperscript");
 
 var Layout = ViewMaster.extend({
 
+    className: "layout",
+
     constructor: function(options) {
         ViewMaster.prototype.constructor.apply(this, arguments);
         this.settings = options.settings;
