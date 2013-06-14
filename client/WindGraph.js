@@ -151,6 +151,14 @@ var WindGraph = ViewMaster.extend({
             legend: {
                 show: true,
                 container: this.$(".legend")
+            },
+            mouse: {
+                track: true,
+                sensibility: 10,
+                trackFormatter: function(p) {
+                    var time = moment(parseInt(p.x)).format("LT");
+                    return p.y + " m/s klo. " + time;
+                }
             }
         });
 
