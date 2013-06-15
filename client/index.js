@@ -24,8 +24,11 @@ var layout = new Layout({
 
 $("body").append(layout.el);
 
+var loading = $(".loading");
+loading.text("Ladataan Ilmatieteenlaitoksen dataa...");
+
 weather.once("change", function() {
-    $(".loading").remove();
+    loading.remove();
     layout.render();
     weather.autoUpdate();
 });
