@@ -18,8 +18,27 @@ var Layout = ViewMaster.extend({
 
     template: function() {
         return h("div",
-            h("h1", "Havaintoasema ", this.model.getStationName()),
-            h("div.graph-container")
+            h("h1", this.model.getStationName()),
+            h("div.graph-container"),
+            h("footer",
+                h("p",
+                    "Data on haettu Ilmatieteenlaitoksen avoimista rajapinnoista. ",
+                    "Niiden tulkinnan oikellisuudesta ei ole kuitenkaan mitään takeita. "
+                 ),
+
+                h("p",
+                    "Be safe, blue skies!"
+                 ),
+
+                h("p",
+                    "Tämä sovellus on ",
+                    h("a", "avointa lähdekoodia",
+                        { href: "https://github.com/epeli/hyppykeli/" }),
+                    " ja sitä ylläpitää ",
+                    h("a", "Esa-Matti Suuronen", { href: "http://esa-matti.suuronen.org" }),
+                    "."
+                 )
+            )
         );
     }
 
