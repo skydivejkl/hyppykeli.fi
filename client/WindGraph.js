@@ -146,7 +146,7 @@ var WindGraph = ViewMaster.extend({
                 }
             },
             yaxis: {
-                title: "m/s"
+                title: null
             },
             legend: {
                 show: true,
@@ -156,7 +156,8 @@ var WindGraph = ViewMaster.extend({
                 track: true,
                 sensibility: 10,
                 trackFormatter: function(p) {
-                    return moment(parseInt(p.x, 10)).fromNow();
+                    var m = moment(parseInt(p.x, 10));
+                    return p.y + "m/s klo " + m.format("LT") + " (" + m.fromNow() + ")";
                 }
             }
         });
@@ -168,12 +169,14 @@ var WindGraph = ViewMaster.extend({
     template: function() {
         return h("div.dummy",
             h("div.data-age-container"),
-            h("div.options-container"),
-            h("div.graph-wrap",
+            h("div",
                 h("p", "Keskituuli ", this.model.getLatestWindSpeed(), " m/s, ",
                    "puuska ", this.model.getLatestGust(), " m/s"
-                ),
+                )
+             ),
+            h("div.graph-wrap",
                 h("div.graph"),
+                h("div.options-container"),
                 h("div.legend")
              )
         );
