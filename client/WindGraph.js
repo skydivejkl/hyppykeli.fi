@@ -142,7 +142,7 @@ var WindGraph = ViewMaster.extend({
             xaxis: {
                 mode: "time",
                 tickFormatter: function(time) {
-                    return moment(time).fromNow();
+                    return moment(time).format("LT");
                 }
             },
             yaxis: {
@@ -156,8 +156,7 @@ var WindGraph = ViewMaster.extend({
                 track: true,
                 sensibility: 10,
                 trackFormatter: function(p) {
-                    var time = moment(parseInt(p.x)).format("LT");
-                    return p.y + " m/s klo. " + time;
+                    return moment(parseInt(p.x, 10)).fromNow();
                 }
             }
         });
