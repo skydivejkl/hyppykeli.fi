@@ -7,13 +7,13 @@ function cachePromise(origfn, isValid) {
         var args = [].slice.call(arguments);
         var key = JSON.stringify(args);
         var d = Q.defer();
+        var current = cache[key] || next();
         function next() { return cache[key] = origfn.apply(self, args); }
-        function current() { return cache[key] || (cache[key] = next()); }
 
-        isValid(current()).then(function() {
-            current().then(d.resolve);
+        isValid(current).then(function() {
+            d.resolve(current);
         }, function() {
-            next().then(d.resolve, d.reject);
+            d.resolve(next());
         });
 
         return d.promise;
