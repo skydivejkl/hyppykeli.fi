@@ -27,6 +27,12 @@ $("body").append(layout.el);
 var loading = $(".loading");
 loading.text("Ladataan Ilmatieteenlaitoksen dataa...");
 
+weather.on("error", function(m, xhr) {
+    console.error("fetch failed", xhr.responseJSON);
+    layout.remove();
+    $("body").text("FMI:n datan lataus epäonnistui :(");
+});
+
 weather.once("change", function() {
     loading.remove();
     layout.render();

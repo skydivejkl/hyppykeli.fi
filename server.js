@@ -32,7 +32,12 @@ var promiseObservations = function (query) {
     s.on("error", d.reject);
     s.pipe(concat(function(data) {
         console.log("request took", Date.now() - start, "ms");
-        d.resolve(parseObservations(data.toString()));
+        try {
+            d.resolve(parseObservations(data.toString()));
+        } catch(err) {
+            console.error("Failed to parse FMI data", err);
+            d.reject(err);
+        }
     }));
 
     return d.promise;
