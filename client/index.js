@@ -14,8 +14,11 @@ require("./vendor/moment_fi");
 
 var Layout = require("./Layout");
 var Weather = require("./Weather");
+var LocalStorageModel = require("./LocalStorageModel");
 
-var settings = new Backbone.Model({ limit: 3 });
+var settings = new LocalStorageModel({ limit: 3 }, {
+    key: "settings"
+});
 var weather = new Weather();
 var layout = new Layout({
     model: weather,
