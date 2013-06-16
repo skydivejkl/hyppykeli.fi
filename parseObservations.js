@@ -1,4 +1,3 @@
-
 var cheerio = require("cheerio");
 
 function parseObservations(xmlDoc) {
@@ -17,7 +16,7 @@ function parseObservations(xmlDoc) {
             return {
                 id: id,
 
-                // grap some metadata
+                // grab some metadata
                 fmisid: $("target\\:Location gml\\:identifier", this).text(),
                 wmo: $("target\\:Location gml\\:name[codeSpace=\"http://xml.fmi.fi/namespace/locationcode/wmo\"]", this).text(),
                 stationName: $("target\\:Location gml\\:name[codeSpace=\"http://xml.fmi.fi/namespace/locationcode/name\"]", this).text(),
