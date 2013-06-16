@@ -146,6 +146,7 @@ var WindGraph = ViewMaster.extend({
                 }
             },
             yaxis: {
+                min: 0,
                 title: null
             },
             legend: {
