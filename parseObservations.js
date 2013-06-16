@@ -9,7 +9,7 @@ function parseObservations(xmlDoc) {
 
         // data is under <om:observedProperty>
         return $("om\\:observedProperty").filter(function() {
-            // grap the one with our id
+            // grab the one with our id
             var property = $("sams\\:SF_SpatialSamplingFeature[gml\\:id=\""+ id + "\"]", this);
             return property.length > 0;
         }).map(function() {
