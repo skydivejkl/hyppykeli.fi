@@ -1,0 +1,61 @@
+.weather {
+  border-top: 1px solid #fff;
+}
+.weather .description {
+  text-align: right;
+}
+.weather h2 {
+  font-size: 8pt;
+}
+.sky {
+  width: 100%;
+  background-color: #006bff;
+  padding: 0px;
+  padding-top: 50px;
+  margin: 0px;
+}
+footer {
+  border-top: 10px solid #30b800;
+  padding-top: 50px;
+  color: #fff;
+  background-color: #705017;
+  bottom: 0px;
+}
+.app-info {
+  padding-top: 50px;
+}
+.app-info,
+.weather,
+header {
+  font-size: 8pt;
+  font-family: monospace;
+  color: #fff;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.content {
+  margin: 1em;
+}
+.clearfix {
+  clear: both;
+}
+.weather.ground .description {
+  font-size: 10pt;
+}
+.weather.ground .description .wind,
+.weather.ground .description .gust {
+  float: left;
+  margin: 1em;
+}
+.weather.ground .description .wind .value,
+.weather.ground .description .gust .value {
+  font-size: 20pt;
+}
+.weather.ground .description .license-info img {
+  vertical-align: middle;
+  height: 10pt;
+}
+body {
+  background-color: #006bff;
+}
