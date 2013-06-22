@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Hyppykeli</title>
         <link rel="stylesheet" href="styles/normalize.css" >
         <link rel="stylesheet" href="styles/index.css" >
@@ -17,12 +18,14 @@
             <div class="weather">
                 <div class="content">
                     <div class="altitude">
-                        4000m
+                        4000m 20 min sitten
                     </div>
 
                     <div class="description">
-                        <h2>Täysi pilvikatto<h2>
-                        <img src="styles/img/cloud/ovc.png">
+                        <h2>Täysi pilvikatto <img src="styles/img/cloud/ovc.png"><h2>
+                    </div>
+                    <div class="source">
+                        Lähde: <a href="#metar">METAR</a>
                     </div>
                 </div>
             </div>
@@ -30,12 +33,14 @@
             <div class="weather">
                 <div class="content">
                     <div class="altitude">
-                        3000m
+                        3000m 20 min sitten
                     </div>
 
                     <div class="description">
-                        <h2>Rikkonainen</h2>
-                        <img src="styles/img/cloud/bkn.png">
+                        <h2>Rikkonainen <img src="styles/img/cloud/bkn.png"></h2>
+                    </div>
+                    <div class="source">
+                        Lähde: <a href="#metar">METAR</a>
                     </div>
                 </div>
             </div>
@@ -43,12 +48,14 @@
             <div class="weather">
                 <div class="content">
                     <div class="altitude">
-                        1500m
+                        1500m 20 min sitten
                     </div>
 
                     <div class="description">
-                        <h2>Muutamia</h2>
-                        <img src="styles/img/cloud/sct.png">
+                        <h2>Muutamia <img src="styles/img/cloud/sct.png"></h2>
+                    </div>
+                    <div class="source">
+                        Lähde: <a href="#metar">METAR</a>
                     </div>
                 </div>
             </div>
@@ -58,34 +65,31 @@
             <div class="weather ground">
                 <div class="content">
                     <div class="altitude">
-                        Maanpinta
+                        Maanpinta 10 min sitten
                     </div>
 
                     <div class="description">
 
-                        <div class="wind">
+                        <span class="wind">
                             <span class="type">Tuuli</span>
                             <span class="value">5 m/s</span>
-                        </div>
+                        </span>
 
-                        <div class="gust">
+                        <span class="gust">
                             <span class="type">Puuska</span>
                             <span class="value">9 m/s</span>
-                        </div>
+                        </span>
 
+                        <span class="direction">
+                            <span class="type">Suunta</span>
+                            <span class="value">45 deg</span>
+                            <span class="arrow">&gt;</span>
+                        </span>
 
                         <div class="clearfix"></div>
-
-                        <!-- <div class="license-info"> -->
-                        <!--     <div> -->
-                        <!--         A-lisenssit ja oppilaat<img src="styles/img/cloud/notok.png"> -->
-                        <!--     </div> -->
-                        <!--     <div> -->
-                        <!--         Muut lisenssit <img src="styles/img/cloud/ok.png"> -->
-                        <!--     </div> -->
-                        <!-- </div> -->
-                        <div>10 min sitten</div>
-
+                    </div>
+                    <div class="source">
+                        Lähde: <a href="#fmi">FMI</a>
                     </div>
                 </div>
             </div>
@@ -98,8 +102,18 @@
 
         <footer>
             <div class="app-info">
-                foo bar footer
-            </div>
+                <h3>Hyppykeli</h3>
+                <p>
+                Tämä sovellus on avointa lähdekoodia
+                </p>
+
+                <h2>Lähteet</h2>
+                <div id="metar">
+                    <h3>METAR</h3>
+                    <p>
+                        EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006
+                    </p>
+                </div>
         </footer>
 
     </body>

@@ -7,19 +7,23 @@
 .weather h2 {
   font-size: 8pt;
 }
+.weather img {
+  height: 60px;
+  vertical-align: middle;
+}
 .sky {
   width: 100%;
-  background-color: #006bff;
+  background-color: #6daaff;
   padding: 0px;
   padding-top: 50px;
   margin: 0px;
 }
 footer {
   border-top: 10px solid #30b800;
-  padding-top: 50px;
   color: #fff;
   background-color: #705017;
   bottom: 0px;
+  padding-bottom: 5em;
 }
 .app-info {
   padding-top: 50px;
@@ -40,22 +44,36 @@ header {
 .clearfix {
   clear: both;
 }
+.source {
+  margin-top: 1em;
+}
 .weather.ground .description {
+  text-align: right;
+  padding-top: 2em;
+  padding-bottom: 2em;
   font-size: 10pt;
 }
 .weather.ground .description .wind,
-.weather.ground .description .gust {
-  float: left;
+.weather.ground .description .gust,
+.weather.ground .description .direction {
   margin: 1em;
 }
 .weather.ground .description .wind .value,
-.weather.ground .description .gust .value {
-  font-size: 20pt;
+.weather.ground .description .gust .value,
+.weather.ground .description .direction .value,
+.weather.ground .description .wind .arrow,
+.weather.ground .description .gust .arrow,
+.weather.ground .description .direction .arrow {
+  font-size: 18pt;
+}
+.weather.ground .description .arrow {
+  display: inline-block;
+  -webkit-transform: rotate(45deg);
 }
 .weather.ground .description .license-info img {
   vertical-align: middle;
   height: 10pt;
 }
 body {
-  background-color: #006bff;
+  background-color: #6daaff;
 }

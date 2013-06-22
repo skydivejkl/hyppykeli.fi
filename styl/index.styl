@@ -6,20 +6,24 @@
         text-align right
     h2
         font-size 8pt
+    img
+        height 60px
+        vertical-align middle
 
 .sky
     width 100%
-    background-color: #006bff
+    background-color #6daaff
     padding 0px
     padding-top 50px
     margin 0px
 
 footer
     border-top 10px solid #30b800
-    padding-top 50px
     color white
     background-color #705017
     bottom 0px
+    padding-bottom 5em
+
 
 .app-info
     padding-top 50px
@@ -38,12 +42,20 @@ footer
 .clearfix
     clear both
 
+.source
+    margin-top 1em
+
 .weather.ground .description
-    .wind,.gust
-        float left
+    text-align right
+    padding-top 2em
+    padding-bottom 2em
+    .wind,.gust,.direction
         margin 1em
-        .value
-            font-size 20pt
+        .value,.arrow
+            font-size 18pt
+    .arrow
+        display inline-block
+        -webkit-transform: rotate(45deg);
 
 
     font-size 10pt
@@ -53,4 +65,4 @@ footer
             height 10pt
 
 body
-    background-color: #006bff
+    background-color #6daaff
