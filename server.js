@@ -23,10 +23,7 @@ var fetchObservations = function (query) {
         query: query
     });
 
-    var start = Date.now();
-    console.log("API request to", fmiUrl);
     return fetch(fmiUrl).then(function(data) {
-        console.log("Request took", Date.now() - start, "ms");
         return parseObservations(data.toString());
     });
 };
@@ -40,8 +37,8 @@ fetchObservations = cachePromise(fetchObservations, function isValid(observation
 var fetchMETAR = function(airportCode) {
     var url = "http://weather.noaa.gov/pub/data/observations/metar/stations/" +
         airportCode.toUpperCase() + ".TXT";
-    return fetch(url).then(function(data) {
-        var metarPage = data.toString();
+    return fetch(url).spread(function(res, body) {
+        var metarPage = body.toString();
         var raw = metarPage.split("\n")[1];
         var ob = parseMETAR(raw);
         ob.raw = raw;
