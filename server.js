@@ -17,7 +17,7 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 
 
-var promiseObservations = function (query) {
+var fetchObservations = function (query) {
     var fmiUrl = formatFmiUrl({
         apikey: config.apikey,
         query: query
@@ -30,7 +30,7 @@ var promiseObservations = function (query) {
         return parseObservations(data.toString());
     });
 };
-promiseObservations = cachePromise(promiseObservations, function isValid(observations) {
+fetchObservations = cachePromise(fetchObservations, function isValid(observations) {
     return observations.then(function(data) {
         var weather = new Weather(data);
         return Q(!weather.isDataOld());
@@ -50,7 +50,7 @@ var fetchMETAR = function(airportCode) {
 };
 
 app.get("/api/observations", function(req, res) {
-    promiseObservations(req.query).then(function(ob) {
+    fetchObservations(req.query).then(function(ob) {
         res.json(ob);
     }, function(err) {
         res.json(500, { error: err.message });
