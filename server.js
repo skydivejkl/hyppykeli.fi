@@ -1,6 +1,4 @@
 
-var hyperquest = require("hyperquest");
-var concat = require('concat-stream');
 var express = require("express");
 var Q = require("q");
 
@@ -9,6 +7,7 @@ var formatFmiUrl = require("./formatFmiUrl");
 var parseObservations = require("./parseObservations");
 var cachePromise = require("./cachePromise");
 var Weather = require("./client/Weather");
+var fetch = require("./fetch");
 
 // http://ilmatieteenlaitos.fi/tallennetut-kyselyt
 
@@ -18,29 +17,17 @@ app.use(express.static(__dirname + '/public'));
 
 
 var promiseObservations = function (query) {
-    var d = Q.defer();
-
     var fmiUrl = formatFmiUrl({
         apikey: config.apikey,
         query: query
     });
 
-    console.log("API request to", fmiUrl);
     var start = Date.now();
-    var s = hyperquest(fmiUrl);
-
-    s.on("error", d.reject);
-    s.pipe(concat(function(data) {
-        console.log("request took", Date.now() - start, "ms");
-        try {
-            d.resolve(parseObservations(data.toString()));
-        } catch(err) {
-            console.error("Failed to parse FMI data", err);
-            d.reject(err);
-        }
-    }));
-
-    return d.promise;
+    console.log("API request to", fmiUrl);
+    return fetch(fmiUrl).then(function(data) {
+        console.log("Request took", Date.now() - start, "ms");
+        return parseObservations(data.toString());
+    });
 };
 
 promiseObservations = cachePromise(promiseObservations, function isValid(observations) {
