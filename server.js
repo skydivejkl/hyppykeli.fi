@@ -43,23 +43,18 @@ var promiseObservations = function (query) {
     return d.promise;
 };
 
-promiseObservations = cachePromise(promiseObservations, function(observations) {
-    var d = Q.defer();
-
-    observations.then(function(data) {
+promiseObservations = cachePromise(promiseObservations, function isValid(observations) {
+    return observations.then(function(data) {
         var weather = new Weather(data);
-        if (weather.isDataOld()) d.reject();
-        else d.resolve();
-    }, d.reject);
-
-    return d.promise;
+        return Q(!weather.isDataOld());
+    });
 });
 
 app.get("/api/observations", function(req, res) {
     promiseObservations(req.query).then(function(json) {
         res.json(json);
     }, function(err) {
-        res.json(500, err);
+        res.json(500, { error: err.message });
     });
 });
 

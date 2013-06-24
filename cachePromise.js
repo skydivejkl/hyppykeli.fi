@@ -6,17 +6,16 @@ function cachePromise(origfn, isValid) {
         var self = this;
         var args = [].slice.call(arguments);
         var key = JSON.stringify(args);
-        var d = Q.defer();
         var current = cache[key] || next();
         function next() { return cache[key] = origfn.apply(self, args); }
 
-        isValid(current).then(function() {
-            d.resolve(current);
-        }, function() {
-            d.resolve(next());
+        return isValid(current).then(function(valid) {
+            return valid ? current : next();
+        }, function(err) {
+            console.error("Cache validation error", err);
+            cache[key] = null;
+            return Q.reject(err);
         });
-
-        return d.promise;
     };
 }
 
