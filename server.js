@@ -1,6 +1,7 @@
 
 var express = require("express");
 var Q = require("q");
+var parseMETAR = require("metar");
 
 var config = require("./config.json");
 var formatFmiUrl = require("./formatFmiUrl");
@@ -29,7 +30,6 @@ var promiseObservations = function (query) {
         return parseObservations(data.toString());
     });
 };
-
 promiseObservations = cachePromise(promiseObservations, function isValid(observations) {
     return observations.then(function(data) {
         var weather = new Weather(data);
@@ -37,9 +37,29 @@ promiseObservations = cachePromise(promiseObservations, function isValid(observa
     });
 });
 
+var fetchMETAR = function(airportCode) {
+    var url = "http://weather.noaa.gov/pub/data/observations/metar/stations/" +
+        airportCode.toUpperCase() + ".TXT";
+    return fetch(url).then(function(data) {
+        var metarPage = data.toString();
+        var raw = metarPage.split("\n")[1];
+        var ob = parseMETAR(raw);
+        ob.raw = raw;
+        return ob;
+    });
+};
+
 app.get("/api/observations", function(req, res) {
-    promiseObservations(req.query).then(function(json) {
-        res.json(json);
+    promiseObservations(req.query).then(function(ob) {
+        res.json(ob);
+    }, function(err) {
+        res.json(500, { error: err.message });
+    });
+});
+
+app.get("/api/metar/:airport", function(req, res) {
+    fetchMETAR(req.params.airport).then(function(ob) {
+        res.json(ob);
     }, function(err) {
         res.json(500, { error: err.message });
     });
