@@ -1,58 +1,16 @@
 
 var express = require("express");
-var Q = require("q");
-var parseMETAR = require("metar");
+
+var fetchFmiObservations = require("./lib/fetchFmiObservations");
+var fetchMetar = require("./lib/fetchMetar");
 
 var config = require("./config.json");
-var formatFmiUrl = require("./formatFmiUrl");
-var parseObservations = require("./parseObservations");
-var cachePromise = require("./cachePromise");
-var Weather = require("./client/Weather");
-var fetch = require("./fetch");
 
 // http://ilmatieteenlaitos.fi/tallennetut-kyselyt
 
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
-
-
-var fetchObservations = function (query) {
-    var fmiUrl = formatFmiUrl({
-        apikey: config.apikey,
-        query: query
-    });
-
-    return fetch(fmiUrl).then(function(data) {
-        return parseObservations(data.toString());
-    });
-};
-fetchObservations = cachePromise(fetchObservations, function isValid(observations) {
-    return observations.then(function(data) {
-        var weather = new Weather(data);
-        return Q(!weather.isDataOld());
-    });
-});
-
-var fetchMETAR = function(airportCode) {
-    var url = "http://weather.noaa.gov/pub/data/observations/metar/stations/" +
-        airportCode.toUpperCase() + ".TXT";
-    return fetch(url).spread(function(res, body) {
-        var metarPage = body.toString();
-        var raw = metarPage.split("\n")[1];
-        var ob = parseMETAR(raw);
-        ob.raw = raw;
-        return ob;
-    });
-};
-
-app.get("/api/observations", function(req, res) {
-    fetchObservations(req.query).then(function(ob) {
-        res.json(ob);
-    }, function(err) {
-        res.json(500, { error: err.message });
-    });
-});
 
 function respondError(res) {
     return function(err) {
@@ -71,8 +29,19 @@ function respondError(res) {
     };
 }
 
+app.get("/api/observations", function(req, res) {
+    var options = {apikey: config.apikey, query: req.query};
+
+    fetchFmiObservations.cached(options).then(function(ob) {
+        res.json(ob);
+    }, function(err) {
+        res.json(500, { error: err.message });
+    });
+});
+
+
 app.get("/api/metar/:airport", function(req, res) {
-    fetchMETAR(req.params.airport).then(function(ob) {
+    fetchMetar.cached(req.params.airport).then(function(ob) {
         res.json(ob);
     }, respondError(res));
 });

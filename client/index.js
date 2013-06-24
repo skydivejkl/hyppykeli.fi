@@ -13,8 +13,8 @@ require("./vendor/moment_fi");
 
 
 var Layout = require("./Layout");
-var Weather = require("./Weather");
-var LocalStorageModel = require("./LocalStorageModel");
+var Weather = require("../models/Weather");
+var LocalStorageModel = require("../models/LocalStorageModel");
 
 var settings = new LocalStorageModel({ limit: 3 }, {
     key: "settings"

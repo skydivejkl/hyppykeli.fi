@@ -5,7 +5,7 @@ var _ = require("underscore");
 
 var MAX_AGE = 15 * 60 * 1000; // minutes
 
-module.exports = Backbone.Model.extend({
+var Weather = Backbone.Model.extend({
 
     url: function() {
         var pathParts = window.location.pathname.split("/");
@@ -74,8 +74,10 @@ module.exports = Backbone.Model.extend({
 
     isDataOld: function() {
         var age = this.getDataAge();
-        console.log("Data for", this.getStationName(),  "is", age/1000/60, "minutes old");
+        console.log("FMI data for", this.getStationName(),  "is", age/1000/60, "minutes old");
         return age > MAX_AGE;
     }
 
 });
+
+module.exports = Weather;
