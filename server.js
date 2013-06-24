@@ -54,12 +54,27 @@ app.get("/api/observations", function(req, res) {
     });
 });
 
+function respondError(res) {
+    return function(err) {
+        var out = { error: err.message };
+        if (err.response) {
+            console.error("Upstream responded error:",
+                err.response.statusCode,
+                err.url
+            );
+            out.statusCode = err.response.statusCode;
+        }
+        else {
+            console.error("API Error", err);
+        }
+        res.json(500, out);
+    };
+}
+
 app.get("/api/metar/:airport", function(req, res) {
     fetchMETAR(req.params.airport).then(function(ob) {
         res.json(ob);
-    }, function(err) {
-        res.json(500, { error: err.message });
-    });
+    }, respondError(res));
 });
 
 app.get("/", function(req, res) {
