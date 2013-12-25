@@ -1,5 +1,7 @@
 
 var express = require("express");
+var browserify = require("browserify-middleware");
+
 
 var fetchFmiObservations = require("./lib/fetchFmiObservations");
 var fetchMetar = require("./lib/fetchMetar");
@@ -50,9 +52,15 @@ app.get("/", function(req, res) {
     res.sendfile(__dirname + "/html/index.html");
 });
 
+app.get("/new.html", function(req, res) {
+    res.sendfile(__dirname + "/html/new.html");
+});
+
 app.get("/:key/:value", function(req, res) {
     res.sendfile(__dirname + "/html/app.html");
 });
+
+app.get("/new.js", browserify("./new.js"));
 
 
 var port = process.env.PORT || config.port || 8080;

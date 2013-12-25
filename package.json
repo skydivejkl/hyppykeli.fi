@@ -27,7 +27,9 @@
     "viewmaster": "~1.1.2",
     "hyperscript": "~1.1.1",
     "q": "~0.9.6",
-    "metar": "0.0.3"
+    "metar": "0.0.3",
+    "browserify-middleware": "~2.2.0",
+    "d3": "~3.3.13"
   },
   "devDependencies": {
     "uglify-js": "~2.3.6",
