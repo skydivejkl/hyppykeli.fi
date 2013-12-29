@@ -1,5 +1,6 @@
 
 var express = require("express");
+var browserify = require("browserify-middleware");
 
 var fetchFmiObservations = require("./lib/fetchFmiObservations");
 var fetchMetar = require("./lib/fetchMetar");
@@ -9,6 +10,8 @@ var config = require("./config.json");
 // http://ilmatieteenlaitos.fi/tallennetut-kyselyt
 
 var app = express();
+
+app.get("/new.js", browserify("new.js"));
 
 app.use(express.static(__dirname + '/public'));
 
