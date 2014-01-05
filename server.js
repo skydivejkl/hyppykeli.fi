@@ -1,4 +1,7 @@
 
+var Q = require("q");
+Q.longStackSupport = true;
+
 var express = require("express");
 var browserify = require("browserify-middleware");
 

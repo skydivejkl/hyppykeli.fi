@@ -14,9 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "hyperquest": "~0.1.6",
-    "cheerio": "~0.11.0",
+    "cheerio": "~0.13.0",
     "concat-stream": "~1.0.0",
-    "express": "~3.2.6",
     "browserify": "~2.17.3",
     "underscore": "~1.4.4",
     "bean": "~1.0.3",
@@ -29,7 +28,14 @@
     "q": "~0.9.6",
     "metar": "0.0.3",
     "browserify-middleware": "~2.2.0",
-    "d3": "~3.3.13"
+    "d3": "~3.3.13",
+    "xml2js": "~0.4.1",
+    "eyes": "~0.1.8",
+    "express": "~3.4.7",
+    "request": "~2.30.0",
+    "promisepipe": "~1.0.1",
+    "through": "~2.3.4",
+    "xtend": "~2.1.2"
   },
   "devDependencies": {
     "uglify-js": "~2.3.6",

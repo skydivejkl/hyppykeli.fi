@@ -68,6 +68,7 @@ var Weather = Backbone.Model.extend({
     },
 
     getDataAge: function() {
+        console.log(this.attributes);
         var last = _.last(this.get("windGusts").data);
         return Date.now() - new Date(last.time).getTime();
     },
