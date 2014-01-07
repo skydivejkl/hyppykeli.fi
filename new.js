@@ -1,12 +1,13 @@
 var d3 = require("d3");
 var _ = require("underscore");
 var Q = require("q");
+// http://examples.oreilly.com/0636920026938/chapter_09/20_axes_dynamic.html
 
 var fetchJSON = Q.denodeify(d3.json);
 
 var padding = 30;
 var height = 400;
-var width = window.innerWidth - 100;
+var width = window.innerWidth;
 
 //The SVG Container
 var svgContainer = d3.select(".container")
@@ -16,7 +17,6 @@ var svgContainer = d3.select(".container")
     ;
 
 
-var windSpeedGroup = svgContainer.append("g");
 
 console.log("loading");
 
@@ -27,6 +27,120 @@ function toDates(d) {
     });
 }
 
+function drawHorizontalLine(svgContainer, xScale, yScale, linePos, color) {
+    svgContainer.append("line")
+        .attr("x1", padding)
+        .attr("y1", yScale(linePos))
+
+        .attr("x2", width - padding)
+        .attr("y2", yScale(linePos))
+
+        .attr("stroke-width", 2)
+        .attr("stroke", color)
+        ;
+}
+
+function drawVerticalLine(svgContainer, xScale, yScale, linePos, color) {
+    svgContainer.append("line")
+        .attr("x1", xScale(linePos))
+        .attr("y1", padding)
+
+        .attr("x2", xScale(linePos))
+        .attr("y2", height - padding)
+
+        .attr("stroke-width", 1)
+        .attr("stroke", color)
+        ;
+}
+
+function drawPath(svgContainer, xScale, yScale, observations, forecast, opts) {
+    var allData = observations.concat(forecast);
+    forecast = [_.last(observations)].concat(forecast);
+
+    svgContainer.selectAll("circle." + opts.klass)
+        .data(allData)
+        .enter()
+        .append("circle")
+        .attr("stroke", "red")
+        .attr("fill", "none")
+        .attr("stroke-width", "1")
+        .attr("cx", function (d) {
+            return xScale(d.time);
+        })
+        .attr("cy", function (d) {
+            return yScale(d.value);
+        })
+        .attr("r", "5")
+        ;
+
+
+    var rectHeight = 40;
+    svgContainer.selectAll("rect." + opts.klass)
+        .data(allData)
+        .enter()
+        .append("rect")
+        .attr("fill", "transparent")
+        .attr("stroke", "green")
+        .attr("stroke-width", "0")
+        .attr("fill-opacity", "0.2")
+        .attr("x", function(d, i) {
+            var current = d.time.getTime();
+            var prev = (allData[i-1] || d).time.getTime();
+
+            var diffToPrev = current - prev;
+            return xScale(current - diffToPrev / 2);
+        })
+        .attr("width", function(d, i) {
+            var current = d.time.getTime();
+            var next = (allData[i+1] || d).time.getTime();
+            var prev = (allData[i-1] || d).time.getTime();
+
+            current = xScale(current);
+            next = xScale(next);
+            prev = xScale(prev);
+            var diffToPrev = current - prev;
+            var diffToNext = next - current;
+
+            return diffToPrev/2 + diffToNext/2;
+
+        })
+        .attr("y", function(d) {
+            return yScale(d.value) - rectHeight / 2;
+        })
+        .attr("height", rectHeight)
+        .on("mouseover", function(d) {
+            console.log("d", d);
+            d3.select(this).attr("fill", "black");
+            console.log("hovering");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this)
+            .attr("fill", "transparent")
+            ;
+        })
+        ;
+
+    var lineFunction = d3.svg.line()
+        .x(function(d) { return xScale(d.time.getTime()); })
+        .y(function(d) { return yScale(d.value); })
+        .interpolate("linear")
+        ;
+
+    svgContainer.append("path")
+        .attr("d", lineFunction(observations))
+        .attr("stroke", opts.color)
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+        ;
+
+    svgContainer.append("path")
+        .attr("d", lineFunction.interpolate("cardinal")(forecast))
+        .attr("stroke", opts.color)
+        .style("stroke-dasharray", ("3, 3"))
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+        ;
+}
 
 Q.all([
     fetchJSON("/api/fmi/observations?place=tikkakoski"),
@@ -35,24 +149,25 @@ Q.all([
     var studentLimit = 8;
     var licenseLimit = 11;
 
-
-    var gustData = obs["obs-obs-1-1-wg_10min"].data.map(toDates);
+    var gustData = obs["obs-obs-1-1-wg_10min"].data.slice(0).map(toDates);
     var gustForecast = forecast["mts-1-1-WindGust"].data.slice(0, 10).map(toDates);
 
-    var maxGust = d3.max(
-        gustData.concat(gustForecast),
-        function(d) { return d.value; }
-    );
+    var windAvg = obs["obs-obs-1-1-ws_10min"].data.slice(0).map(toDates);
+    var windAvgForecast = forecast["mts-1-1-WindSpeedMS"].data.slice(0, 10).map(toDates);
+
+    var all = gustData
+        .concat(gustForecast)
+        .concat(windAvg)
+        .concat(windAvgForecast)
+        ;
+
+    var maxGust = d3.max(all, function(d) { return d.value; });
     maxGust = Math.max(maxGust, licenseLimit+1);
     console.log("max gust", maxGust);
 
-    var startDate = d3.min(gustData, function(d) {
-        return d.time.getTime();
-    });
+    var startDate = d3.min(all, function(d) { return d.time.getTime(); });
 
-    var endDate = d3.max(gustData.concat(gustForecast), function(d) {
-        return d.time.getTime();
-    });
+    var endDate = d3.max(all, function(d) { return d.time.getTime(); });
 
     var xScale = d3.scale.linear()
         .domain([startDate, endDate])
@@ -62,19 +177,6 @@ Q.all([
         .domain([0, maxGust])
         .range([height - padding, padding])
         ;
-
-
-    // var reverseLookup = d3.scale.linear()
-    //     .domain([0, svgContainer.attr("width")])
-    //     .rangeRound([0, gustData.length]);
-
-    // console.log("gust point", gustData.length);
-    // svgContainer.on("mousemove", function() {
-    //     var point = d3.mouse(this);
-    //     // var index = Math.round(reverseLookup(point[0]));
-    //     console.log("index", reverseLookup(point[0]));
-    //     // console.log(gustData[index-1].value);
-    // });
 
     var xAxis = d3.svg.axis()
         .scale(xScale)
@@ -111,72 +213,19 @@ Q.all([
         .call(yAxisRight)
         ;
 
+    drawVerticalLine(svgContainer, xScale, yScale, Date.now(), "red");
+    drawHorizontalLine(svgContainer, xScale, yScale, studentLimit, "darkgray");
+    drawHorizontalLine(svgContainer, xScale, yScale, licenseLimit, "gray");
 
-    var lineFunction = d3.svg.line()
-        .x(function(d) { return xScale(d.time.getTime()); })
-        .y(function(d) { return yScale(d.value); })
-        .interpolate("linear");
+    drawPath(svgContainer, xScale, yScale, gustData, gustForecast, {
+        klass: "gust",
+        color: "black"
+    });
+    drawPath(svgContainer, xScale, yScale, windAvg, windAvgForecast, {
+        klass: "avg",
+        color: "gray"
+    });
 
-    windSpeedGroup.append("path")
-        .attr("d", lineFunction(gustData))
-        .attr("stroke", "black")
-        .attr("stroke-width", 2)
-        .attr("fill", "none")
-        ;
-
-    windSpeedGroup.append("path")
-        .attr("d", lineFunction(gustForecast))
-        .attr("stroke", "black")
-        .style("stroke-dasharray", ("3, 3"))
-        .attr("stroke-width", 2)
-        .attr("fill", "none")
-        ;
-
-    var lastObs = _.last(gustData);
-    var firstForecast = _.first(gustForecast);
-
-    windSpeedGroup.append("line")
-        .attr("x1", xScale(lastObs.time))
-        .attr("y1", yScale(lastObs.value))
-
-        .attr("x2", xScale(firstForecast.time))
-        .attr("y2", yScale(firstForecast.value))
-
-        .attr("stroke-width", 2)
-        .style("stroke-dasharray", ("3, 3"))
-        .attr("stroke", "black")
-        ;
-
-    function drawHorizontalLine(linePos, color) {
-        windSpeedGroup.append("line")
-            .attr("x1", padding)
-            .attr("y1", yScale(linePos))
-
-            .attr("x2", width - padding)
-            .attr("y2", yScale(linePos))
-
-            .attr("stroke-width", 2)
-            .attr("stroke", color)
-            ;
-    }
-
-    function drawVerticalLine(linePos, color) {
-        windSpeedGroup.append("line")
-            .attr("x1", xScale(linePos))
-            .attr("y1", padding)
-
-            .attr("x2", xScale(linePos))
-            .attr("y2", height - padding)
-
-            .attr("stroke-width", 1)
-            .attr("stroke", color)
-            ;
-    }
-
-    drawVerticalLine(Date.now(), "red");
-
-    drawHorizontalLine(studentLimit, "darkgray");
-    drawHorizontalLine(licenseLimit, "gray");
 
 }).done();
 
