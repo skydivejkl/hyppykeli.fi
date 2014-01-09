@@ -73,6 +73,27 @@ function drawPath(svgContainer, xScale, yScale, observations, forecast, opts) {
         .attr("r", "5")
         ;
 
+    var lineFunction = d3.svg.line()
+        .x(function(d) { return xScale(d.time.getTime()); })
+        .y(function(d) { return yScale(d.value); })
+        .interpolate("linear")
+        ;
+
+    svgContainer.append("path")
+        .attr("d", lineFunction(observations))
+        .attr("stroke", opts.color)
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+        ;
+
+    svgContainer.append("path")
+        .attr("d", lineFunction.interpolate("cardinal")(forecast))
+        .attr("stroke", opts.color)
+        .style("stroke-dasharray", ("3, 3"))
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+        ;
+
 
     var rectHeight = 40;
     svgContainer.selectAll("rect." + opts.klass)
@@ -120,26 +141,6 @@ function drawPath(svgContainer, xScale, yScale, observations, forecast, opts) {
         })
         ;
 
-    var lineFunction = d3.svg.line()
-        .x(function(d) { return xScale(d.time.getTime()); })
-        .y(function(d) { return yScale(d.value); })
-        .interpolate("linear")
-        ;
-
-    svgContainer.append("path")
-        .attr("d", lineFunction(observations))
-        .attr("stroke", opts.color)
-        .attr("stroke-width", 2)
-        .attr("fill", "none")
-        ;
-
-    svgContainer.append("path")
-        .attr("d", lineFunction.interpolate("cardinal")(forecast))
-        .attr("stroke", opts.color)
-        .style("stroke-dasharray", ("3, 3"))
-        .attr("stroke-width", 2)
-        .attr("fill", "none")
-        ;
 }
 
 Q.all([
