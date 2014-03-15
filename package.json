@@ -35,7 +35,9 @@
     "request": "~2.30.0",
     "promisepipe": "~1.0.1",
     "through": "~2.3.4",
-    "xtend": "~2.1.2"
+    "xtend": "~2.1.2",
+    "jquery": "~2.1.0-beta3",
+    "bluebird": "~1.1.0"
   },
   "devDependencies": {
     "uglify-js": "~2.3.6",
