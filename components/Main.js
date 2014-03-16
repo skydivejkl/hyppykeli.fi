@@ -4,22 +4,16 @@ var React = require('react');
 var _ = require("lodash");
 
 var WeatherGraph = require("./WeatherGraph");
+var Slider = require("./Slider");
 
 var Main = React.createClass({
 
     getInitialState: function() {
         return {
             data: {},
-            futureHours: 10,
-            pastHours: 10
+            futureHours: 6,
+            pastHours: 6
         };
-    },
-
-    slice: function() {
-        this.setState({
-            futureHours: this.state.futureHours - 1,
-            pastHours: this.state.pastHours - 1
-        });
     },
 
     futureSlice: function(arr) {
@@ -38,7 +32,6 @@ var Main = React.createClass({
 
     getSlicedData: function() {
 
-        console.log("SLICING DATA");
         var data = _.clone(this.state.data, true);
         var self = this;
 
@@ -50,14 +43,64 @@ var Main = React.createClass({
         return data;
     },
 
+    handleObservationSlide: function(val) {
+        this.setState({
+            pastHours: Math.max(val, 1)
+        });
+    },
+
+    handleForceastSlide: function(val) {
+        this.setState({
+            futureHours: Math.max(val, 1)
+        });
+    },
+
     render: function() {
-        console.log("main render");
         return (
             <div>
+                <div className="cf weather-boxes">
+                    <div className="box-wrap">
+                        <div className="box">
+                            <h1>Gusts<img src="/climacons/Wind.svg" /></h1>
+                            <p className="value">5 m/s</p>
+                            <p className="time">2 min 45 sec ago</p>
+                        </div>
+                    </div>
+
+                    <div className="box-wrap">
+                        <div className="box">
+                            <h1>Windspeed</h1>
+                            <p className="value">2 m/s</p>
+                            <p className="time">2 min 45 sec ago</p>
+                        </div>
+                    </div>
+
+                    <div className="box-wrap">
+                        <div className="box">
+                            <h1>Windspeed</h1>
+                            <p className="value">2 m/s</p>
+                            <p className="time">2 min 45 sec ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Wind gust/avg over time</h2>
+
                 <WeatherGraph
                     data={ this.getSlicedData() }
                 />
-                <button onClick={this.slice} >slice</button>
+                <Slider
+                    className="observations"
+                    name={"Show observations from the last " + this.state.pastHours.toFixed(1) + " hours"}
+                    onChange={_.debounce(this.handleObservationSlide, 200)}
+                    value={this.state.pastHours}
+                />
+                <Slider
+                    className="forecasts"
+                    name={"Show forecasts for the next " + this.state.futureHours.toFixed(1) + " hours"}
+                    onChange={_.debounce(this.handleForceastSlide, 200)}
+                    value={this.state.futureHours}
+                />
             </div>
         );
     }

@@ -5,10 +5,6 @@ var d3 = require("d3");
 
 var WeatherSvgPath = require("./WeatherSvgPath");
 
-var padding = 30;
-var height = 400;
-
-
 
 var WeatherGraph = React.createClass({
 
@@ -17,27 +13,41 @@ var WeatherGraph = React.createClass({
     },
 
     componentWillReceiveProps: function(props) {
-        console.log("GRAPH PROPSS!", this.props.data, "->", props.data);
         this.computeData(props);
+    },
+
+    getWidth: function() {
+        return window.innerWidth - 20;
+    },
+
+    getHeight: function() {
+        // return parseInt(screen.height / 2);
+        return Math.max(parseInt(window.innerHeight - 250), 300);
     },
 
     updateDimensions: function() {
         this.setState({
-            width: window.innerWidth,
-            height: height
+            width: this.getWidth(),
+            height: this.getHeight()
         });
     },
 
     getInitialState: function() {
         return {
-            width: window.innerWidth,
-            height: height,
+            width: this.getWidth(),
+            height: this.getHeight(),
 
-            maxValue: 3,
+            maxValue: 13,
             minValue: 0,
 
             startTime: new Date(),
             endTime: new Date()
+        };
+    },
+
+    getDefaultProps: function() {
+        return {
+            padding: 30
         };
     },
 
@@ -72,11 +82,11 @@ var WeatherGraph = React.createClass({
 
         var xScale = d3.scale.linear()
             .domain([state.startTime, state.endTime])
-            .range([padding, state.width - padding]);
+            .range([this.props.padding, state.width - this.props.padding]);
 
         var yScale = d3.scale.linear()
             .domain([state.minValue, state.maxValue])
-            .range([state.height - padding, padding])
+            .range([state.height - this.props.padding, this.props.padding])
             ;
 
         // educated guess
@@ -141,7 +151,6 @@ var WeatherGraph = React.createClass({
     },
 
     componentDidUpdate: function() {
-        console.log("did updata!");
         this.renderAxes();
     },
 
@@ -152,10 +161,9 @@ var WeatherGraph = React.createClass({
 
 
         var self = this;
-        console.log("graph render");
 
         return (
-            <div>
+            <div className="graph">
             <svg width={this.state.width} height={this.state.height}>
 
                 {Object.keys(this.props.data).map(function(key) {
@@ -173,23 +181,22 @@ var WeatherGraph = React.createClass({
                 <g
                     ref="xAxis"
                     className="axis"
-                    transform={ "translate(0, " + (height - padding) + ")" }
+                    transform={ "translate(0, " + (this.state.height - this.props.padding) + ")" }
                 />
 
                 <g
                     ref="yAxis"
                     className="axis"
-                    transform={ "translate(" + padding + ",0)" }
+                    transform={ "translate(" + this.props.padding + ",0)" }
                 />
 
                 <g
                     ref="yAxisRight"
                     className="axis"
-                    transform={ "translate(" +  (this.state.width - padding) + ",0)" }
+                    transform={ "translate(" +  (this.state.width - this.props.padding) + ",0)" }
                 />
 
             </svg>
-            <input type="range" />
             </div>
         );
     }

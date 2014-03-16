@@ -1,0 +1,136 @@
+
+@import "vendor/jquery.nouislider.scss";
+@import "media-queries.scss";
+
+html, body, div, svg {
+    padding: 0px;
+    margin: 0px;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+html, p, .button, ul, li, div {
+    font-family: 'Signika Negative';
+    text-align: center;
+}
+
+h1 {
+    font-size: 18pt;
+    margin-bottom: 2em;
+}
+
+h2 {
+    font-size: 14pt;
+}
+
+#app {
+    margin-top: 0.5em;
+}
+
+.slider-wrap {
+    width: 100%;
+    float: left;
+}
+
+.box-wrap {
+    width: 50%;
+    float: left;
+}
+
+.graph {
+    text-align: center;
+}
+
+@media #{$medium-up} {
+    * {
+        color: red;
+    }
+}
+
+    .slider-wrap {
+        width: 50%;
+        float: left;
+    }
+
+.noUi-handle {
+    cursor: pointer;
+}
+
+.cf { zoom: 1; }
+.cf:before,
+.cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+
+.weather-boxes {
+    margin-bottom: 3em;
+}
+
+.box {
+    position: relative;
+    img {
+        // position:absolute;
+        height: 1em;
+        margin-left: 0.2em;
+        vertical-align: middle;
+        // top: -10px;
+        // right: -10px;
+        opacity: 0.5;
+     }
+    h1 {
+        font-size: 12pt;
+        padding: 0px;
+        margin: 0px;
+    }
+    .value {
+        color: black;
+    }
+
+}
+
+.slider, .box {
+    font-size: 8pt;
+    text-align: center;
+    color: gray;
+    padding: 1em;
+    margin: 0.5em;
+    border: 1px solid #DDD;
+    background-color: rgb(240, 240, 240);
+
+    .name {
+        margin-bottom: 1em;
+    }
+}
+
+
+// .weather-data-path.
+// weather-data-path windSpeeds
+
+$observations-color: rgb(97, 97, 255);
+$forecasts-color: rgb(179, 179, 255);
+
+.weather-data-path .observations {
+    stroke: $observations-color;
+}
+.weather-data-path .forecasts {
+    stroke: $forecasts-color;
+    stroke-dasharray: 1,6;
+}
+
+.forecasts .noUi-connect {
+    background-color: $forecasts-color;
+}
+
+.observations .noUi-connect {
+    background-color: $observations-color;
+}
+
+

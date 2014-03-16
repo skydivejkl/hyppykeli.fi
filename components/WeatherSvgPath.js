@@ -21,21 +21,20 @@ var WeatherSvgPath = React.createClass({
     render: function() {
 
         return (
-            <g className="weather-data-path">
+            <g className={"weather-data-path " + this.props.key}>
 
                 <path
                     className="observations"
                     d={ this.props.lineFunction(this.props.observations) }
-                    stroke="black"
-                    strokeWidth="2"
+                    strokeWidth="1"
                     fill="none"
                 />
 
                 <path
                     className="forecasts"
-                    d={ this.props.lineFunction.interpolate("monotone")(this.cleanedForecasts()) }
-                    stroke="gray"
+                    d={ this.props.lineFunction(this.cleanedForecasts()) }
                     strokeWidth="2"
+                    // strokeDasharray="5,5"
                     fill="none"
                 />
 

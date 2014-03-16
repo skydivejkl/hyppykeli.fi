@@ -3,6 +3,7 @@ var React = require('react');
 var d3 = require("d3");
 var Promise = require("bluebird");
 var _ = require("lodash");
+var $ = require("jquery");
 
 var Main = require("./Main");
 
@@ -19,6 +20,11 @@ function cast(d) {
         value: parseFloat(d.value, 10)
     });
 }
+
+var removeSpinner = _.once(function() {
+    $(".loading").remove();
+});
+
 
 Promise.all([obs, fore])
 .spread(function(observations, forecasts) {
@@ -39,7 +45,7 @@ Promise.all([obs, fore])
                     forecasts: forecasts["mts-1-1-WindGust"].data.map(cast)
                 }
             }
-        });
+        }, removeSpinner);
 
     }, 1);
 })
@@ -47,5 +53,5 @@ Promise.all([obs, fore])
     console.error("Failed to fetch data", err);
 });
 
-React.renderComponent(main, document.body);
+React.renderComponent(main, document.getElementById("app"));
 

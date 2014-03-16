@@ -8,6 +8,21 @@ var parseFmi = require("./lib/parseFmi");
 var _ = require("lodash");
 var browserify = require("browserify-middleware");
 
+var config = require("./config.json");
+
+var app = express();
+
+app.use(express.static(__dirname + "/public"));
+
+// app.use(function(req, res, next) {
+//     if (req.url === "/") return next();
+//     console.log("middleware wait!", req.url);
+//     setTimeout(function() {
+//         console.log("wait done");
+//         next();
+//     }, 1000);
+// });
+
 
 function requestp(url, _opts) {
     var opts = _.extend({}, _opts, { url: url });
@@ -49,10 +64,6 @@ function cachedReq(u) {
     });
 }
 
-var config = require("./config.json");
-console.log(config);
-
-var app = express();
 
 
 var prettyStoredQueries = {
