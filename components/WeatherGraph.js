@@ -17,7 +17,7 @@ var WeatherGraph = React.createClass({
     },
 
     getWidth: function() {
-        return window.innerWidth - 20;
+        return window.innerWidth - this.props.externalPadding;
     },
 
     getHeight: function() {
@@ -41,13 +41,16 @@ var WeatherGraph = React.createClass({
             minValue: 0,
 
             startTime: new Date(),
-            endTime: new Date()
+            endTime: new Date(),
+
+            mousePosition: 300
         };
     },
 
     getDefaultProps: function() {
         return {
-            padding: 30
+            padding: 30,
+            externalPadding: 20
         };
     },
 
@@ -154,49 +157,77 @@ var WeatherGraph = React.createClass({
         this.renderAxes();
     },
 
+    handleMouseMove: function(e) {
+        var pos = e.clientX;
+        pos -= this.refs.svg.getDOMNode().offsetLeft;
+        this.setState({ mousePosition: pos });
+    },
 
     render: function() {
 
         this.updateScales();
 
-
         var self = this;
+
+        var linePos = this.state.mousePosition;
+        // linePos -= this.props.padding;
+        // linePos -= this.props.padding;
+        // linePos -= this.props.externalPadding;
+
+        var time = new Date(this.xScale.invert(this.state.mousePosition));
+        // console.log("tine", this.state.mousePosition);
 
         return (
             <div className="graph">
-            <svg width={this.state.width} height={this.state.height}>
+                <svg
+                    ref="svg"
+                    onMouseMove={this.handleMouseMove}
+                    width={this.state.width}
+                    height={this.state.height} >
 
-                {Object.keys(this.props.data).map(function(key) {
-                    var d = self.props.data[key];
-                    return (
-                        <WeatherSvgPath
-                            key={key}
-                            lineFunction={self.lineFunction}
-                            observations={d.observations}
-                            forecasts={d.forecasts}
-                        />
-                    );
-                })}
+                    {Object.keys(this.props.data).map(function(key) {
+                        var d = self.props.data[key];
+                        return (
+                            <WeatherSvgPath
+                                key={key}
+                                lineFunction={self.lineFunction}
+                                observations={d.observations}
+                                forecasts={d.forecasts}
+                            />
+                        );
+                    })}
 
-                <g
-                    ref="xAxis"
-                    className="axis"
-                    transform={ "translate(0, " + (this.state.height - this.props.padding) + ")" }
-                />
+                    <line
+                        x1={linePos}
+                        y1="0"
 
-                <g
-                    ref="yAxis"
-                    className="axis"
-                    transform={ "translate(" + this.props.padding + ",0)" }
-                />
+                        x2={linePos}
+                        y2={this.state.height}
 
-                <g
-                    ref="yAxisRight"
-                    className="axis"
-                    transform={ "translate(" +  (this.state.width - this.props.padding) + ",0)" }
-                />
+                        stroke="black"
+                        strokeWidth="black"
 
-            </svg>
+                    />
+
+                    <g
+                        ref="xAxis"
+                        className="axis"
+                        transform={ "translate(0, " + (this.state.height - this.props.padding) + ")" }
+                    />
+
+                    <g
+                        ref="yAxis"
+                        className="axis"
+                        transform={ "translate(" + this.props.padding + ",0)" }
+                    />
+
+                    <g
+                        ref="yAxisRight"
+                        className="axis"
+                        transform={ "translate(" +  (this.state.width - this.props.padding) + ",0)" }
+                    />
+
+                </svg>
             </div>
         );
     }
