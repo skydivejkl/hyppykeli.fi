@@ -1,73 +1,104 @@
 
-var Q = require("q");
-Q.longStackSupport = true;
-
 var express = require("express");
+var Promise = require("bluebird");
+Promise.longStackTraces();
+var request = require("request");
+var formatFmiUrl = require("./lib/formatFmiUrl");
+var parseFmi = require("./lib/parseFmi");
+var _ = require("lodash");
 var browserify = require("browserify-middleware");
 
 
-var fetchFmiObservations = require("./lib/fetchFmiObservations");
-var fetchMetar = require("./lib/fetchMetar");
+function requestp(url, _opts) {
+    var opts = _.extend({}, _opts, { url: url });
+
+    return new Promise(function (resolve, reject) {
+        request(opts, function (err, res, body) {
+            if (err) {
+                return reject(err);
+            } else if (res.statusCode !== 200) {
+                err = new Error("Unexpected status code: " + res.statusCode);
+                err.res = res;
+                return reject(err);
+            }
+            resolve(body);
+        });
+    });
+}
+
+
+
+var requestCache = {};
+
+function cachedReq(u) {
+    var cached;
+    if (cached = requestCache[u]) {
+        console.log("Using cache for", u);
+        return cached;
+    }
+
+    console.log("Actually fetching", u);
+    return requestp(u).then(function(res) {
+        requestCache[u] = Promise.cast(res);
+
+        Promise.delay(1000*60*10).then(function() {
+            requestCache[u] = null;
+        });
+
+        return res;
+    });
+}
 
 var config = require("./config.json");
-
-// http://ilmatieteenlaitos.fi/tallennetut-kyselyt
+console.log(config);
 
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
 
-function respondError(res) {
-    return function(err) {
-        var out = { error: err.message };
-        if (err.response) {
-            console.error("Upstream responded error:",
-                err.response.statusCode,
-                err.url
-            );
-            out.statusCode = err.response.statusCode;
-        }
-        else {
-            console.error("API Error", err);
-        }
-        res.json(500, out);
-    };
-}
-
-app.get("/api/observations", function(req, res) {
-    var options = {apikey: config.apikey, query: req.query};
-
-    fetchFmiObservations.cached(options).then(function(ob) {
-        res.json(ob);
-    }, function(err) {
-        res.json(500, { error: err.message });
-    });
-});
-
-
-app.get("/api/metar/:airport", function(req, res) {
-    fetchMetar.cached(req.params.airport).then(function(ob) {
-        res.json(ob);
-    }, respondError(res));
-});
+var prettyStoredQueries = {
+    observations: "fmi::observations::weather::timevaluepair",
+    forecasts: "fmi::forecast::hirlam::surface::point::timevaluepair"
+};
 
 app.get("/", function(req, res) {
-    res.sendfile(__dirname + "/html/index.html");
+    res.sendfile(__dirname + "/index.html");
 });
 
-app.get("/new.html", function(req, res) {
-    res.sendfile(__dirname + "/html/new.html");
+app.get("/app.js", browserify("./components/index.js", {
+    transform: ["reactify"]
+}));
+
+app.get("/api/fmi/:storedquery", function(req, res) {
+
+    console.log("query", req.query);
+    console.log("params", req.params);
+
+    var storedquery = prettyStoredQueries[req.params.storedquery];
+    if (!storedquery) {
+        return res.json(404, {
+            message: "Bad query",
+            available: Object.keys(prettyStoredQueries)
+        });
+    }
+
+    var u = formatFmiUrl({
+        apikey: config.apikey,
+        query: _.extend({
+            place: "tikkakoski",
+            storedquery_id: storedquery
+        }, req.query)
+    });
+
+    cachedReq(u).then(parseFmi).then(res.json.bind(res))
+    .catch(function(err) {
+        console.log("Failed to fetch fmi data", err);
+        res.json(500, {
+            message: "Failed to fetch fmi data",
+            fmiError: err.message
+        });
+    });
+
 });
 
-app.get("/:key/:value", function(req, res) {
-    res.sendfile(__dirname + "/html/app.html");
-});
 
-app.get("/new.js", browserify("./new.js"));
-
-
-var port = process.env.PORT || config.port || 8080;
-app.listen(port, function() {
-    console.log("Listening on http://localhost:" + port);
-});
-
+app.listen(8080);
