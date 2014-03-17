@@ -92,14 +92,14 @@ var Main = React.createClass({
 
                 <Slider
                     className="observations"
-                    name={"Show observations from the last " + this.state.pastHours.toFixed(1) + " hours"}
-                    onChange={_.debounce(this.handleObservationSlide, 200)}
+                    title="Show observations from the last "
+                    onChange={this.handleObservationSlide}
                     value={this.state.pastHours}
                 />
                 <Slider
                     className="forecasts"
-                    name={"Show forecasts for the next " + this.state.futureHours.toFixed(1) + " hours"}
-                    onChange={_.debounce(this.handleForceastSlide, 200)}
+                    title="Show forecasts for the next "
+                    onChange={this.handleForceastSlide}
                     value={this.state.futureHours}
                 />
             </div>

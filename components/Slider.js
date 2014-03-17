@@ -9,9 +9,16 @@ var Slider = React.createClass({
         return {
             range: [0, 12],
             connect: "lower",
+            initialValue: 6,
             onChange: function(val) {
                 console.log("No handler for slider value", val);
             }
+        };
+    },
+
+    getInitialState: function() {
+        return {
+            value: this.props.initialValue
         };
     },
 
@@ -23,17 +30,16 @@ var Slider = React.createClass({
 
         $el.noUiSlider({
              range: this.props.range,
-             start: this.props.value,
+             start: this.props.initialValue,
              direction: this.props.direction,
              slide: function() {
-                 var val = $el.val();
-                 self.props.onChange(val);
+                 self.setState({ value: $el.val() });
+             },
+             set: function() {
+                 self.props.onChange($el.val());
              },
              handles: 1,
              connect: this.props.connect
-            //  serialization: {
-            //     resolution: 1
-            // }
         });
     },
 
@@ -42,7 +48,7 @@ var Slider = React.createClass({
         return (
             <div className={"slider-wrap " + this.props.className}>
                 <div className="slider">
-                    <div className="name">{this.props.name}</div>
+                    <div className="name">{this.props.title} {this.state.value} hours</div>
                     <div ref="el"></div>
                 </div>
             </div>
