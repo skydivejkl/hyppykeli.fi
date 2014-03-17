@@ -12,6 +12,9 @@ var config = require("./config.json");
 
 var app = express();
 
+
+var dropzones = require("./dropzones.json");
+
 app.use(express.static(__dirname + "/public"));
 
 // app.use(function(req, res, next) {
@@ -42,7 +45,6 @@ function requestp(url, _opts) {
 }
 
 
-
 var requestCache = {};
 
 function cachedReq(u) {
@@ -71,11 +73,17 @@ var prettyStoredQueries = {
     forecasts: "fmi::forecast::hirlam::surface::point::timevaluepair"
 };
 
+app.get("/dz/:key", function(req, res) {
+    var dz = dropzones[req.params.key];
+    if (!dz) return res.end(404, "Unknown DZ " + res.params.key);
+    res.render("dz.ejs", {dz: dz});
+});
+
 app.get("/", function(req, res) {
     res.sendfile(__dirname + "/index.html");
 });
 
-app.get("/app.js", browserify("./components/index.js", {
+app.get("/app.js", browserify("./client.js", {
     transform: ["reactify"]
 }));
 

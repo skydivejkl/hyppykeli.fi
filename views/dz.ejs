@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Skydiving Weather</title>
+        <title>Skydiving Weather for <%= dz.name %></title>
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             .spinner {
@@ -75,7 +75,7 @@
         <link rel="stylesheet" href="/app.css" />
     </head>
     <body>
-        <h1>Skydiving weather</div>
+      <h1>Skydiving weather for <%= dz.name %></div>
         <div class="loading">
             <div class="spinner">
               <div class="rect1"></div>
@@ -90,5 +90,11 @@
         <div id="app">
         </div>
         <script src="/app.js" charset="utf-8"></script>
+        <script charset="utf-8">
+          createWeatherApp(
+              document.getElementById("app"),
+              <%- JSON.stringify(dz, null, "    ") %>
+          );
+        </script>
     </body>
 </html>

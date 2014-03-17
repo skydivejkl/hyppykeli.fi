@@ -89,6 +89,7 @@ var Main = React.createClass({
                 <WeatherGraph
                     data={ this.getSlicedData() }
                 />
+
                 <Slider
                     className="observations"
                     name={"Show observations from the last " + this.state.pastHours.toFixed(1) + " hours"}
