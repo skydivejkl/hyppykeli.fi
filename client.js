@@ -30,7 +30,7 @@ function createWeatherApp(container, options) {
         }
     }));
 
-    var main = <Main />;
+    var main = <Main options={options} />;
 
     function cast(d) {
         return _.extend({}, {
