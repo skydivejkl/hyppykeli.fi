@@ -9,6 +9,8 @@ var url = require("url");
 var Main = require("./components/Main");
 
 var fetchJSON = Promise.promisify(d3.json.bind(d3));
+var loadingScreen = $(".loading");
+loadingScreen.find(".text").text("Loading data...");
 
 function createWeatherApp(container, options) {
 
@@ -38,7 +40,7 @@ function createWeatherApp(container, options) {
     }
 
     var removeSpinner = _.once(function() {
-        $(".loading").remove();
+        loadingScreen.remove();
     });
 
 

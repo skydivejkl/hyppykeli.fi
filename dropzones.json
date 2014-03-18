@@ -1,6 +1,6 @@
 {
     "efjy": {
-        "name": "EFJY - Tikkakoski",
+        "name": "Tikkakoski",
         "url": "efjy",
         "airportCode": "EFJY",
         "geoid": 6296545,
@@ -9,8 +9,7 @@
     },
 
     "efut": {
-        "name": "EFJY - Utti",
-        "url": "efut",
+        "name": "Utti",
         "airportCode": "EFUT",
         "geoid": 6296565,
         "lat": 60.89639,
