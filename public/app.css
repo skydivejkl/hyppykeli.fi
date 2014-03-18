@@ -224,6 +224,9 @@ h2 {
   margin-bottom: 2em; }
 
 .box {
+  font-size: 10pt;
+  padding: 1em;
+  margin: 0.5em;
   text-align: left;
   position: relative;
   border-top: 1px solid #DDD; }
@@ -254,12 +257,10 @@ h2 {
 .weather-boxes .box-wrap:last-child .box {
   border-bottom: 1px solid #DDD; }
 
-.slider, .box {
-  font-size: 8pt;
-  padding: 1em;
-  margin: 0.5em; }
-
 .slider {
+  padding: 1em;
+  font-size: 8pt;
+  margin: 0.5em;
   text-align: center;
   color: gray;
   border: 1px solid #DDD;

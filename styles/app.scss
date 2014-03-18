@@ -82,7 +82,11 @@ h2 {
 }
 
 .box {
+    font-size: 10pt;
+    padding: 1em;
+    margin: 0.5em;
     text-align: left;
+
     * {
         text-align: left;
     }
@@ -138,12 +142,10 @@ h2 {
     border-bottom: 1px solid #DDD;
 }
 
-.slider, .box {
-    font-size: 8pt;
-    padding: 1em;
-    margin: 0.5em;
-}
 .slider {
+    padding: 1em;
+    font-size: 8pt;
+    margin: 0.5em;
     text-align: center;
     color: gray;
     border: 1px solid #DDD;

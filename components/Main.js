@@ -3,6 +3,7 @@
 var React = require("react");
 var _ = require("lodash");
 var moment = require("moment");
+var SunCalc = require("suncalc");
 
 var WeatherGraph = require("./WeatherGraph");
 var Slider = require("./Slider");
@@ -53,13 +54,48 @@ var CurrentWinds = React.createClass({
                 icon="Tornado"
                 title="Winds"
                 time={this.state.ago} >
-                <p>Gust {this.props.gust.value} m/s</p>
-                <p>10 minute average {this.props.avg.value} m/s</p>
+                <p>Gust <b>{this.props.gust.value} m/s</b></p>
+                <p>10 minute average <b>{this.props.avg.value} m/s</b></p>
 
             </WeatherProp>
         );
     }
 });
+
+
+var Sunset = React.createClass({
+
+    componentWillMount: function() {
+        this.computeSunset();
+    },
+    componentDidMount: function() {
+        setInterval(this.computeSunset.bind(this), 1000 * 30);
+    },
+
+    computeSunset: function() {
+        this.setState({
+            sunset: SunCalc.getTimes(
+                new Date(),
+                this.props.latitude,
+                this.props.longitude
+            ).sunset
+        });
+    },
+
+    render: function() {
+
+        return (
+            <WeatherProp
+                icon="Sunset"
+                title="Sunset"
+                time={"at " + moment(this.state.sunset).format("HH:mm")} >
+                <p>{moment(this.state.sunset).fromNow()}</p>
+
+            </WeatherProp>
+        );
+    }
+});
+
 
 var Main = React.createClass({
 
@@ -132,14 +168,10 @@ var Main = React.createClass({
 
                     </WeatherProp>
 
-                    <WeatherProp
-                        icon="Sunset"
-                        title="Sunset"
-                        time="at 18:20" >
-
-                        <p>in 1 hour 30 minutes</p>
-
-                    </WeatherProp>
+                    <Sunset
+                        latitude={this.props.options.lat}
+                        longitude={this.props.options.lon}
+                    />
 
                 </div>
 
