@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Skydiving Weather for <%= dz.name %></title>
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <link href="/images/parachute.ico" rel="icon">
         <style>
             .spinner {
               margin: 50px auto;
@@ -70,12 +71,21 @@
                 -webkit-transform: scaleY(1.0);
               }
             }
+            .logo {
+              margin-top: 1em;
+            }
+            h1.title {
+              margin-bottom: 2em;
+              margin-right: 0.5em;
+              margin-left: 0.5em;
+            }
         </style>
         <link href='http://fonts.googleapis.com/css?family=Passion+One|Signika+Negative:400,300,600' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/app.css" />
     </head>
     <body>
-      <h1>Skydiving weather for <%= dz.name %></div>
+      <img class="logo" src="/images/parachute.svg" height="50">
+      <h1 class="title" >Skydiving weather for <%= dz.name %></div>
         <div class="loading">
             <div class="spinner">
               <div class="rect1"></div>

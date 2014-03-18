@@ -120,4 +120,6 @@ app.get("/api/fmi/:storedquery", function(req, res) {
 });
 
 
-app.listen(8080);
+var server = app.listen(3000, function() {
+    console.log('Listening on port %d', server.address().port);
+});

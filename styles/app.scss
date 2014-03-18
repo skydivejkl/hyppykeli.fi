@@ -45,10 +45,10 @@ h2 {
     float: left;
 }
 
-.box-wrap {
-    width: 50%;
-    float: left;
-}
+// .box-wrap {
+//     width: 50%;
+//     float: left;
+// }
 
 .graph {
     text-align: center;
@@ -76,36 +76,76 @@ h2 {
 
 .weather-boxes {
     margin-bottom: 3em;
+    max-width: 25em;
+    margin: 0 auto;
+    margin-bottom: 2em;
 }
 
 .box {
-    position: relative;
-    img {
-        // position:absolute;
-        height: 1em;
-        margin-left: 0.2em;
-        vertical-align: middle;
-        // top: -10px;
-        // right: -10px;
-        opacity: 0.5;
-     }
-    h1 {
-        font-size: 12pt;
-        padding: 0px;
-        margin: 0px;
-    }
-    .value {
-        color: black;
+    text-align: left;
+    * {
+        text-align: left;
     }
 
+    $top-margin: 10px;
+    $left-margin: 40px;
+    position: relative;
+
+    .icon, h1, .time {
+        opacity: 0.5;
+        // border-top: 1px solid red;
+    }
+
+    .icon {
+        left: 0px;
+        top: $top-margin;
+        position: absolute;
+        padding-top: $top-margin;
+        img {
+            height: 20px;
+        }
+    }
+
+    h1 {
+        top: $top-margin;
+        margin: 0px;
+        padding: 0px;
+        margin-left: $left-margin;
+    }
+
+    .value {
+        margin-top: 1em;
+        margin-left: $left-margin;
+    }
+
+    .time {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    // .text {
+    //     left: $icon-width;
+    //     right: 1em;
+    //     border: 1px solid green;
+    // }
+
+    border-top: 1px solid #DDD;
+
+}
+
+.weather-boxes .box-wrap:last-child .box {
+    border-bottom: 1px solid #DDD;
 }
 
 .slider, .box {
     font-size: 8pt;
-    text-align: center;
-    color: gray;
     padding: 1em;
     margin: 0.5em;
+}
+.slider {
+    text-align: center;
+    color: gray;
     border: 1px solid #DDD;
     background-color: rgb(240, 240, 240);
 
