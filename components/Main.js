@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require("react");
 var _ = require("lodash");
+var moment = require("moment");
 
 var WeatherGraph = require("./WeatherGraph");
 var Slider = require("./Slider");
@@ -27,6 +28,37 @@ var WeatherProp = React.createClass({
         );
     }
 
+});
+
+var CurrentWinds = React.createClass({
+
+    componentWillMount: function() {
+        this.computeTimeAgo();
+    },
+    componentDidMount: function() {
+        setInterval(this.computeTimeAgo.bind(this), 1000 * 5);
+        this.computeTimeAgo();
+    },
+
+    computeTimeAgo: function() {
+        this.setState({
+            ago: moment(this.props.gust.time).fromNow()
+        });
+    },
+
+    render: function() {
+
+        return (
+            <WeatherProp
+                icon="Tornado"
+                title="Winds"
+                time={this.state.ago} >
+                <p>Gust {this.props.gust.value} m/s</p>
+                <p>10 minute average {this.props.avg.value} m/s</p>
+
+            </WeatherProp>
+        );
+    }
 });
 
 var Main = React.createClass({
@@ -82,16 +114,11 @@ var Main = React.createClass({
         return (
             <div>
                 <div className="cf weather-boxes">
-                    <WeatherProp
-                        icon="Tornado"
-                        title="Winds"
-                        time="5 minutes 21 seconds ago" >
 
-                        <p>Gusts 10 m/s</p>
-                        <p>AVG 7 m/s</p>
-
-                    </WeatherProp>
-
+                    {this.state.data.windGusts && <CurrentWinds
+                        avg={_.last(this.state.data.windSpeeds.observations)}
+                        gust={_.last(this.state.data.windGusts.observations)}
+                    />}
 
                     <WeatherProp
                         icon="Cloud-Sun"
