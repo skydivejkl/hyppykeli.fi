@@ -59,22 +59,32 @@ var WeatherGraph = React.createClass({
         var newState = this.getInitialState();
         console.log("Computing DATA!");
 
-        _.flatten(_.values(props.data).map(_.values), true).forEach(function(values) {
+        props.lines.forEach(function(d) {
+            _.forEach(d, function(values) {
 
-            var minValue = d3.min(values, function(d) { return d.value; });
-            var maxValue = d3.max(values, function(d) { return d.value; });
+                var minValue = d3.min(values, function(d) { return d.value; });
+                var maxValue = d3.max(values, function(d) { return d.value; });
 
-            var startTime = d3.min(values, function(d) { return d.time; });
-            var endTime = d3.max(values, function(d) { return d.time; });
+                var startTime = d3.min(values, function(d) { return d.time; });
+                var endTime = d3.max(values, function(d) { return d.time; });
 
 
-            newState.maxValue = d3.max([maxValue, newState.maxValue]);
-            newState.minValue = d3.min([minValue, newState.minValue]);
+                newState.maxValue = d3.max([maxValue, newState.maxValue]);
+                newState.minValue = d3.min([minValue, newState.minValue]);
 
-            newState.startTime = d3.min([startTime, newState.startTime]);
-            newState.endTime = d3.max([endTime, newState.endTime]);
+                newState.startTime = d3.min([startTime, newState.startTime]);
+                newState.endTime = d3.max([endTime, newState.endTime]);
 
+            });
         });
+
+        // Ensure that the current is always visible in the graph
+        newState.endTime = new Date(
+             Math.max(newState.endTime.getTime(), Date.now())
+         );
+        newState.startTime = new Date(
+             Math.min(newState.startTime.getTime(), Date.now())
+         );
 
         this.setState(newState);
     },
@@ -174,7 +184,7 @@ var WeatherGraph = React.createClass({
         // linePos -= this.props.padding;
         // linePos -= this.props.externalPadding;
 
-        var time = new Date(this.xScale.invert(this.state.mousePosition));
+        // var time = new Date(this.xScale.invert(this.state.mousePosition));
         // console.log("tine", this.state.mousePosition);
 
         return (
@@ -185,11 +195,10 @@ var WeatherGraph = React.createClass({
                     width={this.state.width}
                     height={this.state.height} >
 
-                    {Object.keys(this.props.data).map(function(key) {
-                        var d = self.props.data[key];
+                    {this.props.lines.map(function(d) {
                         return (
                             <WeatherSvgPath
-                                key={key}
+                                key={d.key}
                                 lineFunction={self.lineFunction}
                                 observations={d.observations}
                                 forecasts={d.forecasts}

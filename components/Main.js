@@ -101,7 +101,10 @@ var Main = React.createClass({
 
     getInitialState: function() {
         return {
-            data: {},
+            windObservations: { data: [] },
+            gustObservations: { data: [] },
+            windForecasts: { data: [] },
+            gustForecasts: { data: [] },
             futureHours: 6,
             pastHours: 6
         };
@@ -121,28 +124,15 @@ var Main = React.createClass({
         });
     },
 
-    getSlicedData: function() {
-
-        var data = _.clone(this.state.data, true);
-        var self = this;
-
-        _.forEach(data, function(value) {
-            value.forecasts = self.futureSlice(value.forecasts);
-            value.observations = self.pastSlice(value.observations);
-        });
-
-        return data;
-    },
-
     handleObservationSlide: function(val) {
         this.setState({
-            pastHours: Math.max(val, 1)
+            pastHours: Math.max(val, 0)
         });
     },
 
     handleForceastSlide: function(val) {
         this.setState({
-            futureHours: Math.max(val, 1)
+            futureHours: Math.max(val, 0)
         });
     },
 
@@ -151,10 +141,16 @@ var Main = React.createClass({
             <div>
                 <div className="cf weather-boxes">
 
-                    {this.state.data.windGusts && <CurrentWinds
-                        avg={_.last(this.state.data.windSpeeds.observations)}
-                        gust={_.last(this.state.data.windGusts.observations)}
-                    />}
+                    <CurrentWinds
+                        avg={_.last(this.state.windObservations.data)}
+                        gust={_.last(this.state.gustObservations.data)}
+                    />
+
+                    <Sunset
+                        latitude={this.props.options.lat}
+                        longitude={this.props.options.lon}
+                    />
+
 
                     <WeatherProp
                         icon="Cloud-Sun"
@@ -168,17 +164,23 @@ var Main = React.createClass({
 
                     </WeatherProp>
 
-                    <Sunset
-                        latitude={this.props.options.lat}
-                        longitude={this.props.options.lon}
-                    />
-
                 </div>
 
                 <h2>Wind gust/avg over time</h2>
 
                 <WeatherGraph
-                    data={ this.getSlicedData() }
+                    lines={[
+                        {
+                            key: "winds",
+                            observations: this.pastSlice(this.state.windObservations.data),
+                            forecasts: this.futureSlice(this.state.windForecasts.data)
+                        },
+                        {
+                            key: "gusts",
+                            observations: this.pastSlice(this.state.gustObservations.data),
+                            forecasts: this.futureSlice(this.state.gustForecasts.data)
+                        }
+                    ]}
                 />
 
                 <Slider

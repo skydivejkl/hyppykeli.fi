@@ -4,6 +4,9 @@ var React = require('react');
 var WeatherSvgPath = React.createClass({
 
     cleanedForecasts: function() {
+
+        if (this.props.observations.length === 0) return this.props.forecasts;
+
         var latestsObservation = this.props.observations[this.props.observations.length-1];
 
         // We don't care about forecasts from the time we have actual

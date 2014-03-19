@@ -10,7 +10,7 @@ var Main = require("./components/Main");
 
 var fetchJSON = Promise.promisify(d3.json.bind(d3));
 var loadingScreen = $(".loading");
-loadingScreen.find(".text").text("Loading data...");
+loadingScreen.remove();
 
 function createWeatherApp(container, options) {
 
@@ -39,37 +39,39 @@ function createWeatherApp(container, options) {
         });
     }
 
-    var removeSpinner = _.once(function() {
-        loadingScreen.remove();
-    });
+    function errorLogger(err) {
+        console.log("Failed to load data", err);
+    }
+
+    obs.then(function(data) {
+
+        _.forEach(data, function(val) {
+            val.data = val.data.map(cast);
+        });
+
+        console.log("observations loaded");
+        main.setState({
+            windObservations: data["obs-obs-1-1-windspeedms"],
+            gustObservations: data["obs-obs-1-1-windgust"],
+        });
 
 
-    Promise.all([obs, fore])
-    .spread(function(observations, forecasts) {
-        setTimeout(function() {
-            console.log(observations, forecasts);
-            // {obs-obs-1-1-winddirection: Object, obs-obs-1-1-windspeedms: Object, obs-obs-1-1-windgust: Object}
-            // {mts-1-1-WindDirection: Object, mts-1-1-WindSpeedMS: Object, mts-1-1-WindGust: Object}
 
-            console.log("Setting main state");
-            main.setState({
-                data: {
-                    windSpeeds: {
-                        observations: observations["obs-obs-1-1-windspeedms"].data.map(cast),
-                        forecasts: forecasts["mts-1-1-WindSpeedMS"].data.map(cast),
-                    },
-                    windGusts: {
-                        observations: observations["obs-obs-1-1-windgust"].data.map(cast),
-                        forecasts: forecasts["mts-1-1-WindGust"].data.map(cast)
-                    }
-                }
-            }, removeSpinner);
+    }).catch(errorLogger);
 
-        }, 1);
-    })
-    .catch(function(err) {
-        console.error("Failed to fetch data", err);
-    });
+    fore.then(function(data) {
+
+        _.forEach(data, function(val) {
+            val.data = val.data.map(cast);
+        });
+
+        console.log("forecasts loaded");
+        main.setState({
+            windForecasts: data["mts-1-1-WindSpeedMS"],
+            gustForecasts: data["mts-1-1-WindGust"]
+        });
+
+    }).catch(errorLogger);
 
     React.renderComponent(main, $(container).get(0));
 }
