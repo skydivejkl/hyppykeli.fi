@@ -33,30 +33,40 @@ var WeatherProp = React.createClass({
 
 var CurrentWinds = React.createClass({
 
-    componentWillMount: function() {
-        this.computeTimeAgo();
-    },
     componentDidMount: function() {
-        setInterval(this.computeTimeAgo.bind(this), 1000 * 5);
-        this.computeTimeAgo();
+        setInterval(this.forceUpdate.bind(this), 1000 * 5);
     },
 
-    computeTimeAgo: function() {
-        this.setState({
-            ago: moment(this.props.gust.time).fromNow()
-        });
+    hasData: function() {
+        return !!this.props.gust;
+    },
+
+    fromNow: function() {
+        if (this.hasData()) return moment(this.props.gust.time).fromNow();
     },
 
     render: function() {
+
+        var content = (
+            <div>
+                <p>Loading...</p>
+                <p> </p>
+            </div>
+        );
+
+        if (this.hasData()) content = (
+            <div>
+                <p>Gust <b>{this.props.gust.value} m/s</b></p>
+                <p>10 minute average <b>{this.props.avg.value} m/s</b></p>
+            </div>
+        );
 
         return (
             <WeatherProp
                 icon="Tornado"
                 title="Winds"
-                time={this.state.ago} >
-                <p>Gust <b>{this.props.gust.value} m/s</b></p>
-                <p>10 minute average <b>{this.props.avg.value} m/s</b></p>
-
+                time={this.fromNow()} >
+                {content}
             </WeatherProp>
         );
     }
@@ -65,31 +75,24 @@ var CurrentWinds = React.createClass({
 
 var Sunset = React.createClass({
 
-    componentWillMount: function() {
-        this.computeSunset();
-    },
     componentDidMount: function() {
-        setInterval(this.computeSunset.bind(this), 1000 * 30);
-    },
-
-    computeSunset: function() {
-        this.setState({
-            sunset: SunCalc.getTimes(
-                new Date(),
-                this.props.latitude,
-                this.props.longitude
-            ).sunset
-        });
+        setInterval(this.forceUpdate.bind(this), 1000 * 30);
     },
 
     render: function() {
+
+        var sunset = SunCalc.getTimes(
+            new Date(),
+            this.props.latitude,
+            this.props.longitude
+        ).sunset;
 
         return (
             <WeatherProp
                 icon="Sunset"
                 title="Sunset"
-                time={"at " + moment(this.state.sunset).format("HH:mm")} >
-                <p>{moment(this.state.sunset).fromNow()}</p>
+                time={"at " + moment(sunset).format("HH:mm")} >
+                <p>{moment(sunset).fromNow()}</p>
 
             </WeatherProp>
         );
