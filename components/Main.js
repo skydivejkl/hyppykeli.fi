@@ -2,103 +2,12 @@
 
 var React = require("react");
 var _ = require("lodash");
-var moment = require("moment");
-var SunCalc = require("suncalc");
 
 var WeatherGraph = require("./WeatherGraph");
 var Slider = require("./Slider");
-
-
-var WeatherProp = React.createClass({
-
-    render: function() {
-        return (
-            <div className="box-wrap">
-                <div className="box">
-
-                    <div className="icon">
-                        <img src={"/climacons/"+this.props.icon+".svg"} />
-                    </div>
-
-                        <h1>{this.props.title}</h1>
-                        <div className="value">{this.props.children}</div>
-                        <div className="time">{this.props.time}</div>
-
-                </div>
-            </div>
-        );
-    }
-
-});
-
-var CurrentWinds = React.createClass({
-
-    componentDidMount: function() {
-        setInterval(this.forceUpdate.bind(this), 1000 * 5);
-    },
-
-    hasData: function() {
-        return !!this.props.gust;
-    },
-
-    fromNow: function() {
-        if (this.hasData()) return moment(this.props.gust.time).fromNow();
-    },
-
-    render: function() {
-
-        var content = (
-            <div>
-                <p>Loading...</p>
-                <p> </p>
-            </div>
-        );
-
-        if (this.hasData()) content = (
-            <div>
-                <p>Gust <b>{this.props.gust.value} m/s</b></p>
-                <p>10 minute average <b>{this.props.avg.value} m/s</b></p>
-            </div>
-        );
-
-        return (
-            <WeatherProp
-                icon="Tornado"
-                title="Winds"
-                time={this.fromNow()} >
-                {content}
-            </WeatherProp>
-        );
-    }
-});
-
-
-var Sunset = React.createClass({
-
-    componentDidMount: function() {
-        setInterval(this.forceUpdate.bind(this), 1000 * 30);
-    },
-
-    render: function() {
-
-        var sunset = SunCalc.getTimes(
-            new Date(),
-            this.props.latitude,
-            this.props.longitude
-        ).sunset;
-
-        return (
-            <WeatherProp
-                icon="Sunset"
-                title="Sunset"
-                time={"at " + moment(sunset).format("HH:mm")} >
-                <p>{moment(sunset).fromNow()}</p>
-
-            </WeatherProp>
-        );
-    }
-});
-
+var CurrentWinds = require("./CurrentWinds");
+var Sunset = require("./Sunset");
+var DataBox = require("./DataBox");
 
 var Main = React.createClass({
 
@@ -155,7 +64,7 @@ var Main = React.createClass({
                     />
 
 
-                    <WeatherProp
+                    <DataBox
                         icon="Cloud-Sun"
                         title="Clouds"
                         time="23 minutes 41 seconds ago" >
@@ -165,7 +74,7 @@ var Main = React.createClass({
                         <p>Few at 300m</p>
                         <p>Few at 300m with ksdjf lsdajfl asda</p>
 
-                    </WeatherProp>
+                    </DataBox>
 
                 </div>
 
