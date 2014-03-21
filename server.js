@@ -7,6 +7,7 @@ var formatFmiUrl = require("./lib/formatFmiUrl");
 var parseFmi = require("./lib/parseFmi");
 var _ = require("lodash");
 var browserify = require("browserify-middleware");
+var parseMETAR = require("metar");
 
 var config = require("./config.json");
 
@@ -115,6 +116,22 @@ app.get("/api/fmi/:storedquery", function(req, res) {
             message: "Failed to fetch fmi data",
             fmiError: err.message
         });
+    });
+
+});
+
+
+app.get("/api/metar/:airportCode", function(req, res) {
+    cachedReq(
+        "http://weather.noaa.gov/pub/data/observations/metar/stations/" +
+        req.params.airportCode.toUpperCase() +
+        ".TXT"
+    ).then(function(apiRes) {
+        // Remove extra timestamp header "2014/03/21 14:50" if any
+        var metarString = _.last(apiRes.split("\n", 2).filter(_.identity));
+        var metarJSON = parseMETAR(metarString);
+        metarJSON.raw = metarString;
+        res.json(metarJSON);
     });
 
 });
