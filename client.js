@@ -48,6 +48,16 @@ function createWeatherApp(container, options) {
         }
     });
 
+    ajaxPoller("/api/metar/" + options.airportCode, {
+        onPoll: function(req) {
+            req.then(function(res) {
+                res.time = new Date(res.time);
+                main.setState({
+                    metar: res
+                });
+            });
+        }
+    });
 
 }
 

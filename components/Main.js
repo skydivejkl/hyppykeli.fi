@@ -9,6 +9,38 @@ var CurrentWinds = require("./CurrentWinds");
 var Sunset = require("./Sunset");
 var DataBox = require("./DataBox");
 
+var Clouds = React.createClass({
+
+    renderClouds: function(cloud) {
+        if (!this.props.metar.clouds) return;
+        return this.props.metar.clouds.map(function(cloud) {
+            var altitude = Math.round(cloud.altitude * 0.3048);
+            return (
+                <p>
+                    {cloud.meaning + " at " + altitude} m
+                </p>
+            );
+        });
+    },
+
+    render: function() {
+        if (!this.props.metar) return <p>Loading...</p>;
+
+        return (
+            <DataBox
+                icon="Cloud-Sun"
+                title="Clouds"
+                time="23 minutes 41 seconds ago" >
+
+                {this.renderClouds()}
+
+            </DataBox>
+
+        );
+    }
+
+});
+
 var Main = React.createClass({
 
     getInitialState: function() {
@@ -63,18 +95,7 @@ var Main = React.createClass({
                         longitude={this.props.options.lon}
                     />
 
-
-                    <DataBox
-                        icon="Cloud-Sun"
-                        title="Clouds"
-                        time="23 minutes 41 seconds ago" >
-
-                        <p>Broken at 2000m</p>
-                        <p>Scattered at 800m</p>
-                        <p>Few at 300m</p>
-                        <p>Few at 300m with ksdjf lsdajfl asda</p>
-
-                    </DataBox>
+                    <Clouds metar={this.state.metar} />
 
                 </div>
 
