@@ -17,7 +17,7 @@ var Clouds = React.createClass({
             var altitude = Math.round(cloud.altitude * 0.3048);
             return (
                 <p>
-                    {cloud.meaning + " at " + altitude} m
+                    {cloud.meaning} at {altitude} m
                 </p>
             );
         });
