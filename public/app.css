@@ -235,12 +235,12 @@ h2 {
   .box .icon, .box h1, .box .time {
     opacity: 0.5; }
   .box .icon {
-    left: 0px;
+    left: 1em;
     top: 10px;
     position: absolute;
     padding-top: 10px; }
     .box .icon img {
-      height: 20px; }
+      height: 22px; }
   .box h1 {
     top: 10px;
     margin: 0px;
