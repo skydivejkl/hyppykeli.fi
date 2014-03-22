@@ -254,7 +254,7 @@ h2 {
     right: 0px;
     bottom: 0px; }
 
-.weather-boxes .box-wrap:last-child .box {
+.weather-boxes .box-wrap:last-child {
   border-bottom: 1px solid #DDD; }
 
 .slider {
