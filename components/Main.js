@@ -7,39 +7,9 @@ var WeatherGraph = require("./WeatherGraph");
 var Slider = require("./Slider");
 var CurrentWinds = require("./CurrentWinds");
 var Sunset = require("./Sunset");
-var DataBox = require("./DataBox");
+var Clouds = require("./Clouds");
 
-var Clouds = React.createClass({
 
-    renderClouds: function(cloud) {
-        if (!this.props.metar.clouds) return;
-        return this.props.metar.clouds.map(function(cloud) {
-            var altitude = Math.round(cloud.altitude * 0.3048);
-            return (
-                <p>
-                    {cloud.meaning} at {altitude} m
-                </p>
-            );
-        });
-    },
-
-    render: function() {
-        if (!this.props.metar) return <p>Loading...</p>;
-
-        return (
-            <DataBox
-                icon="Cloud-Sun"
-                title="Clouds"
-                time="23 minutes 41 seconds ago" >
-
-                {this.renderClouds()}
-
-            </DataBox>
-
-        );
-    }
-
-});
 
 var Main = React.createClass({
 
