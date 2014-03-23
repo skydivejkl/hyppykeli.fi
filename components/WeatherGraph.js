@@ -43,7 +43,7 @@ var WeatherGraph = React.createClass({
             startTime: new Date(),
             endTime: new Date(),
 
-            mousePosition: 300
+            mousePosition: 0
         };
     },
 
@@ -136,11 +136,6 @@ var WeatherGraph = React.createClass({
 
     componentWillMount: function() {
         this.updateDimensions();
-        var self = this;
-        this.lineFunction = d3.svg.line()
-            .x(function(d) { return self.xScale(d.time.getTime()); })
-            .y(function(d) { return self.yScale(d.value); })
-            ;
     },
 
 
@@ -174,18 +169,10 @@ var WeatherGraph = React.createClass({
     },
 
     render: function() {
+        var self = this;
 
         this.updateScales();
 
-        var self = this;
-
-        var linePos = this.state.mousePosition;
-        // linePos -= this.props.padding;
-        // linePos -= this.props.padding;
-        // linePos -= this.props.externalPadding;
-
-        // var time = new Date(this.xScale.invert(this.state.mousePosition));
-        // console.log("tine", this.state.mousePosition);
 
         return (
             <div className="graph">
@@ -199,7 +186,9 @@ var WeatherGraph = React.createClass({
                         return (
                             <WeatherSvgPath
                                 key={d.key}
-                                lineFunction={self.lineFunction}
+                                mousePosition={self.state.mousePosition}
+                                xScale={self.xScale}
+                                yScale={self.yScale}
                                 observations={d.observations}
                                 forecasts={d.forecasts}
                             />
@@ -207,10 +196,10 @@ var WeatherGraph = React.createClass({
                     })}
 
                     <line
-                        x1={linePos}
+                        x1={this.state.mousePosition}
                         y1="0"
 
-                        x2={linePos}
+                        x2={this.state.mousePosition}
                         y2={this.state.height}
 
                         stroke="black"
