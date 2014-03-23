@@ -2,9 +2,25 @@
 var React = require('react');
 var _ = require("lodash");
 var d3 = require("d3");
+var moment = require("moment");
 
 var WeatherSvgPath = require("./WeatherSvgPath");
+var GraphCursor = require("./GraphCursor");
 
+function cmp(a, b) {
+    return b.time.getTime() - a.time.getTime();
+}
+
+// TODO: this is a sorted array. We could binary search it...
+function findClosest(value, arr, start) {
+    return arr.reduce(function(best, current) {
+        if (Math.abs(cmp(value, current)) < Math.abs(cmp(value, best))) {
+            return current;
+        } else {
+            return best;
+        }
+    }, start || arr[0]);
+}
 
 var WeatherGraph = React.createClass({
 
@@ -17,7 +33,7 @@ var WeatherGraph = React.createClass({
     },
 
     getWidth: function() {
-        return window.innerWidth - this.props.externalPadding;
+        return window.innerWidth - this.props.margin;
     },
 
     getHeight: function() {
@@ -37,20 +53,21 @@ var WeatherGraph = React.createClass({
             width: this.getWidth(),
             height: this.getHeight(),
 
-            maxValue: 13,
+            maxValue: 0,
             minValue: 0,
 
             startTime: new Date(),
             endTime: new Date(),
 
-            mousePosition: 0
+            _cursorPosition: null
         };
     },
 
     getDefaultProps: function() {
         return {
             padding: 30,
-            externalPadding: 20
+            paddingTop: 30,
+            margin: 20
         };
     },
 
@@ -99,7 +116,7 @@ var WeatherGraph = React.createClass({
 
         var yScale = d3.scale.linear()
             .domain([state.minValue, state.maxValue])
-            .range([state.height - this.props.padding, this.props.padding])
+            .range([state.height - this.props.padding, this.props.paddingTop])
             ;
 
         // educated guess
@@ -162,31 +179,98 @@ var WeatherGraph = React.createClass({
         this.renderAxes();
     },
 
+    handleTouchMove: function(e) {
+        this.handleMove(e.targetTouches[0].clientX);
+    },
+
     handleMouseMove: function(e) {
-        var pos = e.clientX;
-        pos -= this.refs.svg.getDOMNode().offsetLeft;
-        this.setState({ mousePosition: pos });
+        this.handleMove(e.clientX);
+    },
+
+    handleMove: function(clientX) {
+        if (clientX === null || clientX === undefined) return;
+        clientX -= this.refs.svg.getDOMNode().offsetLeft;
+        this.setState({ _cursorPosition: clientX });
+    },
+
+    getCursorPosition: function() {
+        if (this.state._cursorPosition === null) {
+            return this.xScale(new Date());
+        }
+        return this.state._cursorPosition;
+    },
+
+    getPointsCloseToCursor: function() {
+        var self = this;
+        var timeInMousePos = {
+            time: new Date(this.xScale.invert(this.getCursorPosition()))
+        };
+
+        return this.props.lines.map(function(line) {
+            var point = findClosest(timeInMousePos, line.observations);
+            point = findClosest(timeInMousePos, line.forecasts, point);
+            if (!point) return;
+            return {
+                title: line.title,
+                time: point.time,
+                value: point.value,
+                x: self.xScale(point.time.getTime()),
+                y: self.yScale(point.value)
+            };
+        }).filter(_.identity);
     },
 
     render: function() {
         var self = this;
-
         this.updateScales();
-
 
         return (
             <div className="graph">
+                <div className="point-descriptions">
+                    <table>
+
+                    {this.getPointsCloseToCursor().map(function(point) {
+                        return (
+                            <tr>
+                                <td>{point.title}</td>
+                                <td className="value">{point.value} m/s</td>
+                                <td>{moment(point.time).fromNow()}</td>
+                            </tr>
+                        );
+                    })}
+                    </table>
+                </div>
                 <svg
                     ref="svg"
                     onMouseMove={this.handleMouseMove}
+                    onTouchMove={this.handleTouchMove}
+                    onTouchStart={this.handleTouchMove}
                     width={this.state.width}
                     height={this.state.height} >
 
-                    {this.props.lines.map(function(d) {
+                    <GraphCursor
+                        height={self.state.height}
+                        cursorPosition={self.getCursorPosition()}
+                        padding={self.props.padding}
+                        paddingTop={self.props.paddingTop}
+                    />
+
+                    {this.getPointsCloseToCursor().map(function(point) {
+                        return (
+                            <circle
+                                cx={point.x}
+                                cy={point.y}
+                                r="5"
+                                fill="none"
+                                stroke="red"
+                            />
+                        );
+                    })}
+
+                    {self.props.lines.map(function(d) {
                         return (
                             <WeatherSvgPath
-                                key={d.key}
-                                mousePosition={self.state.mousePosition}
+                                key={d.title}
                                 xScale={self.xScale}
                                 yScale={self.yScale}
                                 observations={d.observations}
@@ -195,34 +279,23 @@ var WeatherGraph = React.createClass({
                         );
                     })}
 
-                    <line
-                        x1={this.state.mousePosition}
-                        y1="0"
-
-                        x2={this.state.mousePosition}
-                        y2={this.state.height}
-
-                        stroke="black"
-                        strokeWidth="black"
-
-                    />
 
                     <g
                         ref="xAxis"
                         className="axis"
-                        transform={ "translate(0, " + (this.state.height - this.props.padding) + ")" }
+                        transform={ "translate(0, " + (self.state.height - self.props.padding) + ")" }
                     />
 
                     <g
                         ref="yAxis"
                         className="axis"
-                        transform={ "translate(" + this.props.padding + ",0)" }
+                        transform={ "translate(" + self.props.padding + ",0)" }
                     />
 
                     <g
                         ref="yAxisRight"
                         className="axis"
-                        transform={ "translate(" +  (this.state.width - this.props.padding) + ",0)" }
+                        transform={ "translate(" +  (self.state.width - self.props.padding) + ",0)" }
                     />
 
                 </svg>

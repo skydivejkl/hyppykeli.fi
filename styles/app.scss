@@ -2,9 +2,6 @@
 @import "vendor/jquery.nouislider.scss";
 @import "media-queries.scss";
 
-svg {
-    cursor:crosshair;
-}
 
 html, body, div, svg {
     padding: 0px;
@@ -65,8 +62,13 @@ h2 {
         float: left;
     }
 
-.noUi-handle {
+.noUi-handle, .noUi-base {
     cursor: pointer;
+}
+
+.noUi-handle:active {
+    cursor: move;
+    background-color: darkgray;
 }
 
 .cf { zoom: 1; }
@@ -160,23 +162,40 @@ h2 {
 // .weather-data-path.
 // weather-data-path windSpeeds
 
-$observations-color: rgb(97, 97, 255);
-$forecasts-color: rgb(179, 179, 255);
+$observations-color: black;
+$forecasts-color: gray;
 
 .weather-data-path .observations {
     stroke: $observations-color;
 }
 .weather-data-path .forecasts {
     stroke: $forecasts-color;
-    stroke-dasharray: 1,6;
+    stroke-dasharray: 10,7;
 }
 
 .forecasts .noUi-connect {
-    background-color: $forecasts-color;
+    background-color: darkgray;
 }
 
 .observations .noUi-connect {
-    background-color: $observations-color;
+    background-color: darkgray;
 }
 
+
+.point-descriptions {
+    margin: 0 auto;
+    text-align: left;
+    width: 12em;
+    position: relative;
+    right: -2em;
+    td {
+        text-align: left;
+        font-size: 8pt;
+        // border: 1px solid black;
+    }
+    .value {
+        text-align: left;
+        width: 4em;
+    }
+}
 

@@ -159,9 +159,6 @@
 /* 1025px, 1440px */
 /* 1441px, 1920px */
 /* 1921px */
-svg {
-  cursor: crosshair; }
-
 html, body, div, svg {
   padding: 0px;
   margin: 0px; }
@@ -204,8 +201,12 @@ h2 {
   width: 50%;
   float: left; }
 
-.noUi-handle {
+.noUi-handle, .noUi-base {
   cursor: pointer; }
+
+.noUi-handle:active {
+  cursor: move;
+  background-color: darkgray; }
 
 .cf {
   zoom: 1; }
@@ -269,16 +270,29 @@ h2 {
     margin-bottom: 1em; }
 
 .weather-data-path .observations {
-  stroke: #6161ff; }
+  stroke: black; }
 
 .weather-data-path .forecasts {
-  stroke: #b3b3ff;
-  stroke-dasharray: 1, 6; }
+  stroke: grey;
+  stroke-dasharray: 10, 7; }
 
 .forecasts .noUi-connect {
-  background-color: #b3b3ff; }
+  background-color: darkgray; }
 
 .observations .noUi-connect {
-  background-color: #6161ff; }
+  background-color: darkgray; }
+
+.point-descriptions {
+  margin: 0 auto;
+  text-align: left;
+  width: 12em;
+  position: relative;
+  right: -2em; }
+  .point-descriptions td {
+    text-align: left;
+    font-size: 8pt; }
+  .point-descriptions .value {
+    text-align: left;
+    width: 4em; }
 
 /*# sourceMappingURL=app.css.map */

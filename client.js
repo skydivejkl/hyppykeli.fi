@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
+React.initializeTouchEvents(true);
 var _ = require("lodash");
 var $ = require("jquery");
 var url = require("url");
