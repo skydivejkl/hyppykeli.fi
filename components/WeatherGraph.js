@@ -180,6 +180,7 @@ var WeatherGraph = React.createClass({
     },
 
     handleTouchMove: function(e) {
+        e.preventDefault();
         this.handleMove(e.targetTouches[0].clientX);
     },
 
@@ -243,8 +244,8 @@ var WeatherGraph = React.createClass({
                 <svg
                     ref="svg"
                     onMouseMove={this.handleMouseMove}
-                    onTouchMove={this.handleTouchMove}
                     onTouchStart={this.handleTouchMove}
+                    onTouchMove={this.handleTouchMove}
                     width={this.state.width}
                     height={this.state.height} >
 
