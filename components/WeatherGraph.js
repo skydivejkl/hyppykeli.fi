@@ -203,13 +203,18 @@ var WeatherGraph = React.createClass({
 
     getPointsCloseToCursor: function() {
         var self = this;
-        var timeInMousePos = {
+
+        var pos = {
             time: new Date(this.xScale.invert(this.getCursorPosition()))
         };
 
-        return this.props.lines.map(function(line) {
-            var point = findClosest(timeInMousePos, line.observations);
-            point = findClosest(timeInMousePos, line.forecasts, point);
+
+        return _.compact(this.props.lines.map(function(line) {
+            var points = line.forecasts;
+            if (pos.time.getTime() < Date.now()) {
+                points = line.observations;
+            }
+            var point = findClosest(pos, points);
             if (!point) return;
             return {
                 title: line.title,
@@ -218,7 +223,7 @@ var WeatherGraph = React.createClass({
                 x: self.xScale(point.time.getTime()),
                 y: self.yScale(point.value)
             };
-        }).filter(_.identity);
+        }));
     },
 
     render: function() {
