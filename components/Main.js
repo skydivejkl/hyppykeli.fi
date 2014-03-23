@@ -69,7 +69,7 @@ var Main = React.createClass({
 
                 </div>
 
-                <h2>Winds over time</h2>
+                <h2>Wind over time</h2>
 
 
                 <WeatherGraph
@@ -80,7 +80,7 @@ var Main = React.createClass({
                             forecasts: this.futureSlice(this.state.gustForecasts.data)
                         },
                         {
-                            title: "Winds",
+                            title: "Wind",
                             observations: this.pastSlice(this.state.windObservations.data),
                             forecasts: this.futureSlice(this.state.windForecasts.data)
                         }

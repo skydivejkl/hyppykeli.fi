@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require("react");
 var moment = require("moment");
+var s = require("underscore.string");
 
 var DataBox = require("./DataBox");
 
@@ -15,7 +16,7 @@ var Clouds = React.createClass({
             var altitude = Math.round(cloud.altitude * 0.3048);
             return (
                 <p>
-                    {cloud.meaning} at {altitude} m
+                    {s.capitalize(cloud.meaning)} at {altitude} m
                 </p>
             );
         });

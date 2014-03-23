@@ -15,7 +15,9 @@ var CurrentWinds = React.createClass({
     },
 
     fromNow: function() {
-        if (this.hasData()) return moment(this.props.gust.time).fromNow();
+        if (this.hasData()) {
+            return "measured " + moment(this.props.gust.time).fromNow();
+        }
     },
 
     render: function() {
@@ -23,21 +25,21 @@ var CurrentWinds = React.createClass({
         var content = (
             <div>
                 <p>Loading...</p>
-                <p> </p>
             </div>
         );
 
         if (this.hasData()) content = (
             <div>
-                <p>Gust <b>{this.props.gust.value} m/s</b></p>
-                <p>10 minute average <b>{this.props.avg.value} m/s</b></p>
+                <p>Gust {this.props.gust.value} m/s</p>
+                <p>Average {this.props.avg.value} m/s</p>
+                <p>Within last last measured 10 minutes</p>
             </div>
         );
 
         return (
             <DataBox
                 icon="Tornado"
-                title="Winds"
+                title="Wind"
                 time={this.fromNow()} >
                 {content}
             </DataBox>

@@ -2,6 +2,7 @@
 var React = require("react");
 var moment= require("moment");
 var SunCalc = require("suncalc");
+var s = require("underscore.string");
 
 var DataBox = require("./DataBox");
 
@@ -24,7 +25,7 @@ var Sunset = React.createClass({
                 icon="Sunset"
                 title="Sunset"
                 time={"at " + moment(sunset).format("HH:mm")} >
-                <p>{moment(sunset).fromNow()}</p>
+                <p>{s.capitalize(moment(sunset).fromNow())}</p>
 
             </DataBox>
         );
