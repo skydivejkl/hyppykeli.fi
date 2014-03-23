@@ -53,7 +53,7 @@ var WeatherGraph = React.createClass({
             width: this.getWidth(),
             height: this.getHeight(),
 
-            maxValue: 0,
+            maxValue: 13,
             minValue: 0,
 
             startTime: new Date(),
@@ -201,6 +201,33 @@ var WeatherGraph = React.createClass({
         return this.state._cursorPosition;
     },
 
+    renderLimit: function(desc, color, limit) {
+        var bottom = this.state.height;
+        bottom -= this.yScale(this.state.maxValue - limit);
+        bottom -= this.props.padding;
+
+        var textHeight = 8;
+        var textWidth = 100;
+        return (
+            <g>
+                <rect
+                    x={this.props.padding}
+                    y={this.props.padding}
+                    width={this.state.width - this.props.padding*2}
+                    height={bottom}
+                    fill={color} />
+
+                <text
+                    className="limit-text"
+                    x={this.state.width - textWidth}
+                    y={bottom + this.props.padding - textHeight}
+                    fill="black">{desc}</text>
+
+            </g>
+
+        );
+    },
+
     getPointsCloseToCursor: function() {
         var self = this;
 
@@ -253,6 +280,9 @@ var WeatherGraph = React.createClass({
                     onTouchMove={this.handleTouchMove}
                     width={this.state.width}
                     height={this.state.height} >
+
+                    {this.renderLimit("Student limit", "lightgray", 8)}
+                    {this.renderLimit("License limit", "gray", 11)}
 
                     <GraphCursor
                         height={self.state.height}

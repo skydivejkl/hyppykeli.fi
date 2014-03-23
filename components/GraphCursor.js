@@ -15,7 +15,7 @@ var GraphCursor = React.createClass({
                 x2={this.props.cursorPosition}
                 y2={this.props.height - this.props.padding}
 
-                stroke="gray"
+                stroke="darkgray"
                 strokeWidth="1"
 
             />
