@@ -257,6 +257,19 @@ var WeatherGraph = React.createClass({
         var self = this;
         this.updateScales();
 
+        var circles;
+        circles = this.getPointsCloseToCursor().map(function(point) {
+            return (
+                <circle
+                    cx={point.x}
+                    cy={point.y}
+                    r="5"
+                    fill="none"
+                    stroke="red"
+                />
+            );
+        });
+
         return (
             <div className="graph">
                 <div className="point-descriptions">
@@ -291,17 +304,7 @@ var WeatherGraph = React.createClass({
                         paddingTop={self.props.paddingTop}
                     />
 
-                    {this.getPointsCloseToCursor().map(function(point) {
-                        return (
-                            <circle
-                                cx={point.x}
-                                cy={point.y}
-                                r="5"
-                                fill="none"
-                                stroke="red"
-                            />
-                        );
-                    })}
+                    {circles}
 
                     {self.props.lines.map(function(d) {
                         return (
