@@ -257,8 +257,8 @@ var WeatherGraph = React.createClass({
         var self = this;
         this.updateScales();
 
-        var circles;
-        circles = this.getPointsCloseToCursor().map(function(point) {
+        var points = this.getPointsCloseToCursor();
+        var circles = points.map(function(point) {
             return (
                 <circle
                     cx={point.x}
@@ -274,8 +274,7 @@ var WeatherGraph = React.createClass({
             <div className="graph">
                 <div className="point-descriptions">
                     <table>
-
-                    {this.getPointsCloseToCursor().map(function(point) {
+                    {points.map(function(point) {
                         return (
                             <tr>
                                 <td>{point.title}</td>
