@@ -237,9 +237,11 @@ var WeatherGraph = React.createClass({
 
 
         return _.compact(this.props.lines.map(function(line) {
-            var points = line.forecasts;
-            if (pos.time.getTime() < Date.now()) {
-                points = line.observations;
+            var points = line.observations;
+            if (pos.time.getTime() > Date.now()) {
+                points = line.forecasts.filter(function(p) {
+                    return p.time.getTime() > Date.now();
+                });
             }
             var point = findClosest(pos, points);
             if (!point) return;
