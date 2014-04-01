@@ -192,15 +192,11 @@ $forecasts-color: gray;
     text-align: left;
     width: 12em;
     position: relative;
-    right: -2em;
-    td {
+    right: -3.5em;
+    p {
         text-align: left;
         font-size: 8pt;
         // border: 1px solid black;
-    }
-    .value {
-        text-align: left;
-        width: 4em;
     }
 }
 

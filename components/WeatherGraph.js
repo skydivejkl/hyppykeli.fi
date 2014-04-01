@@ -261,9 +261,9 @@ var WeatherGraph = React.createClass({
                 <circle
                     cx={point.x}
                     cy={point.y}
-                    r="5"
-                    fill="none"
-                    stroke="red"
+                    r="3"
+                    fill="red"
+                    stroke="0"
                 />
             );
         });
@@ -271,17 +271,13 @@ var WeatherGraph = React.createClass({
         return (
             <div className="graph">
                 <div className="point-descriptions">
-                    <table>
                     {points.map(function(point) {
                         return (
-                            <tr>
-                                <td>{point.title}</td>
-                                <td className="value">{point.value} m/s</td>
-                                <td>{moment(point.time).fromNow()}</td>
-                            </tr>
+                            <p>
+                                {point.title} {point.value} m/s {moment(point.time).fromNow()}
+                            </p>
                         );
                     })}
-                    </table>
                 </div>
                 <svg
                     ref="svg"

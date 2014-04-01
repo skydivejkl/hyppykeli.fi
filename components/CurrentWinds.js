@@ -16,7 +16,7 @@ var CurrentWinds = React.createClass({
 
     fromNow: function() {
         if (this.hasData()) {
-            return "measured " + moment(this.props.gust.time).fromNow();
+            return moment(this.props.gust.time).fromNow();
         }
     },
 
@@ -32,7 +32,6 @@ var CurrentWinds = React.createClass({
             <div>
                 <p>Gust {this.props.gust.value} m/s</p>
                 <p>Average {this.props.avg.value} m/s</p>
-                <p>Within last last measured 10 minutes</p>
             </div>
         );
 
