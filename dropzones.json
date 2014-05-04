@@ -14,5 +14,13 @@
         "geoid": 6296565,
         "lat": 60.89639,
         "lon": 26.93835
+    },
+
+    "efku": {
+        "name": "Rissala",
+        "airportCode": "EFKU",
+        "geoid": 6296552,
+        "lat": 63.00715 ,
+        "lon": 27.79776
     }
 }
