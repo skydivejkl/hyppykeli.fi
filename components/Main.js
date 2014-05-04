@@ -1,11 +1,9 @@
 /** @jsx React.DOM */
 
 var React = require("react");
+window.React = React;
 var _ = require("lodash");
-
-var WeatherGraph = require("./WeatherGraph");
-var Slider = require("./Slider");
-var CurrentWinds = require("./CurrentWinds");
+var Winds = require("./CurrentWinds");
 var Sunset = require("./Sunset");
 var Clouds = require("./Clouds");
 
@@ -42,7 +40,6 @@ var Location = React.createClass({
 });
 
 
-
 var Main = React.createClass({
 
     getInitialState: function() {
@@ -50,36 +47,8 @@ var Main = React.createClass({
             windObservations: { data: [] },
             gustObservations: { data: [] },
             windForecasts: { data: [] },
-            gustForecasts: { data: [] },
-            futureHours: 6,
-            pastHours: 6
+            gustForecasts: { data: [] }
         };
-    },
-
-    futureSlice: function(arr) {
-        var max = Date.now() + 1000 * 60 * 60 * this.state.futureHours;
-        return arr.filter(function(d) {
-            return d.time.getTime() < max;
-        });
-    },
-
-    pastSlice: function(arr) {
-        var min = Date.now() - 1000 * 60 * 60 * this.state.pastHours;
-        return arr.filter(function(d) {
-            return d.time.getTime() > min;
-        });
-    },
-
-    handleObservationSlide: function(val) {
-        this.setState({
-            pastHours: Math.max(val, 0)
-        });
-    },
-
-    handleForceastSlide: function(val) {
-        this.setState({
-            futureHours: Math.max(val, 0)
-        });
     },
 
     render: function() {
@@ -87,9 +56,11 @@ var Main = React.createClass({
             <div>
                 <div className="cf weather-boxes">
 
-                    <CurrentWinds
-                        avg={_.last(this.state.windObservations.data)}
-                        gust={_.last(this.state.gustObservations.data)}
+                    <Winds
+                        windObservations={this.state.windObservations}
+                        windForecasts={this.state.windForecasts}
+                        gustObservations={this.state.gustObservations}
+                        gustForecasts={this.state.gustForecasts}
                     />
 
                     <Sunset
@@ -101,23 +72,6 @@ var Main = React.createClass({
 
                 </div>
 
-                <h2>Wind over time</h2>
-
-
-                <WeatherGraph
-                    lines={[
-                        {
-                            title: "Gusts",
-                            observations: this.pastSlice(this.state.gustObservations.data),
-                            forecasts: this.futureSlice(this.state.gustForecasts.data)
-                        },
-                        {
-                            title: "Wind",
-                            observations: this.pastSlice(this.state.windObservations.data),
-                            forecasts: this.futureSlice(this.state.windForecasts.data)
-                        }
-                    ]}
-                />
 
                 <Slider
                     className="observations"

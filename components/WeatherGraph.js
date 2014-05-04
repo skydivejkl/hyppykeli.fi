@@ -2,7 +2,6 @@
 var React = require('react');
 var _ = require("lodash");
 var d3 = require("d3");
-var moment = require("moment");
 
 var WeatherSvgPath = require("./WeatherSvgPath");
 var GraphCursor = require("./GraphCursor");
@@ -33,8 +32,9 @@ var WeatherGraph = React.createClass({
     },
 
     getHeight: function() {
+        return 300;
         // return parseInt(screen.height / 2);
-        return Math.max(parseInt(window.innerHeight - 250), 300);
+        return Math.max(parseInt(window.innerHeight / 3), 200);
     },
 
     updateDimensions: function() {
@@ -48,6 +48,7 @@ var WeatherGraph = React.createClass({
         return {
             width: this.getWidth(),
             height: this.getHeight(),
+            selectedPoints: [],
 
             maxValue: 12,
             minValue: 0,
@@ -62,7 +63,7 @@ var WeatherGraph = React.createClass({
     getDefaultProps: function() {
         return {
             padding: 30,
-            paddingTop: 30,
+            paddingTop: 5,
             margin: 20
         };
     },
@@ -70,7 +71,6 @@ var WeatherGraph = React.createClass({
     computeData: function(props) {
         props = props || this.props;
         var newState = this.getInitialState();
-        console.log("Computing DATA!");
 
         props.lines.forEach(function(d) {
             _.forEach(d, function(values) {
@@ -121,9 +121,9 @@ var WeatherGraph = React.createClass({
         var xAxis = d3.svg.axis()
             .scale(xScale)
             .orient("bottom")
-            .ticks( parseInt(state.width / tickLabelWidth) )
+            .tickValues(d3.time.hours(state.startTime, state.endTime))
             .tickFormat(function(d) {
-                return d3.time.format("%H:%M")(new Date(d));
+                return d3.time.format("%H")(new Date(d));
             })
             ;
 
@@ -186,52 +186,26 @@ var WeatherGraph = React.createClass({
 
     handleMove: function(clientX) {
         if (clientX === null || clientX === undefined) return;
-        clientX -= this.refs.svg.getDOMNode().offsetLeft;
-        this.setState({ _cursorPosition: clientX });
+        var cursorPosition = clientX - this.refs.svg.getDOMNode().offsetLeft;
+        console.log("move!", cursorPosition);
+        this.computeClosestPoints(cursorPosition);
     },
 
-    getCursorPosition: function() {
-        if (this.state._cursorPosition === null) {
-            return this.xScale(new Date());
+    selectNone: function() {
+        this.computeClosestPoints();
+    },
+
+    computeClosestPoints: function(cursorPosition) {
+        var pos = { time: new Date() };
+
+        if (cursorPosition) {
+            pos.time = new Date(this.xScale.invert(cursorPosition));
+        } else {
+            cursorPosition = this.xScale(new Date());
         }
-        return this.state._cursorPosition;
-    },
 
-    renderLimit: function(desc, color, limit) {
-        var bottom = this.state.height;
-        bottom -= this.yScale(this.state.maxValue - limit);
-        bottom -= this.props.padding;
-
-        var textHeight = 8;
-        return (
-            <g>
-                <rect
-                    x={this.props.padding}
-                    y={this.props.padding}
-                    width={this.state.width - this.props.padding*2}
-                    height={bottom}
-                    fill={color} />
-
-                <text
-                    className="limit-text"
-                    x={this.props.padding + 5}
-                    y={bottom + this.props.padding - textHeight}
-                    fill="black">{desc}</text>
-
-            </g>
-
-        );
-    },
-
-    getPointsCloseToCursor: function() {
         var self = this;
-
-        var pos = {
-            time: new Date(this.xScale.invert(this.getCursorPosition()))
-        };
-
-
-        return _.compact(this.props.lines.map(function(line) {
+        var points = _.compact(this.props.lines.map(function(line) {
             var points = line.observations;
             if (pos.time.getTime() > Date.now()) {
                 points = line.forecasts.filter(function(p) {
@@ -248,20 +222,57 @@ var WeatherGraph = React.createClass({
                 y: self.yScale(point.value)
             };
         }));
+
+        this.props.onSlide({
+            points: points,
+            cursorPosition: cursorPosition,
+        });
+
+        console.log("setting points", points.length);
+        this.setState({
+            selectedPoints: points,
+            cursorPosition: cursorPosition
+        });
+    },
+
+    renderLimit: function(desc, color, limit) {
+        var bottom = this.state.height;
+        bottom -= this.yScale(this.state.maxValue - limit);
+        bottom -= this.props.padding;
+
+        var textHeight = 8;
+        return (
+            <g>
+                <rect
+                    x={this.props.padding}
+                    y={this.props.paddingTop}
+                    width={this.state.width - this.props.padding*2}
+                    height={bottom}
+                    fill={color} />
+
+                <text
+                    className="limit-text"
+                    x={this.props.padding + 5}
+                    y={bottom + this.props.padding - textHeight}
+                    fill="black">{desc}</text>
+
+            </g>
+
+        );
     },
 
     render: function() {
         var self = this;
         this.updateScales();
 
-        var points = this.getPointsCloseToCursor();
-        var circles = points.map(function(point) {
+        console.log("points in state", this.state.selectedPoints.length);
+        var circles = this.state.selectedPoints.map(function(point) {
             return (
                 <circle
                     cx={point.x}
                     cy={point.y}
                     r="3"
-                    fill="red"
+                    fill="blue"
                     stroke="0"
                 />
             );
@@ -269,20 +280,12 @@ var WeatherGraph = React.createClass({
 
         return (
             <div className="graph">
-                <div className="point-descriptions">
-                    {points.map(function(point) {
-                        return (
-                            <p>
-                                {point.title} {point.value} m/s {moment(point.time).fromNow()}
-                            </p>
-                        );
-                    })}
-                </div>
                 <svg
                     ref="svg"
                     onMouseMove={this.handleMouseMove}
                     onTouchStart={this.handleTouchMove}
                     onTouchMove={this.handleTouchMove}
+                    onMouseLeave={this.selectNone}
                     width={this.state.width}
                     height={this.state.height} >
 
@@ -291,8 +294,9 @@ var WeatherGraph = React.createClass({
 
                     <GraphCursor
                         height={self.state.height}
-                        cursorPosition={self.getCursorPosition()}
+                        cursorPosition={self.state.cursorPosition}
                         padding={self.props.padding}
+                        width={self.state.width}
                         paddingTop={self.props.paddingTop}
                     />
 
