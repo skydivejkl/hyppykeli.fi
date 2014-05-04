@@ -10,6 +10,40 @@ var Sunset = require("./Sunset");
 var Clouds = require("./Clouds");
 
 
+/**
+ * Location
+ *
+ * @namespace components
+ * @class Location
+ */
+var Location = React.createClass({
+
+    render: function() {
+        if (!this.props.location) return <script></script>;
+        return (
+            <div className="location">
+                <h3>{this.props.name}</h3>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td>{this.props.location.name}</td>
+                    </tr>
+                    <tr>
+                        <th>wmo</th>
+                        <td>{this.props.location.wmo}</td>
+                    </tr>
+                    <tr>
+                        <th>fmisid</th>
+                        <td>{this.props.location.fmisid}</td>
+                    </tr>
+                </table>
+            </div>
+        );
+    }
+
+});
+
+
 
 var Main = React.createClass({
 
@@ -99,6 +133,14 @@ var Main = React.createClass({
                     onChange={this.handleForceastSlide}
                     value={this.state.futureHours}
                 />
+
+                <div className="locations" id="stations">
+                    <h3>Weather stations</h3>
+                    <Location name="Wind observations" location={this.state.windObservations.location} />
+                    <Location name="Wind forecasts" location={this.state.windForecasts.location} />
+                    <Location name="Gust observations" location={this.state.gustObservations.location} />
+                    <Location name="Gust forecasts" location={this.state.gustForecasts.location} />
+                </div>
             </div>
         );
     }
