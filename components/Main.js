@@ -21,21 +21,21 @@ var Location = React.createClass({
     render: function() {
         if (!this.props.location) return <script></script>;
         return (
-            <table className="location">
-                <tr>
-                    <th>
+            <div className="location">
+                <h4>
                     {this.props.name}
-                    </th>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{this.props.location.name}</td>
-                </tr>
-                <tr>
-                    <th>fmisid</th>
-                    <td>{this.props.location.fmisid}</td>
-                </tr>
-            </table>
+                </h4>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td>{this.props.location.name}</td>
+                    </tr>
+                    <tr>
+                        <th>fmisid</th>
+                        <td>{this.props.location.fmisid}</td>
+                    </tr>
+                </table>
+            </div>
         );
     }
 
@@ -134,8 +134,8 @@ var Main = React.createClass({
 
                 <div className="locations" id="stations">
                     <h3>Weather stations</h3>
-                    <Location name="Wind observations" location={this.state.windObservations.location} />
-                    <Location name="Wind forecasts" location={this.state.windForecasts.location} />
+                    <Location name="Wind average observations" location={this.state.windObservations.location} />
+                    <Location name="Wind average forecasts" location={this.state.windForecasts.location} />
                     <Location name="Gust observations" location={this.state.gustObservations.location} />
                     <Location name="Gust forecasts" location={this.state.gustForecasts.location} />
                 </div>
