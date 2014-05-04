@@ -29,10 +29,6 @@ var Location = React.createClass({
                         <td>{this.props.location.name}</td>
                     </tr>
                     <tr>
-                        <th>wmo</th>
-                        <td>{this.props.location.wmo}</td>
-                    </tr>
-                    <tr>
                         <th>fmisid</th>
                         <td>{this.props.location.fmisid}</td>
                     </tr>
