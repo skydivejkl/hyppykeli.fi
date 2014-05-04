@@ -47,11 +47,6 @@ h2 {
     float: left;
 }
 
-// .box-wrap {
-//     width: 50%;
-//     float: left;
-// }
-
 .graph {
     text-align: center;
 }
@@ -81,17 +76,22 @@ h2 {
 .cf:after { content: ""; display: table; }
 .cf:after { clear: both; }
 
+
 .weather-boxes {
-    margin-bottom: 3em;
-    max-width: 25em;
-    margin: 0 auto;
+    .box {
+        max-width: 25em;
+        margin: 0 auto;
+    }
+}
+
+.zoomable-graph {
     margin-bottom: 2em;
 }
 
 .box {
     font-size: 10pt;
     padding: 1em;
-    margin: 0.5em;
+    margin: 0;
     text-align: left;
 
     * {
@@ -104,7 +104,6 @@ h2 {
 
     .icon, h1, .time {
         opacity: 0.5;
-        // border-top: 1px solid red;
     }
 
     .icon {
@@ -124,29 +123,24 @@ h2 {
         margin-left: $left-margin;
     }
 
-    .value {
+    .value, .time {
         margin-top: 1em;
         margin-left: $left-margin;
     }
 
-    .time {
-        position: absolute;
-        right: 0px;
-        bottom: 0px;
-    }
-
-    // .text {
-    //     left: $icon-width;
-    //     right: 1em;
-    //     border: 1px solid green;
+    // .time {
+    //     position: absolute;
+    //     right: 0px;
+    //     bottom: 0px;
     // }
 
-    border-top: 1px solid #DDD;
+
+    // border-top: 1px solid #DDD;
 
 }
 
 .weather-boxes .box-wrap:last-child {
-    border-bottom: 1px solid #DDD;
+    // border-bottom: 1px solid #DDD;
 }
 
 .slider {
@@ -219,3 +213,7 @@ $forecasts-color: gray;
 
 }
 
+
+path.domain {
+    visibility: hidden;
+}
