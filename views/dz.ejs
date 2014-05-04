@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Skydive Weather in <%= dz.name %></title>
+        <title>Skydiving Weather in <%= dz.name %></title>
         <meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no" />
 
          <link href="/images/parachute.ico" rel="icon">
@@ -119,25 +119,14 @@
             </div>
             <p class="text">Loading application...</p>
         </div>
-        <img class="logo" src="/images/parachute.svg" height="50">
-        <h1 class="title" >Skydive Weather in <%= dz.name %></h1>
 
-        <table class="dz-info" >
-            <tr>
-                <th>Airport code</th>
-                <td><%= dz.airportCode %></t>
-            </tr>
-            <tr>
-                <th>Coordinates</th>
-                <td>
-                    <a href="https://maps.google.com/maps?q=<%= dz.lat %>,<%= dz.lon %>+(<%= dz.airportCode %>)&z=14&ll=<%= dz.lat %>,<%= dz.lon %>"
-                        target="_new"
-                    >
-                    <%= dz.lat %>, <%= dz.lon %>
-                    </a>
-                </td>
-            </tr>
-        </table>
+        <h1 class="title" >
+            <a href="/">
+                <img class="logo" src="/images/parachute.svg" height="50">
+            </a>
+            Skydiving Weather in <%= dz.name %>
+        </h1>
+
 
         <div id="app"></div>
         <script src="/app.js" charset="utf-8"></script>

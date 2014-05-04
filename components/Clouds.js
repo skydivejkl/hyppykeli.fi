@@ -28,10 +28,16 @@ var Clouds = React.createClass({
         return (
             <DataBox
                 icon="Cloud-Sun"
-                title="Clouds"
-                time={moment(this.props.metar.time).fromNow()} >
+                title="Clouds" >
 
                 {this.renderClouds()}
+
+                <div className="footer-text">
+                    <p><a href="http://weather.noaa.gov/pub/data/observations/metar/stations/">Source</a>: METAR</p>
+                    <p className="metar">{this.props.metar.raw}</p>
+                    <p>{moment(this.props.metar.time).fromNow()}</p>
+                </div>
+
 
             </DataBox>
 

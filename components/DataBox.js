@@ -9,13 +9,11 @@ var DataBox = React.createClass({
                 <div className="box">
 
                     <div className="icon">
-                        <img src={"/climacons/"+this.props.icon+".svg"} />
+                        <img src={"/icons/"+this.props.icon+".svg"} />
                     </div>
 
                         <h1>{this.props.title}</h1>
                         <div className="value">{this.props.children}</div>
-                        <div className="time">{this.props.time}</div>
-
                 </div>
             </div>
         );

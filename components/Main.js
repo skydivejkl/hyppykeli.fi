@@ -1,46 +1,50 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var _ = require("lodash");
-
-var WeatherGraph = require("./WeatherGraph");
-var Slider = require("./Slider");
-var CurrentWinds = require("./CurrentWinds");
+window.React = React;
+var Winds = require("./CurrentWinds");
 var Sunset = require("./Sunset");
 var Clouds = require("./Clouds");
-
+var DataBox = require("./DataBox");
 
 /**
- * Location
+ * DzLocation
  *
  * @namespace components
- * @class Location
+ * @class DzLocation
  */
-var Location = React.createClass({
+var DzLocation = React.createClass({
+    getGoogleMapsURL: function() {
+        return [
+            "https://maps.google.com/maps?q=",
+            this.props.lat,
+            ",",
+            this.props.lon,
+            "+(",
+            this.props.airportCode,
+            ")&z=14&ll=",
+            this.props.lat,
+            ",",
+            this.props.lon
+        ].join("");
+    },
 
     render: function() {
-        if (!this.props.location) return <script></script>;
         return (
-            <div className="location">
-                <h4>
-                    {this.props.name}
-                </h4>
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <td>{this.props.location.name}</td>
-                    </tr>
-                    <tr>
-                        <th>fmisid</th>
-                        <td>{this.props.location.fmisid}</td>
-                    </tr>
-                </table>
+            <div>
+                <p>
+                    <span>{this.props.name} </span>
+                    (<span>{this.props.airportCode}</span>)
+                </p>
+                <div className="footer-text">
+                        <a href={this.getGoogleMapsURL()} target="_new" >
+                        {this.props.lat}, {this.props.lon}
+                        </a>
+                </div>
             </div>
         );
     }
-
 });
-
 
 
 var Main = React.createClass({
@@ -50,36 +54,8 @@ var Main = React.createClass({
             windObservations: { data: [] },
             gustObservations: { data: [] },
             windForecasts: { data: [] },
-            gustForecasts: { data: [] },
-            futureHours: 6,
-            pastHours: 6
+            gustForecasts: { data: [] }
         };
-    },
-
-    futureSlice: function(arr) {
-        var max = Date.now() + 1000 * 60 * 60 * this.state.futureHours;
-        return arr.filter(function(d) {
-            return d.time.getTime() < max;
-        });
-    },
-
-    pastSlice: function(arr) {
-        var min = Date.now() - 1000 * 60 * 60 * this.state.pastHours;
-        return arr.filter(function(d) {
-            return d.time.getTime() > min;
-        });
-    },
-
-    handleObservationSlide: function(val) {
-        this.setState({
-            pastHours: Math.max(val, 0)
-        });
-    },
-
-    handleForceastSlide: function(val) {
-        this.setState({
-            futureHours: Math.max(val, 0)
-        });
     },
 
     render: function() {
@@ -87,58 +63,62 @@ var Main = React.createClass({
             <div>
                 <div className="cf weather-boxes">
 
-                    <CurrentWinds
-                        avg={_.last(this.state.windObservations.data)}
-                        gust={_.last(this.state.gustObservations.data)}
+                    <Winds
+                        windObservations={this.state.windObservations}
+                        windForecasts={this.state.windForecasts}
+                        gustObservations={this.state.gustObservations}
+                        gustForecasts={this.state.gustForecasts}
                     />
+
+                    <Clouds metar={this.state.metar} />
 
                     <Sunset
                         latitude={this.props.options.lat}
                         longitude={this.props.options.lon}
                     />
 
-                    <Clouds metar={this.state.metar} />
+                    <DataBox
+                        icon="location2"
+                        title="Location" >
+                        <DzLocation
+                            airportCode={this.props.options.airportCode}
+                            name={this.props.options.name}
+                            lat={this.props.options.lat}
+                            lon={this.props.options.lon}
+                        />
+                    </DataBox>
+
+                    <DataBox
+                        icon="info"
+                        title="About" >
+                        <div className="about">
+                            <p>
+                                NEVER BLINDLY TRUST THIS APPLICATION! This only
+                                meant as an additional help when deciding
+                                whether to skydive or not.  There are zero
+                                guarantees that the data or the interpretation
+                                is correct.
+                            </p>
+                            <p>
+                                It is made by Esa-Matti Suuronen
+                                during the weather holds. Feel free the contact
+                                me at esa-matti@suuronen.org for any
+                                suggestions or issues you have with it.
+                                Usage of this application is free but if you
+                                want to support its development you can buy me
+                                a jump ticket (or beer) :)
+                            </p>
+                            <p>
+                                The source code is licensed under the MIT
+                                license and is hosted on <a
+                                    href="https://github.com/epeli/skydivingweather">Github</a>.
+                            </p>
+                        </div>
+
+                    </DataBox>
 
                 </div>
 
-                <h2>Wind over time</h2>
-
-
-                <WeatherGraph
-                    lines={[
-                        {
-                            title: "Gusts",
-                            observations: this.pastSlice(this.state.gustObservations.data),
-                            forecasts: this.futureSlice(this.state.gustForecasts.data)
-                        },
-                        {
-                            title: "Wind",
-                            observations: this.pastSlice(this.state.windObservations.data),
-                            forecasts: this.futureSlice(this.state.windForecasts.data)
-                        }
-                    ]}
-                />
-
-                <Slider
-                    className="observations"
-                    title="Show observations from the last "
-                    onChange={this.handleObservationSlide}
-                    value={this.state.pastHours}
-                />
-                <Slider
-                    className="forecasts"
-                    title="Show forecasts for the next "
-                    onChange={this.handleForceastSlide}
-                    value={this.state.futureHours}
-                />
-
-                <div className="locations" id="stations">
-                    <h3>Weather stations</h3>
-                    <Location name="Wind average observations" location={this.state.windObservations.location} />
-                    <Location name="Wind average forecasts" location={this.state.windForecasts.location} />
-                    <Location name="Gust observations" location={this.state.gustObservations.location} />
-                    <Location name="Gust forecasts" location={this.state.gustForecasts.location} />
-                </div>
             </div>
         );
     }

@@ -173,8 +173,7 @@ html, body, div, svg {
   font-size: 11px; }
 
 html, p, .button, ul, li, div {
-  font-family: 'Signika Negative';
-  text-align: center; }
+  font-family: 'Signika Negative'; }
 
 .limit-text {
   font-family: 'Signika Negative';
@@ -183,6 +182,17 @@ html, p, .button, ul, li, div {
 h1 {
   font-size: 18pt;
   margin-bottom: 2em; }
+  h1 img {
+    vertical-align: bottom; }
+
+.title {
+  margin-left: 2em !important;
+  text-decoration: none; }
+
+@media only screen and (max-width: 1000px) {
+  .title {
+    margin-left: 0em !important;
+    text-decoration: none; } }
 
 h2 {
   font-size: 14pt; }
@@ -196,10 +206,6 @@ h2 {
 
 .graph {
   text-align: center; }
-
-@media only screen and (min-width:lower-bound(40.063em, 64em)) {
-  * {
-    color: red; } }
 
 .slider-wrap {
   width: 50%;
@@ -222,19 +228,37 @@ h2 {
 .cf:after {
   clear: both; }
 
-.weather-boxes {
-  margin-bottom: 3em;
-  max-width: 25em;
-  margin: 0 auto;
+.weather-boxes .box-wrap {
+  margin-bottom: 0.5em; }
+
+@media only screen and (min-width: 1000px) {
+  .weather-boxes {
+    margin: 2em; }
+    .weather-boxes .box-wrap {
+      margin: 1em; } }
+
+.weather-boxes .box-wrap {
+  max-width: 730px;
+  min-height: 225px;
+  float: left; }
+
+.metar {
+  font-family: monospace; }
+
+.footer-text {
+  color: gray;
+  margin-bottom: 1em;
+  font-size: 10pt; }
+
+.zoomable-graph {
   margin-bottom: 2em; }
 
 .box {
   font-size: 10pt;
   padding: 1em;
-  margin: 0.5em;
+  margin: 0;
   text-align: left;
-  position: relative;
-  border-top: 1px solid #DDD; }
+  position: relative; }
   .box * {
     text-align: left; }
   .box .icon, .box h1, .box .time {
@@ -253,14 +277,7 @@ h2 {
     margin-left: 40px; }
   .box .value {
     margin-top: 1em;
-    margin-left: 40px; }
-  .box .time {
-    position: absolute;
-    right: 0px;
-    bottom: 0px; }
-
-.weather-boxes .box-wrap:last-child {
-  border-bottom: 1px solid #DDD; }
+    font-size: 14pt; }
 
 .slider {
   padding: 1em;
@@ -272,6 +289,16 @@ h2 {
   background-color: #f0f0f0; }
   .slider .name {
     margin-bottom: 1em; }
+
+.wind-data-source {
+  margin-left: 2px; }
+
+.wind-values {
+  margin: 1.5em;
+  margin-left: 0;
+  font-size: 14pt; }
+  .wind-values .item {
+    margin: 0.3em; }
 
 .weather-data-path .observations {
   stroke: black; }
@@ -296,17 +323,10 @@ h2 {
     text-align: left;
     font-size: 8pt; }
 
-.locations {
-  font-size: 9pt;
-  margin: 0 auto;
-  margin-top: 15em;
-  margin-bottom: 5em;
-  width: 20em;
-  text-align: center; }
-  .locations table {
-    text-align: left; }
-  .locations .location {
-    margin-top: 1em;
-    margin-bottom: 1em; }
+.about {
+  font-size: 10pt; }
+
+path.domain {
+  visibility: hidden; }
 
 /*# sourceMappingURL=app.css.map */

@@ -19,9 +19,9 @@ html, body, div, svg {
     font-size: 11px;
 }
 
+
 html, p, .button, ul, li, div {
     font-family: 'Signika Negative';
-    text-align: center;
 }
 
 .limit-text {
@@ -32,6 +32,20 @@ html, p, .button, ul, li, div {
 h1 {
     font-size: 18pt;
     margin-bottom: 2em;
+    img {
+        vertical-align: bottom;
+    }
+}
+
+.title {
+    margin-left: 2em !important;
+    text-decoration: none;
+}
+@media only screen and (max-width : 1000px) {
+    .title {
+        margin-left: 0em !important;
+        text-decoration: none;
+    }
 }
 
 h2 {
@@ -47,20 +61,10 @@ h2 {
     float: left;
 }
 
-// .box-wrap {
-//     width: 50%;
-//     float: left;
-// }
-
 .graph {
     text-align: center;
 }
 
-@media #{$medium-up} {
-    * {
-        color: red;
-    }
-}
 
     .slider-wrap {
         width: 50%;
@@ -81,17 +85,46 @@ h2 {
 .cf:after { content: ""; display: table; }
 .cf:after { clear: both; }
 
+.weather-boxes .box-wrap {
+    margin-bottom: 0.5em;
+}
+
+
+@media only screen and (min-width : 1000px) {
+    .weather-boxes {
+        margin: 2em;
+        .box-wrap {
+            margin: 1em;
+        }
+    }
+}
+
 .weather-boxes {
-    margin-bottom: 3em;
-    max-width: 25em;
-    margin: 0 auto;
+    .box-wrap {
+        max-width: 730px;
+        min-height: 225px;
+        float: left;
+    }
+}
+
+.metar {
+    font-family: monospace;
+}
+
+.footer-text {
+    color: gray;
+    margin-bottom: 1em;
+    font-size: 10pt;
+}
+
+.zoomable-graph {
     margin-bottom: 2em;
 }
 
 .box {
     font-size: 10pt;
     padding: 1em;
-    margin: 0.5em;
+    margin: 0;
     text-align: left;
 
     * {
@@ -104,7 +137,6 @@ h2 {
 
     .icon, h1, .time {
         opacity: 0.5;
-        // border-top: 1px solid red;
     }
 
     .icon {
@@ -126,28 +158,11 @@ h2 {
 
     .value {
         margin-top: 1em;
-        margin-left: $left-margin;
+        font-size: 14pt;
     }
-
-    .time {
-        position: absolute;
-        right: 0px;
-        bottom: 0px;
-    }
-
-    // .text {
-    //     left: $icon-width;
-    //     right: 1em;
-    //     border: 1px solid green;
-    // }
-
-    border-top: 1px solid #DDD;
 
 }
 
-.weather-boxes .box-wrap:last-child {
-    border-bottom: 1px solid #DDD;
-}
 
 .slider {
     padding: 1em;
@@ -160,6 +175,21 @@ h2 {
 
     .name {
         margin-bottom: 1em;
+    }
+}
+
+.wind-data-source {
+    margin-left: 2px;
+}
+
+
+
+.wind-values {
+    margin: 1.5em;
+    margin-left: 0;
+    font-size: 14pt;
+    .item {
+        margin: 0.3em;
     }
 }
 
@@ -200,22 +230,12 @@ $forecasts-color: gray;
     }
 }
 
-.locations {
-    font-size: 9pt;
-    margin: 0 auto;
-    margin-top: 15em;
-    margin-bottom: 5em;
-    width: 20em;
-    text-align: center;
-
-    table {
-        text-align: left;
-    }
-
-    .location {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
-
+.about {
+    font-size: 10pt;
 }
 
+
+
+path.domain {
+    visibility: hidden;
+}
