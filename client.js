@@ -9,6 +9,12 @@ var ajaxPoller = require("./lib/ajaxPoller");
 var Main = require("./components/Main");
 
 
+function ensureDataArray(ob) {
+    if (!ob) return { data: [] };
+    if (!ob.data) ob.data = [];
+    return ob;
+}
+
 function createWeatherApp(container, options) {
     $(".loading").remove();
 
@@ -17,16 +23,15 @@ function createWeatherApp(container, options) {
 
     ajaxPoller(url.format({
             pathname: "/api/fmi/observations",
-            query: {
-                geoid: options.geoid,
-                parameters: "winddirection,windspeedms,windgust"
-            }
+            query: _.extend({
+                    parameters: "winddirection,windspeedms,windgust"
+                }, options.fmiObservations)
     }), {
         onPoll: function(req) {
             fixData(req).then(function(res) {
                 main.setState({
-                    windObservations: res["obs-obs-1-1-windspeedms"],
-                    gustObservations: res["obs-obs-1-1-windgust"],
+                    windObservations: ensureDataArray(res["obs-obs-1-1-windspeedms"]),
+                    gustObservations: ensureDataArray(res["obs-obs-1-1-windgust"]),
                 });
             });
         }
@@ -34,16 +39,15 @@ function createWeatherApp(container, options) {
 
     ajaxPoller(url.format({
             pathname: "/api/fmi/forecasts",
-            query: {
-                geoid: options.geoid,
-                parameters: "winddirection,windspeedms,windgust"
-            }
+            query: _.extend({
+                    parameters: "winddirection,windspeedms,windgust"
+                }, options.fmiForecasts)
     }), {
         onPoll: function(req) {
             fixData(req).then(function(res) {
                 main.setState({
-                    windForecasts: res["mts-1-1-WindSpeedMS"],
-                    gustForecasts: res["mts-1-1-WindGust"]
+                    windForecasts: ensureDataArray(res["mts-1-1-WindSpeedMS"]),
+                    gustForecasts: ensureDataArray(res["mts-1-1-WindGust"])
                 });
             });
         }

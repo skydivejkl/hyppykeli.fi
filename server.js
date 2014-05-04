@@ -104,10 +104,10 @@ app.get("/api/fmi/:storedquery", function(req, res) {
     var u = formatFmiUrl({
         apikey: config.apikey,
         query: _.extend({
-            place: "tikkakoski",
             storedquery_id: storedquery
         }, req.query)
     });
+
 
     cachedReq(u).then(parseFmi).then(res.json.bind(res))
     .catch(function(err) {

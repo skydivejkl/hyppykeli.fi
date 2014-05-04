@@ -3,24 +3,40 @@
         "name": "Tikkakoski",
         "url": "efjy",
         "airportCode": "EFJY",
-        "geoid": 6296545,
         "lat": 62.39945,
-        "lon": 25.67825
+        "lon": 25.67825,
+        "fmiObservations": {
+            "fmisid": 101339
+        },
+        "fmiForecasts": {
+            "geoid": 6296545
+        }
     },
 
     "efut": {
         "name": "Utti",
         "airportCode": "EFUT",
-        "geoid": 6296565,
         "lat": 60.89639,
-        "lon": 26.93835
+        "lon": 26.93835,
+        "fmiObservations": {
+            "fmisid": 101191
+        },
+        "fmiForecasts": {
+            "geoid": 6296565
+        }
     },
 
     "efku": {
         "name": "Rissala",
         "airportCode": "EFKU",
-        "geoid": 6296552,
         "lat": 63.00715 ,
-        "lon": 27.79776
+        "lon": 27.79776,
+        "_fmisid": 101580,
+        "fmiObservations": {
+            "fmisid": 101570
+        },
+        "fmiForecasts": {
+            "geoid": 6296552
+        }
     }
 }
