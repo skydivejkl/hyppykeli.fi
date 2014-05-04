@@ -21,19 +21,21 @@ var Location = React.createClass({
     render: function() {
         if (!this.props.location) return <script></script>;
         return (
-            <div className="location">
-                <h3>{this.props.name}</h3>
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <td>{this.props.location.name}</td>
-                    </tr>
-                    <tr>
-                        <th>fmisid</th>
-                        <td>{this.props.location.fmisid}</td>
-                    </tr>
-                </table>
-            </div>
+            <table className="location">
+                <tr>
+                    <th>
+                    {this.props.name}
+                    </th>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{this.props.location.name}</td>
+                </tr>
+                <tr>
+                    <th>fmisid</th>
+                    <td>{this.props.location.fmisid}</td>
+                </tr>
+            </table>
         );
     }
 

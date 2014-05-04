@@ -205,9 +205,16 @@ $forecasts-color: gray;
     margin: 0 auto;
     margin-top: 15em;
     margin-bottom: 5em;
-    width: 15em;
+    width: 20em;
+    text-align: center;
+
     table {
         text-align: left;
+    }
+
+    .location {
+        margin-top: 1em;
+        margin-bottom: 1em;
     }
 
 }
