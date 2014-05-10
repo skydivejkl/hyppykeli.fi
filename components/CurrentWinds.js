@@ -13,12 +13,12 @@ var CurrentWinds = React.createClass({
     },
 
     hasData: function() {
-        return !!this.props.windObservations.data.length;
+        return !!this.state.points.length;
     },
 
     fromNow: function() {
         if (this.hasData()) {
-            return moment(_.last(this.props.windObservations.data).time).fromNow();
+            return moment(this.state.points[0].time).fromNow();
         }
     },
 

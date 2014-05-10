@@ -23,8 +23,8 @@ function findClosest(value, arr, start) {
 
 var WeatherGraph = React.createClass({
 
-    componentWillReceiveProps: function(props) {
-        this.computeData(props);
+    componentWillReceiveProps: function(nextProps) {
+        this.computeData(nextProps);
     },
 
     getWidth: function() {
@@ -49,14 +49,14 @@ var WeatherGraph = React.createClass({
             width: this.getWidth(),
             height: this.getHeight(),
             selectedPoints: [],
+            dataInitialized: false,
 
             maxValue: 12,
             minValue: 0,
 
             startTime: new Date(),
-            endTime: new Date(),
+            endTime: new Date()
 
-            _cursorPosition: null
         };
     },
 
@@ -148,6 +148,10 @@ var WeatherGraph = React.createClass({
     },
 
     componentWillMount: function() {
+        var self = this;
+        this.waitForCursorReset = _.debounce(function() {
+            self.moveCursorToCurrentTime();
+        }, 5000);
         this.updateDimensions();
     },
 
@@ -165,6 +169,9 @@ var WeatherGraph = React.createClass({
     componentDidMount: function() {
         this.computeData();
         window.addEventListener("resize", this.updateDimensions);
+        setTimeout(function() {
+            this.computeClosestPoints();
+        }.bind(this), 4000);
     },
 
     componentWillUnmount: function() {
@@ -189,9 +196,14 @@ var WeatherGraph = React.createClass({
         var cursorPosition = clientX - this.refs.svg.getDOMNode().offsetLeft;
         console.log("move!", cursorPosition);
         this.computeClosestPoints(cursorPosition);
+        this.waitForCursorReset();
     },
 
-    selectNone: function() {
+    handleSelectNone: function() {
+        this.moveCursorToCurrentTime();
+    },
+
+    moveCursorToCurrentTime: function() {
         this.computeClosestPoints();
     },
 
@@ -228,7 +240,6 @@ var WeatherGraph = React.createClass({
             cursorPosition: cursorPosition,
         });
 
-        console.log("setting points", points.length);
         this.setState({
             selectedPoints: points,
             cursorPosition: cursorPosition
@@ -265,7 +276,6 @@ var WeatherGraph = React.createClass({
         var self = this;
         this.updateScales();
 
-        console.log("points in state", this.state.selectedPoints.length);
         var circles = this.state.selectedPoints.map(function(point) {
             return (
                 <circle
@@ -277,6 +287,7 @@ var WeatherGraph = React.createClass({
                 />
             );
         });
+        console.log("circles", circles.length);
 
         return (
             <div className="graph">
@@ -285,7 +296,7 @@ var WeatherGraph = React.createClass({
                     onMouseMove={this.handleMouseMove}
                     onTouchStart={this.handleTouchMove}
                     onTouchMove={this.handleTouchMove}
-                    onMouseLeave={this.selectNone}
+                    onMouseLeave={this.handleSelectNone}
                     width={this.state.width}
                     height={this.state.height} >
 
