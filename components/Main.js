@@ -73,19 +73,6 @@ var Main = React.createClass({
                 </div>
 
 
-                <Slider
-                    className="observations"
-                    title="Show observations from the last "
-                    onChange={this.handleObservationSlide}
-                    value={this.state.pastHours}
-                />
-                <Slider
-                    className="forecasts"
-                    title="Show forecasts for the next "
-                    onChange={this.handleForceastSlide}
-                    value={this.state.futureHours}
-                />
-
                 <div className="locations" id="stations">
                     <h3>Weather stations</h3>
                     <Location name="Wind average observations" location={this.state.windObservations.location} />

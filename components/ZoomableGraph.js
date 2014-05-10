@@ -49,7 +49,6 @@ var ZoomableGraph = React.createClass({
     },
 
     renderSliders: function() {
-        return;
         return (
             <div>
                 <Slider

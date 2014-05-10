@@ -240,7 +240,7 @@ var WeatherGraph = React.createClass({
         bottom -= this.yScale(this.state.maxValue - limit);
         bottom -= this.props.padding;
 
-        var textHeight = 8;
+        var textHeight = 30;
         return (
             <g>
                 <rect

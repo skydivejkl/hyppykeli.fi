@@ -222,19 +222,19 @@ h2 {
 .cf:after {
   clear: both; }
 
-.weather-boxes {
-  margin-bottom: 3em;
+.weather-boxes .box {
   max-width: 25em;
-  margin: 0 auto;
+  margin: 0 auto; }
+
+.zoomable-graph {
   margin-bottom: 2em; }
 
 .box {
   font-size: 10pt;
   padding: 1em;
-  margin: 0.5em;
+  margin: 0;
   text-align: left;
-  position: relative;
-  border-top: 1px solid #DDD; }
+  position: relative; }
   .box * {
     text-align: left; }
   .box .icon, .box h1, .box .time {
@@ -251,16 +251,10 @@ h2 {
     margin: 0px;
     padding: 0px;
     margin-left: 40px; }
-  .box .value {
+  .box .value, .box .time {
     margin-top: 1em;
     margin-left: 40px; }
-  .box .time {
-    position: absolute;
-    right: 0px;
-    bottom: 0px; }
 
-.weather-boxes .box-wrap:last-child {
-  border-bottom: 1px solid #DDD; }
 
 .slider {
   padding: 1em;
@@ -308,5 +302,8 @@ h2 {
   .locations .location {
     margin-top: 1em;
     margin-bottom: 1em; }
+
+path.domain {
+  visibility: hidden; }
 
 /*# sourceMappingURL=app.css.map */
