@@ -287,7 +287,7 @@ var WeatherGraph = React.createClass({
                     width={this.state.width}
                     height={this.state.height} >
 
-                    {this.renderLimit("Student limit", "#F3F3F3", 8)}
+                    {this.renderLimit("A-license/student limit", "#F3F3F3", 8)}
                     {this.renderLimit("License limit", "#D8D8D8", 11)}
 
                     <GraphCursor
