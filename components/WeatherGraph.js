@@ -203,7 +203,6 @@ var WeatherGraph = React.createClass({
         bottom -= this.props.padding;
 
         var textHeight = 8;
-        var textWidth = 100;
         return (
             <g>
                 <rect
@@ -215,7 +214,7 @@ var WeatherGraph = React.createClass({
 
                 <text
                     className="limit-text"
-                    x={this.state.width - textWidth}
+                    x={this.props.padding + 5}
                     y={bottom + this.props.padding - textHeight}
                     fill="black">{desc}</text>
 
