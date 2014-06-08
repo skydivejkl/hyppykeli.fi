@@ -35,9 +35,9 @@ var Clouds = React.createClass({
                 {this.renderClouds()}
 
                 <div className="footer-text">
+                    <p>{moment(this.props.metar.time).fromNow()}</p>
                     <p><a href="http://weather.noaa.gov/pub/data/observations/metar/stations/">Source</a>: METAR</p>
                     <p className="metar">{this.props.metar.raw}</p>
-                    <p>{moment(this.props.metar.time).fromNow()}</p>
                 </div>
 
 
