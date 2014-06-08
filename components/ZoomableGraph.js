@@ -2,23 +2,15 @@
 var React = require("react");
 var WeatherGraph = require("./WeatherGraph");
 var Slider = require("./Slider");
+var _ = require("lodash");
 
 var ZoomableGraph = React.createClass({
 
     getInitialState: function() {
         return {
+            noSliders: false,
             futureHours: 6,
             pastHours: 6
-        };
-    },
-
-    getDefaultProps: function() {
-        return {
-            onSlide: function() {},
-            windObservations: { data: [] },
-            gustObservations: { data: [] },
-            windForecasts: { data: [] },
-            gustForecasts: { data: [] },
         };
     },
 
@@ -49,6 +41,7 @@ var ZoomableGraph = React.createClass({
     },
 
     renderSliders: function() {
+        if (this.props.noSliders) return;
         return (
             <div>
                 <Slider
@@ -69,24 +62,22 @@ var ZoomableGraph = React.createClass({
     },
 
     render: function() {
+        var self = this;
+
+        var lines = this.props.lines.map(function(line) {
+            line = _.clone(line);
+            line.observations = self.pastSlice(line.observations);
+            line.forecasts = self.futureSlice(line.forecasts);
+            return line;
+        });
+
         return (
             <div className="cf zoomable-graph">
                 <WeatherGraph
                     onSlide={this.props.onSlide}
                     selectedPoints={this.props.selectedPoints}
                     cursorPosition={this.props.cursorPosition}
-                    lines={[
-                        {
-                            title: "Gust",
-                            observations: this.pastSlice(this.props.gustObservations.data),
-                            forecasts: this.futureSlice(this.props.gustForecasts.data)
-                        },
-                        {
-                            title: "Wind",
-                            observations: this.pastSlice(this.props.windObservations.data),
-                            forecasts: this.futureSlice(this.props.windForecasts.data)
-                        }
-                    ]}
+                    lines={lines}
                 />
 
                 {this.renderSliders()}

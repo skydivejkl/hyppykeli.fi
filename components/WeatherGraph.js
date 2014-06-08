@@ -25,10 +25,17 @@ var WeatherGraph = React.createClass({
 
     componentWillReceiveProps: function(nextProps) {
         this.computeData(nextProps);
+        if (!this.state.initialized && this.hasData()) {
+            setTimeout(function() {
+                console.log("init!");
+                this.computeClosestPoints();
+                this.setState({ initialized: true });
+            }.bind(this), 1);
+        }
     },
 
     getWidth: function() {
-        return window.innerWidth - this.props.margin;
+        return Math.min(800, window.innerWidth - this.props.margin - 100);
     },
 
     getHeight: function() {
@@ -45,11 +52,15 @@ var WeatherGraph = React.createClass({
     },
 
     getInitialState: function() {
-        console.log("getInitialState");
-        return {
+        return _.extend({
+            initialized: false,
             width: this.getWidth(),
             height: this.getHeight(),
+        }, this.getInitialValues());
+    },
 
+    getInitialValues: function() {
+        return {
             maxValue: 12,
             minValue: 0,
 
@@ -61,16 +72,15 @@ var WeatherGraph = React.createClass({
     getDefaultProps: function() {
         return {
             selectedPoints: [],
-            padding: 30,
+            padding: 20,
             paddingTop: 5,
-            margin: 20
+            margin: 0
         };
     },
 
     computeData: function(props) {
-        console.log("computeData");
         props = props || this.props;
-        var newState = _.clone(this.state);
+        var newState = this.getInitialValues();
 
         props.lines.forEach(function(d) {
             _.forEach(d, function(values) {
@@ -161,7 +171,6 @@ var WeatherGraph = React.createClass({
         if (!this.yAxis) return;
         if (!this.yAxisRight) return;
 
-        console.log("renderAxes");
         this.xAxis(d3.select(this.refs.xAxis.getDOMNode()));
         this.yAxis(d3.select(this.refs.yAxis.getDOMNode()));
         this.yAxisRight(d3.select(this.refs.yAxisRight.getDOMNode()));
@@ -183,6 +192,15 @@ var WeatherGraph = React.createClass({
         this.renderAxes();
     },
 
+    hasData: function() {
+        return (
+            this.props.lines &&
+            this.props.lines[0] &&
+            this.props.lines[0].observations &&
+            this.props.lines[0].observations.length > 0
+        );
+    },
+
     handleTouchMove: function(e) {
         e.preventDefault();
         this.handleMove(e.targetTouches[0].clientX);
@@ -194,7 +212,10 @@ var WeatherGraph = React.createClass({
 
     handleMove: function(clientX) {
         if (clientX === null || clientX === undefined) return;
-        var cursorPosition = clientX - this.refs.svg.getDOMNode().offsetLeft;
+        var cursorPosition = clientX;
+        cursorPosition -= this.refs.svg.getDOMNode().offsetLeft;
+        cursorPosition -= this.refs.svg.getDOMNode().offsetParent.offsetLeft;
+
         this.computeClosestPoints(cursorPosition);
         this.waitForCursorReset();
     },
@@ -259,8 +280,8 @@ var WeatherGraph = React.createClass({
 
                 <text
                     className="limit-text"
-                    x={this.props.padding + 5}
-                    y={bottom + this.props.padding - textHeight}
+                    x={this.props.padding + 2}
+                    y={bottom}
                     fill="black">{desc}</text>
 
             </g>
@@ -278,7 +299,7 @@ var WeatherGraph = React.createClass({
                     cx={point.x}
                     cy={point.y}
                     r="3"
-                    fill="blue"
+                    fill="black"
                     stroke="0"
                 />
             );

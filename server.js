@@ -59,7 +59,7 @@ function cachedReq(u) {
     return requestp(u).then(function(res) {
         requestCache[u] = Promise.cast(res);
 
-        Promise.delay(1000).then(function() {
+        Promise.delay(1000 * 60 * 10).then(function() {
             requestCache[u] = null;
         });
 

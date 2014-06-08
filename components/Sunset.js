@@ -23,9 +23,12 @@ var Sunset = React.createClass({
         return (
             <DataBox
                 icon="Sunset"
-                title="Sunset"
-                time={"at " + moment(sunset).format("HH:mm")} >
+                title="Sunset" >
+
                 <p>{s.capitalize(moment(sunset).fromNow())}</p>
+                <div className="time">
+                    {"at " + moment(sunset).format("HH:mm")}
+                </div>
 
             </DataBox>
         );

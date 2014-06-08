@@ -5,6 +5,7 @@ var _ = require("lodash");
 
 var DataBox = require("./DataBox");
 var ZoomableGraph = require("./ZoomableGraph");
+var WeatherGraph = require("./WeatherGraph");
 
 var CurrentWinds = React.createClass({
 
@@ -38,10 +39,12 @@ var CurrentWinds = React.createClass({
         }
 
         return (
-            <div>
+            <div className="wind-values">
                 {this.state.selectedPoints.map(function(val) {
-                    return <p>{val.title} {val.value} m/s</p>;
+                    return <span className="item">{val.title} {val.value} m/s{" "}</span>;
                 })}
+
+                <span className="time item">{this.fromNow()}</span>
             </div>
         );
     },
@@ -56,24 +59,29 @@ var CurrentWinds = React.createClass({
     render: function() {
 
         return (
-            <div className="winds">
                 <DataBox
                     icon="Tornado"
-                    title="Wind"
-                    time={this.fromNow()} >
+                    title="Wind" >
                     {this.renderCurrent()}
-                </DataBox>
                 <ZoomableGraph
-                    windObservations={this.props.windObservations}
-                    windForecasts={this.props.windForecasts}
-                    gustObservations={this.props.gustObservations}
-                    gustForecasts={this.props.gustForecasts}
                     onSlide={this.handleSlide}
+                    lines={[
+                        {
+                            title: "Gust",
+                            observations: this.props.gustObservations.data,
+                            forecasts: this.props.gustForecasts.data
+                        },
+                        {
+                            title: "Average",
+                            observations: this.props.windObservations.data,
+                            forecasts: this.props.windForecasts.data
+                        }
+                    ]}
 
                     selectedPoints={this.state.selectedPoints}
                     cursorPosition={this.state.cursorPosition}
                 />
-            </div>
+                </DataBox>
         );
     }
 });

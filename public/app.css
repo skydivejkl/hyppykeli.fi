@@ -222,9 +222,17 @@ h2 {
 .cf:after {
   clear: both; }
 
-.weather-boxes .box {
-  max-width: 25em;
-  margin: 0 auto; }
+.weather-boxes {
+  margin: 1em; }
+  .weather-boxes .box-wrap {
+    float: left;
+    padding: 1em; }
+    .weather-boxes .box-wrap .box {
+      border: 1px solid black; }
+
+.raw-metar {
+  font-family: monospace;
+  color: gray; }
 
 .zoomable-graph {
   margin-bottom: 2em; }
@@ -251,10 +259,8 @@ h2 {
     margin: 0px;
     padding: 0px;
     margin-left: 40px; }
-  .box .value, .box .time {
-    margin-top: 1em;
-    margin-left: 40px; }
-
+  .box .value {
+    margin-top: 1em; }
 
 .slider {
   padding: 1em;
@@ -266,6 +272,13 @@ h2 {
   background-color: #f0f0f0; }
   .slider .name {
     margin-bottom: 1em; }
+
+.wind-values {
+  margin: 1.5em;
+  margin-left: 0;
+  font-size: 140%; }
+  .wind-values .item {
+    margin: 1em; }
 
 .weather-data-path .observations {
   stroke: black; }

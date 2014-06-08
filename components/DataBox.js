@@ -14,8 +14,6 @@ var DataBox = React.createClass({
 
                         <h1>{this.props.title}</h1>
                         <div className="value">{this.props.children}</div>
-                        <div className="time">{this.props.time}</div>
-
                 </div>
             </div>
         );

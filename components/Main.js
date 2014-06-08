@@ -63,12 +63,13 @@ var Main = React.createClass({
                         gustForecasts={this.state.gustForecasts}
                     />
 
+                    <Clouds metar={this.state.metar} />
+
                     <Sunset
                         latitude={this.props.options.lat}
                         longitude={this.props.options.lon}
                     />
 
-                    <Clouds metar={this.state.metar} />
 
                 </div>
 

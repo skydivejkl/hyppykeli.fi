@@ -28,10 +28,15 @@ var Clouds = React.createClass({
         return (
             <DataBox
                 icon="Cloud-Sun"
-                title="Clouds"
-                time={moment(this.props.metar.time).fromNow()} >
+                title="Clouds" >
 
                 {this.renderClouds()}
+
+                <pre className="raw-metar">{this.props.metar.raw}</pre>
+
+                <div className="time">
+                    {moment(this.props.metar.time).fromNow()}
+                </div>
 
             </DataBox>
 
