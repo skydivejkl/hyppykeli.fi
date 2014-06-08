@@ -1,11 +1,9 @@
 /** @jsx React.DOM */
 var React = require("react");
 var moment= require("moment");
-var _ = require("lodash");
 
 var DataBox = require("./DataBox");
 var ZoomableGraph = require("./ZoomableGraph");
-var WeatherGraph = require("./WeatherGraph");
 
 
 var Location = React.createClass({
@@ -52,6 +50,8 @@ var CurrentWinds = React.createClass({
                 </div>
             );
         }
+
+        window.spinLogo(this.state.selectedPoints[0].value);
 
         return (
             <div className="wind-values">

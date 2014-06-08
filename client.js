@@ -8,6 +8,12 @@ var url = require("url");
 var ajaxPoller = require("./lib/ajaxPoller");
 var Main = require("./components/Main");
 
+var logo = document.getElementById("logo");
+window.spinLogo =  _.debounce(function(gust) {
+    if (gust < 8) logo.className = "";
+    if (gust >= 8) logo.className = "swing";
+    if (gust >= 11) logo.className = "spin";
+}, 500);
 
 function ensureDataArray(ob) {
     if (!ob) return { data: [] };

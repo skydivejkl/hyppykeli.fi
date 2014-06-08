@@ -329,4 +329,24 @@ h2 {
 path.domain {
   visibility: hidden; }
 
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-webkit-keyframes bounce {
+  25% {
+    -webkit-transform: rotate(25deg); }
+
+  50% {
+    -webkit-transform: rotate(0deg); }
+
+  75% {
+    -webkit-transform: rotate(-25deg); } }
+
+.spin {
+  -webkit-animation: spin 0.8s linear infinite; }
+
+.swing {
+  -webkit-animation: bounce 1s linear infinite; }
+
 /*# sourceMappingURL=app.css.map */
