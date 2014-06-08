@@ -10,7 +10,7 @@ var Clouds = React.createClass({
     renderClouds: function(cloud) {
         if (!this.props.metar) return;
 
-        if (this.props.metar.cavok) return <p>CAVOK</p>;
+        if (this.props.metar.cavok) return <p>No clouds under 1500 m (CAVOK)</p>;
 
         return this.props.metar.clouds.map(function(cloud) {
             var altitude = Math.round(cloud.altitude * 0.3048);
