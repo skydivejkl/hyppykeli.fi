@@ -45,23 +45,22 @@ var WeatherGraph = React.createClass({
     },
 
     getInitialState: function() {
+        console.log("getInitialState");
         return {
             width: this.getWidth(),
             height: this.getHeight(),
-            selectedPoints: [],
-            dataInitialized: false,
 
             maxValue: 12,
             minValue: 0,
 
             startTime: new Date(),
             endTime: new Date()
-
         };
     },
 
     getDefaultProps: function() {
         return {
+            selectedPoints: [],
             padding: 30,
             paddingTop: 5,
             margin: 20
@@ -69,8 +68,9 @@ var WeatherGraph = React.createClass({
     },
 
     computeData: function(props) {
+        console.log("computeData");
         props = props || this.props;
-        var newState = this.getInitialState();
+        var newState = _.clone(this.state);
 
         props.lines.forEach(function(d) {
             _.forEach(d, function(values) {
@@ -161,6 +161,7 @@ var WeatherGraph = React.createClass({
         if (!this.yAxis) return;
         if (!this.yAxisRight) return;
 
+        console.log("renderAxes");
         this.xAxis(d3.select(this.refs.xAxis.getDOMNode()));
         this.yAxis(d3.select(this.refs.yAxis.getDOMNode()));
         this.yAxisRight(d3.select(this.refs.yAxisRight.getDOMNode()));
@@ -194,7 +195,6 @@ var WeatherGraph = React.createClass({
     handleMove: function(clientX) {
         if (clientX === null || clientX === undefined) return;
         var cursorPosition = clientX - this.refs.svg.getDOMNode().offsetLeft;
-        console.log("move!", cursorPosition);
         this.computeClosestPoints(cursorPosition);
         this.waitForCursorReset();
     },
@@ -236,14 +236,10 @@ var WeatherGraph = React.createClass({
         }));
 
         this.props.onSlide({
-            points: points,
-            cursorPosition: cursorPosition,
-        });
-
-        this.setState({
             selectedPoints: points,
             cursorPosition: cursorPosition
         });
+
     },
 
     renderLimit: function(desc, color, limit) {
@@ -276,7 +272,7 @@ var WeatherGraph = React.createClass({
         var self = this;
         this.updateScales();
 
-        var circles = this.state.selectedPoints.map(function(point) {
+        var circles = this.props.selectedPoints.map(function(point) {
             return (
                 <circle
                     cx={point.x}
@@ -287,7 +283,6 @@ var WeatherGraph = React.createClass({
                 />
             );
         });
-        console.log("circles", circles.length);
 
         return (
             <div className="graph">
@@ -305,7 +300,7 @@ var WeatherGraph = React.createClass({
 
                     <GraphCursor
                         height={self.state.height}
-                        cursorPosition={self.state.cursorPosition}
+                        cursorPosition={self.props.cursorPosition}
                         padding={self.props.padding}
                         width={self.state.width}
                         paddingTop={self.props.paddingTop}

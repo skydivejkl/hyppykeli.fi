@@ -73,6 +73,8 @@ var ZoomableGraph = React.createClass({
             <div className="cf zoomable-graph">
                 <WeatherGraph
                     onSlide={this.props.onSlide}
+                    selectedPoints={this.props.selectedPoints}
+                    cursorPosition={this.props.cursorPosition}
                     lines={[
                         {
                             title: "Gust",

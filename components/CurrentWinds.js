@@ -13,18 +13,18 @@ var CurrentWinds = React.createClass({
     },
 
     hasData: function() {
-        return !!this.state.points.length;
+        return !!this.state.selectedPoints.length;
     },
 
     fromNow: function() {
         if (this.hasData()) {
-            return moment(this.state.points[0].time).fromNow();
+            return moment(this.state.selectedPoints[0].time).fromNow();
         }
     },
 
     getInitialState: function() {
         return {
-            points: []
+            selectedPoints: []
         };
     },
 
@@ -39,7 +39,7 @@ var CurrentWinds = React.createClass({
 
         return (
             <div>
-                {this.state.points.map(function(val) {
+                {this.state.selectedPoints.map(function(val) {
                     return <p>{val.title} {val.value} m/s</p>;
                 })}
             </div>
@@ -47,7 +47,10 @@ var CurrentWinds = React.createClass({
     },
 
     handleSlide: function(selected) {
-        this.setState(selected);
+        this.setState({
+            selectedPoints: selected.selectedPoints,
+            cursorPosition: selected.cursorPosition,
+        });
     },
 
     render: function() {
@@ -66,6 +69,9 @@ var CurrentWinds = React.createClass({
                     gustObservations={this.props.gustObservations}
                     gustForecasts={this.props.gustForecasts}
                     onSlide={this.handleSlide}
+
+                    selectedPoints={this.state.selectedPoints}
+                    cursorPosition={this.state.cursorPosition}
                 />
             </div>
         );
