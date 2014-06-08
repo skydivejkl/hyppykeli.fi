@@ -100,10 +100,11 @@ var Main = React.createClass({
                                 is correct.
                             </p>
                             <p>
-                                It is made by Esa-Matti Suuronen
-                                during the weather holds. Feel free the contact
-                                me at esa-matti@suuronen.org for any
-                                suggestions or issues you have with it.
+                                It is made by <a
+                                    href="https://www.facebook.com/esamattisuuronen">Esa-Matti
+                                    Suuronen</a> during the weather holds. Feel
+                                free the contact me at esa-matti@suuronen.org
+                                for any suggestions or issues you have with it.
                                 Usage of this application is free but if you
                                 want to support its development you can buy me
                                 a jump ticket (or beer) :)
