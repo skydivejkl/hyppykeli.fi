@@ -59,7 +59,8 @@ function cachedReq(u) {
     return requestp(u).then(function(res) {
         requestCache[u] = Promise.cast(res);
 
-        Promise.delay(1000 * 60 * 10).then(function() {
+        // Bust cache after 30 seconds
+        Promise.delay(1000 * 30).then(function() {
             requestCache[u] = null;
         });
 
