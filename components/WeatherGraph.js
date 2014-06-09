@@ -28,7 +28,6 @@ var WeatherGraph = React.createClass({
         this.computeData(nextProps);
         if (!this.state.initialized && this.hasData()) {
             setTimeout(function() {
-                console.log("init!");
                 this.computeClosestPoints();
                 this.moveCursorToCurrentTime();
                 this.setState({ initialized: true });
@@ -226,7 +225,6 @@ var WeatherGraph = React.createClass({
 
         this.computeClosestPoints(cursorPosition);
         this.waitForCursorReset();
-        console.log("handleMove");
     },
 
     handleMouseLeave: function() {
