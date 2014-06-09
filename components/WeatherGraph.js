@@ -24,14 +24,17 @@ function findClosest(value, arr, start) {
 var WeatherGraph = React.createClass({
 
     componentWillReceiveProps: function(nextProps) {
+
         this.computeData(nextProps);
         if (!this.state.initialized && this.hasData()) {
             setTimeout(function() {
                 console.log("init!");
                 this.computeClosestPoints();
+                this.moveCursorToCurrentTime();
                 this.setState({ initialized: true });
-            }.bind(this), 1);
+            }.bind(this), 100);
         }
+
     },
 
     getWidth: function() {
@@ -183,9 +186,7 @@ var WeatherGraph = React.createClass({
 
         this.computeData();
         window.addEventListener("resize", this.updateDimensions);
-        setTimeout(function() {
-            this.computeClosestPoints();
-        }.bind(this), 4000);
+
     },
 
     componentWillUnmount: function() {
