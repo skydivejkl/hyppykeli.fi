@@ -75,7 +75,7 @@ var WeatherGraph = React.createClass({
     getDefaultProps: function() {
         return {
             selectedPoints: [],
-            padding: 20,
+            padding: 25,
             paddingTop: 5,
             margin: 0
         };
