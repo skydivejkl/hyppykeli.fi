@@ -213,8 +213,8 @@ var WeatherGraph = React.createClass({
     handleMove: function(clientX) {
         if (clientX === null || clientX === undefined) return;
         var cursorPosition = clientX;
-        cursorPosition -= this.refs.svg.getDOMNode().offsetLeft;
-        cursorPosition -= this.refs.svg.getDOMNode().offsetParent.offsetLeft;
+        var svg = this.refs.svg.getDOMNode();
+        cursorPosition -= svg.getBoundingClientRect().left;
 
         this.computeClosestPoints(cursorPosition);
         this.waitForCursorReset();
