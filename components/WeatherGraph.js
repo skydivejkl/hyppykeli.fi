@@ -177,6 +177,10 @@ var WeatherGraph = React.createClass({
     },
 
     componentDidMount: function() {
+
+        this.handleMove = _.throttle(this.handleMove, 50);
+
+
         this.computeData();
         window.addEventListener("resize", this.updateDimensions);
         setTimeout(function() {
