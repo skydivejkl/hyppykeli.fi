@@ -102,13 +102,13 @@ h2 {
 .weather-boxes {
     .box-wrap {
         max-width: 730px;
-        min-height: 225px;
         float: left;
     }
 }
 
 .metar {
     font-family: monospace;
+    max-width: 14em;
 }
 
 .footer-text {
