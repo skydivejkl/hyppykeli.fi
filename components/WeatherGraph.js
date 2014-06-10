@@ -55,7 +55,7 @@ var WeatherGraph = React.createClass({
 
     getInitialState: function() {
         return _.extend({
-            mouseOverActive: false,
+            cursorSlideActive: false,
             initialized: false,
             width: this.getWidth(),
             height: this.getHeight(),
@@ -206,6 +206,11 @@ var WeatherGraph = React.createClass({
         );
     },
 
+    handleTouchStart: function(e) {
+        e.preventDefault();
+        this.setState({ cursorSlideActive: true });
+    },
+
     handleTouchMove: function(e) {
         e.preventDefault();
         this.handleMove(e.targetTouches[0].clientX);
@@ -216,7 +221,7 @@ var WeatherGraph = React.createClass({
     },
 
     handleMove: function(clientX) {
-        if (!this.state.mouseOverActive) return;
+        if (!this.state.cursorSlideActive) return;
 
         if (clientX === null || clientX === undefined) return;
         var cursorPosition = clientX;
@@ -228,12 +233,12 @@ var WeatherGraph = React.createClass({
     },
 
     handleMouseLeave: function() {
-        this.setState({ mouseOverActive: false });
+        this.setState({ cursorSlideActive: false });
         this.moveCursorToCurrentTime();
     },
 
     handleMouseOver: function() {
-        this.setState({ mouseOverActive: true });
+        this.setState({ cursorSlideActive: true });
     },
 
     moveCursorToCurrentTime: function() {
@@ -322,7 +327,7 @@ var WeatherGraph = React.createClass({
                 <svg
                     ref="svg"
                     onMouseMove={this.handleMouseMove}
-                    onTouchStart={this.handleTouchMove}
+                    onTouchStart={this.handleTouchStart}
                     onTouchMove={this.handleTouchMove}
                     onMouseLeave={this.handleMouseLeave}
                     onMouseOver={this.handleMouseOver}
