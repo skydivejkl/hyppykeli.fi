@@ -38,5 +38,19 @@
         "fmiForecasts": {
             "geoid": 6296552
         }
+    },
+
+    "efva": {
+        "name": "Vaasa",
+        "airportCode": "EFVA",
+        "lat": 63.047257,
+        "lon": 21.761314,
+        "fmiObservations": {
+            "fmisid": 101485
+        },
+        "fmiForecasts": {
+            "geoid": 6296566
+        }
     }
+
 }
