@@ -294,6 +294,9 @@ h2 {
 .wind-data-source {
   margin-left: 2px; }
 
+.wind-sources li {
+  cursor: help; }
+
 .wind-values {
   margin: 1.5em;
   margin-left: 0;

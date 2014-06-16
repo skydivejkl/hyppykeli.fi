@@ -148,7 +148,7 @@ var CurrentWinds = React.createClass({
 
                     <div className="footer-text wind-data">
                         <a href="http://ilmatieteenlaitos.fi/havaintoasemat">Sources</a>:
-                        <ul>
+                        <ul className="wind-sources">
                             <Location name="Wind average observations" stationLocation={this.props.windObservations.location} coordinates={this.props.coordinates} />
                             <Location name="Wind average forecasts" stationLocation={this.props.windForecasts.location} coordinates={this.props.coordinates} />
                             <Location name="Gust observations" stationLocation={this.props.gustObservations.location} coordinates={this.props.coordinates} />
