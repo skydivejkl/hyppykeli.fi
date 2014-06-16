@@ -185,8 +185,14 @@ h2 {
 }
 
 
-.wind-sources li {
+.wind-sources .station {
     cursor: help;
+    width: auto;
+    border: 1px dashed transparent;
+    border-bottom: 1px dashed gray;
+    &:hover {
+        border: 1px dashed gray;
+    }
 }
 
 

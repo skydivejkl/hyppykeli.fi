@@ -294,8 +294,13 @@ h2 {
 .wind-data-source {
   margin-left: 2px; }
 
-.wind-sources li {
-  cursor: help; }
+.wind-sources .station {
+  cursor: help;
+  width: auto;
+  border: 1px dashed transparent;
+  border-bottom: 1px dashed gray; }
+  .wind-sources .station:hover {
+    border: 1px dashed gray; }
 
 .wind-values {
   margin: 1.5em;

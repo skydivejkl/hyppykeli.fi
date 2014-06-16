@@ -58,7 +58,7 @@ var Location = React.createClass({
 
         return (
             <li className="wind-data-source" title={this.getTitle()}>
-                {this.props.name} {this.props.location.name} from a station within {this.getDistanceToStation()} km
+                {this.props.name} {this.props.location.name} from a <span className="station">station</span> within {this.getDistanceToStation()} km
             </li>
         );
     }
