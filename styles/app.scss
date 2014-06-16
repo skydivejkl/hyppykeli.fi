@@ -39,7 +39,9 @@ h1 {
 
 .title {
     margin-left: 2em !important;
-    text-decoration: none;
+    a {
+        text-decoration: none;
+    }
 }
 @media only screen and (max-width : 1000px) {
     .title {

@@ -186,8 +186,9 @@ h1 {
     vertical-align: bottom; }
 
 .title {
-  margin-left: 2em !important;
-  text-decoration: none; }
+  margin-left: 2em !important; }
+  .title a {
+    text-decoration: none; }
 
 @media only screen and (max-width: 1000px) {
   .title {
