@@ -16,8 +16,8 @@
     "efut": {
         "name": "Utti",
         "airportCode": "EFUT",
-        "lat": 60.89639,
-        "lon": 26.93835,
+        "lat": 60.898498,
+        "lon": 26.924409,
         "fmiObservations": {
             "fmisid": 101191
         },
@@ -29,8 +29,8 @@
     "efku": {
         "name": "Rissala",
         "airportCode": "EFKU",
-        "lat": 63.00715 ,
-        "lon": 27.79776,
+        "lat": 63.012165,
+        "lon": 27.790366,
         "_fmisid": 101580,
         "fmiObservations": {
             "fmisid": 101570
@@ -43,8 +43,8 @@
     "efva": {
         "name": "Vaasa",
         "airportCode": "EFVA",
-        "lat": 63.047257,
-        "lon": 21.761314,
+        "lat": 63.040419,
+        "lon": 21.773248,
         "fmiObservations": {
             "fmisid": 101485
         },
