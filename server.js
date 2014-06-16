@@ -89,7 +89,7 @@ app.get("/app.js", browserify("./client.js", {
     transform: ["reactify"]
 }));
 
-app.get("/api/fmi/:storedquery", function(req, res) {
+app.get("/api/fmi/:storedquery", function(req, res, next) {
 
     console.log("query", req.query);
     console.log("params", req.params);
@@ -110,14 +110,10 @@ app.get("/api/fmi/:storedquery", function(req, res) {
     });
 
 
-    cachedReq(u).then(parseFmi).then(res.json.bind(res))
-    .catch(function(err) {
-        console.log("Failed to fetch fmi data", err);
-        res.json(500, {
-            message: "Failed to fetch fmi data",
-            fmiError: err.message
-        });
-    });
+    cachedReq(u)
+    .then(parseFmi)
+    .then(res.json.bind(res))
+    .catch(next);
 
 });
 
