@@ -44,9 +44,11 @@ var Location = React.createClass({
 
     getTitle: function() {
         return [
+            this.props.stationLocation.name + ",",
+            "FMISID:",
+            this.props.stationLocation.fmisid,
             "coordinates:",
-            this.props.stationLocation.coordinates.lat,
-            ",",
+            this.props.stationLocation.coordinates.lat + ",",
             this.props.stationLocation.coordinates.lon,
         ].join(" ");
     },
@@ -56,7 +58,7 @@ var Location = React.createClass({
 
         return (
             <li className="wind-data-source" title={this.getTitle()}>
-                {this.props.name} {this.props.location.name} from a station {this.props.stationLocation.fmisid} within {this.getDistanceToStation()} km
+                {this.props.name} {this.props.location.name} from a station within {this.getDistanceToStation()} km
             </li>
         );
     }
