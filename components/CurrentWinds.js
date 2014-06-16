@@ -6,20 +6,62 @@ var DataBox = require("./DataBox");
 var ZoomableGraph = require("./ZoomableGraph");
 
 
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180);
+}
+
 var Location = React.createClass({
     getDefaultProps: function() {
         return {
             location: {}
         };
     },
+
+    getDistanceToStation: function() {
+        var distance = getDistanceFromLatLonInKm(
+            parseFloat(this.props.coordinates.lat, 10),
+            parseFloat(this.props.coordinates.lon, 10),
+            parseFloat(this.props.stationLocation.coordinates.lat, 10),
+            parseFloat(this.props.stationLocation.coordinates.lon, 10)
+        );
+
+        return Math.round(distance * 100) / 100;
+    },
+
+    getTitle: function() {
+        return [
+            "coordinates:",
+            this.props.stationLocation.coordinates.lat,
+            ",",
+            this.props.stationLocation.coordinates.lon,
+        ].join(" ");
+    },
+
     render: function() {
+        if (!this.props.stationLocation) return <script />;
+
         return (
-            <span className="wind-data-source">
-                {this.props.name}: {this.props.location.name} ({this.props.location.fmisid})
-            </span>
+            <li className="wind-data-source" title={this.getTitle()}>
+                {this.props.name} {this.props.location.name} from a station {this.props.stationLocation.fmisid} within {this.getDistanceToStation()} km
+            </li>
         );
     }
 });
+
 var CurrentWinds = React.createClass({
 
     componentDidMount: function() {
@@ -71,6 +113,7 @@ var CurrentWinds = React.createClass({
         });
     },
 
+
     render: function() {
 
         return (
@@ -98,15 +141,17 @@ var CurrentWinds = React.createClass({
                     />
 
                     <div className="footer-text">
-                        Continuous line represents the observations and the dotted line is a forecast.
+                        Continuous line represents the observations and the dashed line is a forecast.
                     </div>
 
                     <div className="footer-text wind-data">
                         <a href="http://ilmatieteenlaitos.fi/havaintoasemat">Sources</a>:
-                        <Location name="Wind average observations" location={this.props.windObservations.location} />
-                        <Location name="Wind average forecasts" location={this.props.windForecasts.location} />
-                        <Location name="Gust observations" location={this.props.gustObservations.location} />
-                        <Location name="Gust forecasts" location={this.props.gustForecasts.location} />
+                        <ul>
+                            <Location name="Wind average observations" stationLocation={this.props.windObservations.location} coordinates={this.props.coordinates} />
+                            <Location name="Wind average forecasts" stationLocation={this.props.windForecasts.location} coordinates={this.props.coordinates} />
+                            <Location name="Gust observations" stationLocation={this.props.gustObservations.location} coordinates={this.props.coordinates} />
+                            <Location name="Gust forecasts" stationLocation={this.props.gustForecasts.location} coordinates={this.props.coordinates} />
+                        </ul>
                     </div>
 
                 </DataBox>

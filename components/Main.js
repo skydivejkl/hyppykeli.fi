@@ -8,24 +8,24 @@ var Clouds = require("./Clouds");
 var DataBox = require("./DataBox");
 
 /**
- * DzLocation
+ * DZLocation
  *
  * @namespace components
- * @class DzLocation
+ * @class DZLocation
  */
-var DzLocation = React.createClass({
+var DZLocation = React.createClass({
     getGoogleMapsURL: function() {
         return [
             "https://maps.google.com/maps?q=",
-            this.props.lat,
+            this.props.coordinates.lat,
             ",",
-            this.props.lon,
+            this.props.coordinates.lon,
             "+(",
             this.props.airportCode,
             ")&z=14&ll=",
-            this.props.lat,
+            this.props.coordinates.lat,
             ",",
-            this.props.lon
+            this.props.coordinates.lon
         ].join("");
     },
 
@@ -38,7 +38,7 @@ var DzLocation = React.createClass({
                 </p>
                 <div className="footer-text">
                         <a href={this.getGoogleMapsURL()} target="_new" >
-                        {this.props.lat}, {this.props.lon}
+                        {this.props.coordinates.lat}, {this.props.coordinates.lon}
                         </a>
                 </div>
             </div>
@@ -58,6 +58,13 @@ var Main = React.createClass({
         };
     },
 
+    getDZCoordinates: function() {
+        return {
+            lat: this.props.options.lat,
+            lon: this.props.options.lon
+        };
+    },
+
     render: function() {
         return (
             <div>
@@ -68,6 +75,7 @@ var Main = React.createClass({
                         windForecasts={this.state.windForecasts}
                         gustObservations={this.state.gustObservations}
                         gustForecasts={this.state.gustForecasts}
+                        coordinates={this.getDZCoordinates()}
                     />
 
                     <Clouds metar={this.state.metar} />
@@ -80,11 +88,10 @@ var Main = React.createClass({
                     <DataBox
                         icon="location2"
                         title="Location" >
-                        <DzLocation
+                        <DZLocation
                             airportCode={this.props.options.airportCode}
                             name={this.props.options.name}
-                            lat={this.props.options.lat}
-                            lon={this.props.options.lon}
+                            coordinates={this.getDZCoordinates()}
                         />
                     </DataBox>
 
