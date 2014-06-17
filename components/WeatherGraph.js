@@ -25,16 +25,20 @@ var WeatherGraph = React.createClass({
 
     componentWillReceiveProps: function(nextProps) {
         this.computeData(nextProps);
-        this.setInitialCursorPosition();
+
+        if (!this.initialized && this.hasData(nextProps)) {
+            this.initialized = true;
+            setTimeout(this.moveCursorToCurrentTime, 0);
+        }
     },
 
-    setInitialCursorPosition: function() {
-        if (!this.state.initialized && this.hasData()) {
-            setTimeout(function() {
-                this.moveCursorToCurrentTime();
-                this.setState({ initialized: true });
-            }.bind(this), 100);
-        }
+    hasData: function(props) {
+        return (
+            props.lines &&
+            props.lines[0] &&
+            props.lines[0].observations &&
+            props.lines[0].observations.length > 0
+        );
     },
 
     getWidth: function() {
@@ -197,14 +201,6 @@ var WeatherGraph = React.createClass({
         this.renderAxes();
     },
 
-    hasData: function() {
-        return (
-            this.props.lines &&
-            this.props.lines[0] &&
-            this.props.lines[0].observations &&
-            this.props.lines[0].observations.length > 0
-        );
-    },
 
     handleTouchStart: function(e) {
         e.preventDefault();
