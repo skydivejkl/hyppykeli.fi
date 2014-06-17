@@ -296,8 +296,9 @@ var WeatherGraph = React.createClass({
                     fill={color} />
 
                 <text
+                    textAnchor="end"
                     className="limit-text"
-                    x={this.props.padding + 2}
+                    x={this.state.width - this.props.padding - 5}
                     y={bottom}
                     fill="black">{desc}</text>
 
