@@ -51,6 +51,19 @@
         "fmiForecasts": {
             "geoid": 6296566
         }
+    },
+
+    "efpo": {
+        "name": "Pori",
+        "airportCode": "EFPO",
+        "lat": 61.46169,
+        "lon": 21.79998,
+        "fmiObservations": {
+            "fmisid": 101064
+        },
+        "fmiForecasts": {
+            "geoid": 6296557
+        }
     }
 
 }
