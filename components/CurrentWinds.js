@@ -67,7 +67,11 @@ var Location = React.createClass({
 var CurrentWinds = React.createClass({
 
     componentDidMount: function() {
-        setInterval(this.forceUpdate.bind(this), 1000 * 5);
+        var self = this;
+        (function updater() {
+            self.forceUpdate.bind(self);
+            setTimeout(updater, 1000 * 5);    
+        }());
     },
 
     hasData: function() {
