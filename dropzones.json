@@ -53,6 +53,19 @@
         }
     },
 
+    "efla": {
+        "name": "Vesivehmaa",
+        "airportCode": "EFLA",
+        "lat": 61.147442,
+        "lon": 25.693681,
+        "fmiObservations": {
+            "fmisid": 101185
+        },
+        "fmiForecasts": {
+            "place": "vesivehmaa"
+        }
+    },
+
     "efpo": {
         "name": "Pori",
         "airportCode": "EFPO",
