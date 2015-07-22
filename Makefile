@@ -12,4 +12,6 @@ scss-watch:
 	node-sass --watch --source-comments map  --source-map -o public/app.css styles/app.scss
 
 
+server:
+	node server.js
 
