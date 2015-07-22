@@ -96,3 +96,7 @@ function fixData(req) {
 
 
 window.createWeatherApp = createWeatherApp;
+
+setTimeout(function() {
+    window.location.reload();
+}, 1000 * 60 * 5);
