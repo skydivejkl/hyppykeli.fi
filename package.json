@@ -30,8 +30,13 @@
     "prettier": "^0.21.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-fastclick": "^3.0.1",
     "react-redux": "^5.0.3",
+    "react-router-dom": "4",
     "react-simple": "^1.2.3",
+    "recompose": "^0.22.0",
+    "redux": "^3.6.0",
+    "reselect": "^2.5.4",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0",
     "xml2js": "^0.4.17"
