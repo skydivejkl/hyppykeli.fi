@@ -1,3 +1,13 @@
 #!/bin/sh
+
+set -eu
+
+# self update
+cp extra/post-receive .git/hooks/post-receive
+chmod +x .git/hooks/post-receive
+
+# update deps
 yarn
-killall node # lol
+
+# restart (lol)
+killall node
