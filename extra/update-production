@@ -12,5 +12,8 @@ PATH=$HOME/n/bin:$PATH
 # update deps
 yarn
 
+# build bundle
+make js
+
 # restart (lol)
 killall node

@@ -3,7 +3,7 @@ export SHELL := /bin/bash # Required for OS X for some reason
 bundle = static/dist/bundle.js
 
 
-all: dist-changes-hide yarn js
+all: yarn js add-production
 
 yarn:
 	yarn
@@ -19,27 +19,13 @@ server-watch:
 
 js-server:
 	webpack-dev-server -d --progress --inline --port 8081 --host 0.0.0.0
-	
-dist-changes-hide:
-	git update-index --assume-unchanged $(bundle)
 
-dist-changes-show:
-	git update-index --no-assume-unchanged $(bundle)
-
-assert-clean-git: dist-changes-show
+assert-clean-git:
 	git checkout $(bundle)
 	@test -z "$(shell git status . --porcelain)" || (echo "Dirty git tree: " && git status . --porcelain ; exit 1)
-
-commit-bundle: assert-clean-git js
-	$(MAKE) dist-changes-show
-	git add $(bundle)
-	git status . --porcelain
-	git commit -m "Commit bundle"
-	$(MAKE) dist-changes-hide
-
 
 add-production:
 	git remote add production hyppykeli@skydivejkl.fi:hyppykeli
 
-deploy:
+deploy assert-clean-git:
 	git push production HEAD:master
