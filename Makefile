@@ -36,3 +36,10 @@ commit-bundle: assert-clean-git js
 	git status . --porcelain
 	git commit -m "Commit bundle"
 	$(MAKE) dist-changes-hide
+
+
+add-production:
+	git remote add production hyppykeli@skydivejkl.fi:hyppykeli
+
+deploy:
+	git push production HEAD:master
