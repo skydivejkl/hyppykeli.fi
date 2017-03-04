@@ -1,6 +1,6 @@
 export PATH := node_modules/.bin:$(PATH)
 export SHELL := /bin/bash # Required for OS X for some reason
-bundle = dist/bundle.js
+bundle = static/dist/bundle.js
 
 
 all: dist-changes-hide yarn js
@@ -15,7 +15,7 @@ server:
 	node server/server.js
 
 server-watch:
-	nodemon server/server.js
+	nodemon --watch server/ server/server.js
 
 js-server:
 	webpack-dev-server -d --progress --inline --port 8081 --host 0.0.0.0
