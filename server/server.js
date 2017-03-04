@@ -7,6 +7,7 @@ const config = require("../config");
 const app = new Koa();
 
 const metar = require("./metar");
+const observations = require("./observations");
 
 app.use((ctx, next) => {
     ctx.state.fmiApikey = config.fmiApikey;
@@ -14,6 +15,7 @@ app.use((ctx, next) => {
 });
 
 app.use(metar.routes());
+app.use(observations.routes());
 
 app.use(serveStatic("static"));
 
