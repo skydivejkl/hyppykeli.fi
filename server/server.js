@@ -1,6 +1,7 @@
 const Koa = require("koa");
 const router = require("koa-router")();
 const serveStatic = require("koa-static");
+const fs = require("fs");
 
 const config = require("../config");
 
@@ -14,12 +15,21 @@ app.use((ctx, next) => {
     return next();
 });
 
+router.get("/*", (ctx, next) => {
+    if (ctx.request.url.includes(".")) {
+        return next();
+    }
+
+    ctx.type = "text/html";
+    ctx.body = fs.createReadStream(__dirname + "/../static/index.html");
+});
+
 app.use(metar.routes());
 app.use(fmi.routes());
 
 app.use(serveStatic("static"));
 
-app.use(router.allowedMethods());
+app.use(router.routes());
 
 app.listen(8080);
 console.log("Listening 8080");

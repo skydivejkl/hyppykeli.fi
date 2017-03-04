@@ -6,11 +6,8 @@ console.log("git message", GIT_COMMIT_MESSAGE);
 console.log("git rev", GIT_COMMIT_REV);
 
 function HelloWorld() {
-    return (
-        <div>React.js Hello World!</div>
-    );
+    return <div>React.js Hello World! 2</div>;
 }
-
 
 const container = document.getElementById("app-container");
 ReactDOM.render(<HelloWorld />, container);

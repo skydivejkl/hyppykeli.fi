@@ -12,10 +12,13 @@ js:
 	NODE_ENV=production webpack -p --progress
 
 server:
-	python -m SimpleHTTPServer 8080
+	node server/server.js
+
+server-watch:
+	nodemon server/server.js
 
 js-server:
-	webpack-dev-server -d --progress --inline --port 8080
+	webpack-dev-server -d --progress --inline --port 8081 --host 0.0.0.0
 	
 dist-changes-hide:
 	git update-index --assume-unchanged $(bundle)
