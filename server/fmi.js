@@ -71,7 +71,6 @@ router.get("/api/observations/:fmisid", async ctx => {
             return {
                 id: getFeatureId(feature),
                 description: getDescription(descriptionData),
-                featureDescriptionHref,
                 stationName: getFeatureStationName(feature),
                 stationCoordinates: getFeatureStationCoordinates(feature),
                 googleMaps: url.resolve(
