@@ -1,8 +1,9 @@
 const Koa = require("koa");
 const router = require("koa-router")();
 const serveStatic = require("koa-static");
-const fs = require("fs");
+var {execSync} = require("child_process");
 
+var gitRev = execSync("git rev-parse HEAD").toString();
 const config = require("../config");
 
 const app = new Koa();
@@ -46,7 +47,7 @@ router.get("/*", (ctx, next) => {
     ctx.type = "text/html";
     ctx.body = renderHtml(
         process.env.NODE_ENV === "production"
-            ? "dist/bundle.js"
+            ? "dist/bundle.js?v=" + gitRev
             : "http://sihteeri:8081/dist/bundle.js"
     );
 });
