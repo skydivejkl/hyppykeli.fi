@@ -15,6 +15,22 @@ app.use((ctx, next) => {
     return next();
 });
 
+const renderHtml = script => `
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hyppykeli.fi</title>
+        <link href="/parachute.ico" rel="icon">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+        <div id="app-container"></div>
+        <script src="${script}" charset="utf-8"></script>
+    </body>
+</html>
+`;
+
 const started = new Date();
 
 router.get("/uptime", ctx => {
@@ -28,7 +44,11 @@ router.get("/*", (ctx, next) => {
     }
 
     ctx.type = "text/html";
-    ctx.body = fs.createReadStream(__dirname + "/../static/index.html");
+    ctx.body = renderHtml(
+        process.env.NODE_ENV === "production"
+            ? "dist/bundle.js"
+            : "http://sihteeri:8081/dist/bundle.js"
+    );
 });
 
 app.use(metar.routes());
