@@ -16,7 +16,7 @@ app.use((ctx, next) => {
 });
 
 router.get("/*", (ctx, next) => {
-    if (ctx.request.url.includes(".")) {
+    if (/\.[a-z]{1,3}$/.test(ctx.request.url)) {
         return next();
     }
 
