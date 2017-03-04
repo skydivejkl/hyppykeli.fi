@@ -38,14 +38,14 @@ const Title = simple(View.create(Link), {
     color: "black",
 });
 
-const DZLink = ({icaocode, fmisid, lat, lon}) => (
+const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
     <Link
         to={{
             pathname: "/dz",
             search: qs.stringify({icaocode, fmisid, latlon: `${lat},${lon}`}),
         }}
     >
-        EFJY
+        {children}
     </Link>
 );
 
@@ -54,6 +54,14 @@ const FrontPage = () => (
         Etusivu
         <DZLink icaocode="EFJY" fmisid="101339" lat="62.407390" lon="62.407390">
             EFJY
+        </DZLink>
+
+        <DZLink icaocode="EFUT" fmisid="101191" lat="60.898498" lon="26.924409">
+            EFUT
+        </DZLink>
+
+        <DZLink icaocode="EFKU" fmisid="101570" lat="63.012165" lon="27.790366">
+            EFKU
         </DZLink>
     </View>
 );
