@@ -19,7 +19,7 @@ const started = new Date();
 
 router.get("/uptime", (ctx, next) => {
     ctx.type = "text/html";
-    ctx.body = created.toString();
+    ctx.body = started.toString();
 });
 
 router.get("/*", (ctx, next) => {
