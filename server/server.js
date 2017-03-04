@@ -17,7 +17,7 @@ app.use((ctx, next) => {
 
 const started = new Date();
 
-router.get("/uptime", (ctx, next) => {
+router.get("/uptime", ctx => {
     ctx.type = "text/html";
     ctx.body = started.toString();
 });
