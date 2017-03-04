@@ -46,21 +46,27 @@ const OBSERVATION_PARAMETERS = [
     "n_man",
 ];
 router.get("/api/observations/:fmisid", async ctx => {
-    const data = await fmiRequest(
-        ctx.state.fmiApikey,
-        "fmi::observations::weather::timevaluepair",
-        {
+    const data = await fmiRequest({
+        apikey: ctx.state.fmiApikey,
+        query: "fmi::observations::weather::timevaluepair",
+        cacheKey: "observations:" + ctx.params.fmisid,
+        params: {
             starttime: moment().subtract(1, "days").toISOString(),
             endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
-        }
-    );
+        },
+    });
 
     const featuresWithDescriptions = await Promise.all(
         getFeatures(data).map(async feature => {
             const featureDescriptionHref = getFeatureDescriptionHref(feature);
-            const descriptionData = await fmiRawRequest(featureDescriptionHref);
+            const descriptionData = await fmiRawRequest(
+                featureDescriptionHref,
+                {
+                    cacheKey: featureDescriptionHref,
+                }
+            );
 
             return {
                 id: getFeatureId(feature),
@@ -84,16 +90,17 @@ router.get("/api/observations/:fmisid", async ctx => {
 });
 
 router.get("/api/observations/:fmisid/:feature", async ctx => {
-    const data = await fmiRequest(
-        ctx.state.fmiApikey,
-        "fmi::observations::weather::timevaluepair",
-        {
+    const data = await fmiRequest({
+        apikey: ctx.state.fmiApikey,
+        query: "fmi::observations::weather::timevaluepair",
+        cacheKey: "observations:" + ctx.params.fmisid,
+        params: {
             starttime: moment().subtract(1, "days").toISOString(),
             endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
-        }
-    );
+        },
+    });
 
     const features = getFeatures(data);
     if (!features) {
@@ -133,14 +140,15 @@ const FORECAST_PAREMETERS = [
 ];
 
 router.get("/api/forecasts/:latlon", async ctx => {
-    const data = await fmiRequest(
-        ctx.state.fmiApikey,
-        "fmi::forecast::hirlam::surface::point::timevaluepair",
-        {
+    const data = await fmiRequest({
+        apikey: ctx.state.fmiApikey,
+        query: "fmi::forecast::hirlam::surface::point::timevaluepair",
+        cacheKey: "forecasts:" + ctx.params.latlon,
+        params: {
             parameters: FORECAST_PAREMETERS,
             latlon: ctx.params.latlon,
-        }
-    );
+        },
+    });
 
     ctx.body = {
         features: getFeatures(data).map(feature => ({
@@ -152,14 +160,15 @@ router.get("/api/forecasts/:latlon", async ctx => {
 });
 
 router.get("/api/forecasts/:latlon/:feature", async ctx => {
-    const data = await fmiRequest(
-        ctx.state.fmiApikey,
-        "fmi::forecast::hirlam::surface::point::timevaluepair",
-        {
+    const data = await fmiRequest({
+        apikey: ctx.state.fmiApikey,
+        query: "fmi::forecast::hirlam::surface::point::timevaluepair",
+        cacheKey: "forecasts:" + ctx.params.latlon,
+        params: {
             parameters: FORECAST_PAREMETERS,
             latlon: ctx.params.latlon,
-        }
-    );
+        },
+    });
 
     const features = getFeatures(data);
     if (!features) {
