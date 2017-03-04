@@ -10,7 +10,7 @@ var gitDate = execSync("git log -1 --format=%cd ").toString();
 var config = {
     entry: "./src/index.js",
     output: {
-        path: __dirname + "/dist",
+        path: __dirname + "/static/dist",
         filename: "bundle.js",
         publicPath: "/dist",
     },
@@ -27,10 +27,10 @@ var config = {
     plugins: [
         new webpack.DefinePlugin({
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-            "GIT_COMMIT_REV": JSON.stringify(gitRev),
-            "GIT_COMMIT_MESSAGE": JSON.stringify(gitMessageShort),
-            "GIT_COMMIT_MESSAGE_FULL": JSON.stringify(gitMessageFull),
-            "GIT_COMMIT_DATE": JSON.stringify(gitDate),
+            GIT_COMMIT_REV: JSON.stringify(gitRev),
+            GIT_COMMIT_MESSAGE: JSON.stringify(gitMessageShort),
+            GIT_COMMIT_MESSAGE_FULL: JSON.stringify(gitMessageFull),
+            GIT_COMMIT_DATE: JSON.stringify(gitDate),
         }),
     ],
 };
