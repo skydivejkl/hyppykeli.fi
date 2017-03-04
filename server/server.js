@@ -30,7 +30,7 @@ const renderHtml = script => `
         <script src="${script}" charset="utf-8"></script>
     </body>
 </html>
-`;
+`.trim();
 
 const started = new Date();
 
