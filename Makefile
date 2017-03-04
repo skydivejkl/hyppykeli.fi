@@ -21,7 +21,6 @@ js-server:
 	webpack-dev-server -d --progress --inline --port 8081 --host 0.0.0.0
 
 assert-clean-git:
-	git checkout $(bundle)
 	@test -z "$(shell git status . --porcelain)" || (echo "Dirty git tree: " && git status . --porcelain ; exit 1)
 
 add-production:
