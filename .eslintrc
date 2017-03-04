@@ -19,7 +19,10 @@
       "browser": true
   },
   "globals": {
-    "Promise": true
+    "Promise": true,
+    "GIT_COMMIT_DATE": true,
+    "GIT_COMMIT_REV": true,
+    "GIT_COMMIT_MESSAGE": true
   },
   "plugins": [
     "react",
