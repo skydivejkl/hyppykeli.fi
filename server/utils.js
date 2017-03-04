@@ -20,7 +20,13 @@ const xml2js = xml => new Promise((resove, reject) => {
     });
 });
 
-const fmiRequest = async (apikey, query, params) => {
+const fmiRawRequest = async url => {
+    console.log("Requesting", url);
+    const response = await axios(url);
+    return xml2js(response.data);
+};
+
+const fmiRequest = (apikey, query, params) => {
     const metarURL = `http://data.fmi.fi/fmi-apikey/${apikey}/wfs?request=getFeature`;
 
     const finalURL = extendUrlQuery(
@@ -33,13 +39,11 @@ const fmiRequest = async (apikey, query, params) => {
         )
     );
 
-    console.log("requsting", finalURL);
-    const response = await axios(finalURL);
-
-    return xml2js(response.data);
+    return fmiRawRequest(finalURL);
 };
 
 module.exports = {
     xml2js,
     fmiRequest,
+    fmiRawRequest,
 };

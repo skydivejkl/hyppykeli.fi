@@ -4,11 +4,10 @@ const moment = require("moment");
 
 const {fmiRequest} = require("./utils");
 
-var query;
-query = "fmi::avi::observations::finland::iwxxm";
-query = "fmi::avi::observations::finland::latest::iwxxm";
-query = "fmi::avi::observations::iwxxm";
-// query = "fmi::avi::observations::latest::iwxxm";
+// const query = "fmi::avi::observations::finland::iwxxm";
+// const query = "fmi::avi::observations::finland::latest::iwxxm";
+// const query = "fmi::avi::observations::latest::iwxxm";
+const query = "fmi::avi::observations::iwxxm";
 
 const getPoints = get("wfs:FeatureCollection.wfs:member");
 const getMetar = get(
