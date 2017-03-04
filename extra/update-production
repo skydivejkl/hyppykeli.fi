@@ -7,7 +7,7 @@ cp extra/post-receive .git/hooks/post-receive
 chmod +x .git/hooks/post-receive
 
 # update deps
-yarn
+/home/hyppykeli/n/bin/yarn
 
 # restart (lol)
 killall node
