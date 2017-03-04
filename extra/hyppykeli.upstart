@@ -1,0 +1,11 @@
+description "hyppykeli"
+
+start on runlevel [23]
+stop on shutdown
+
+chdir /home/hyppykeli/hyppykeli
+setuid hyppykeli
+env NODE_ENV=production
+exec /home/hyppykeli/n/bin/node server/server.js
+
+respawn
