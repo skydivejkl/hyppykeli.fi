@@ -6,8 +6,11 @@ set -eu
 cp extra/post-receive .git/hooks/post-receive
 chmod +x .git/hooks/post-receive
 
+# Use local n
+PATH=$HOME/n/bin:$PATH
+
 # update deps
-/home/hyppykeli/n/bin/yarn
+yarn
 
 # restart (lol)
 killall node
