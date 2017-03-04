@@ -27,5 +27,5 @@ assert-clean-git:
 add-production:
 	git remote add production hyppykeli@skydivejkl.fi:hyppykeli
 
-deploy assert-clean-git:
+deploy: assert-clean-git
 	git push production HEAD:master
