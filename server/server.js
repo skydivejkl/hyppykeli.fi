@@ -3,7 +3,7 @@ const router = require("koa-router")();
 const serveStatic = require("koa-static");
 var {execSync} = require("child_process");
 
-var gitRev = execSync("git rev-parse HEAD").toString();
+var gitRev = execSync("git rev-parse HEAD").toString().trim();
 const config = require("../config");
 
 const app = new Koa();

@@ -2,10 +2,10 @@ var webpack = require("webpack");
 var path = require("path");
 var {execSync} = require("child_process");
 
-var gitRev = execSync("git rev-parse HEAD").toString();
-var gitMessageShort = execSync("git log -1 --pretty=%s").toString();
-var gitMessageFull = execSync("git log -1 --pretty=%B").toString();
-var gitDate = execSync("git log -1 --format=%cd ").toString();
+var gitRev = execSync("git rev-parse HEAD").toString().trim();
+var gitMessageShort = execSync("git log -1 --pretty=%s").toString().trim();
+var gitMessageFull = execSync("git log -1 --pretty=%B").toString().trim();
+var gitDate = execSync("git log -1 --format=%cd ").toString().trim();
 
 var config = {
     entry: "./src/index.js",
