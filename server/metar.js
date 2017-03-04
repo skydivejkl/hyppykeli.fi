@@ -15,10 +15,15 @@ const getMetar = get(
 );
 
 router.get("/api/metar/:icaocode", async ctx => {
-    const data = await fmiRequest(ctx.state.fmiApikey, query, {
-        icaocode: ctx.params.icaocode,
-        starttime: moment().subtract(1, "days").toISOString(),
-        endtime: moment().toISOString(),
+    const data = await fmiRequest({
+        apikey: ctx.state.fmiApikey,
+        query,
+        cacheKey: ctx.params.icaocode,
+        params: {
+            icaocode: ctx.params.icaocode,
+            starttime: moment().subtract(1, "days").toISOString(),
+            endtime: moment().toISOString(),
+        },
     });
 
     const points = getPoints(data);
