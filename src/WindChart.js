@@ -36,7 +36,7 @@ const PointValue = simple(
     }
 );
 
-const asFloat = i => parseFloat(i, 10) + 5;
+const asFloat = i => parseFloat(i, 10);
 
 const getForecastPoints = data => data.map((d, i, array) => {
     if (d.type === "forecast") {
