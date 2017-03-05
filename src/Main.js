@@ -27,20 +27,43 @@ const Wrap = simple(View, {
     // },
 });
 
+const DZLinkStyled = simple(View.create(Link), {
+    textDecoration: "none",
+    color: "white",
+    marginBottom: 10,
+    fontSize: 40,
+    textAlign: "center",
+    backgroundColor: "skyblue",
+    padding: 10,
+});
+
 const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
-    <Link
+    <DZLinkStyled
         to={{
             pathname: "/dz",
             search: qs.stringify({icaocode, fmisid, lat, lon}),
         }}
     >
         {children}
-    </Link>
+    </DZLinkStyled>
 );
 
+const Title = simple(View, {
+    fontSize: 50,
+    marginBottom: 50,
+});
+
+const FrontPageContainer = simple(View, {
+    margin: "0 auto",
+    justifyContent: "center",
+    maxWidth: 400,
+});
+
 const FrontPage = () => (
-    <View>
-        Etusivu
+    <FrontPageContainer>
+        <Title>
+            Hyppykeli.fi
+        </Title>
         <DZLink icaocode="EFJY" fmisid="101339" lat="62.407390" lon="62.407390">
             EFJY
         </DZLink>
@@ -52,7 +75,7 @@ const FrontPage = () => (
         <DZLink icaocode="EFKU" fmisid="101570" lat="63.012165" lon="27.790366">
             EFKU
         </DZLink>
-    </View>
+    </FrontPageContainer>
 );
 
 const Main = () => (
