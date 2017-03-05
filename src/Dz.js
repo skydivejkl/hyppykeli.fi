@@ -1,6 +1,6 @@
 import React from "react";
 import {compose, lifecycle, withProps} from "recompose";
-import {first, last} from "lodash/fp";
+import {first, last, getOr, isEmpty} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import qs from "querystring";
 import u from "updeep";
@@ -8,6 +8,9 @@ import axios from "axios";
 import moment from "moment";
 import Chart from "chart.js";
 import {View} from "./core";
+
+const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
+const getPoints = getOr([], ["points"]);
 
 Chart.plugins.register({
     beforeDraw: function(chart, easing) {
@@ -34,15 +37,56 @@ Chart.plugins.register({
 
 class ChartView extends React.Component {
     componentDidMount() {
+        const gusts = this.props.gusts;
+        const gustObservations = gusts.map(d => {
+            if (d.type === "observation") {
+                return parseFloat(d.value, 10);
+            }
+            return null;
+        });
+
+        const gustForecasts = gusts.map((d, i, array) => {
+            if (d.type === "forecast") {
+                return parseFloat(d.value, 10);
+            } else if (array[i + 1] && array[i + 1].type === "forecast") {
+                return parseFloat(d.value, 10);
+            }
+
+            return null;
+        });
+        console.log("gust forecasts", gustForecasts);
+
         var data = {
-            labels: this.props.gusts.map(d => d.time),
+            labels: gusts.map(d => d.time),
             datasets: [
+                // {
+                //     label: "Keskituuli",
+                //     fill: false,
+                //     lineTension: 0.5,
+                //     backgroundColor: "rgba(75,192,192,0.4)",
+                //     borderColor: "rgba(75,192,192,1)",
+                //     borderCapStyle: "butt",
+                //     borderDash: [],
+                //     borderDashOffset: 0.0,
+                //     borderJoinStyle: "miter",
+                //     pointBorderColor: "rgba(75,192,192,1)",
+                //     pointBackgroundColor: "#fff",
+                //     pointBorderWidth: 1,
+                //     pointHoverRadius: 5,
+                //     pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                //     pointHoverBorderColor: "rgba(220,220,220,1)",
+                //     pointHoverBorderWidth: 2,
+                //     pointRadius: 1,
+                //     pointHitRadius: 10,
+                //     data: this.props.avg.map(d => parseFloat(d.value, 10)),
+                //     spanGaps: false,
+                // },
                 {
-                    label: "Keskituuli",
+                    label: "Puuskahavainnoit",
                     fill: false,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "rgba(75,192,192,1)",
+                    // backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,0.4)",
                     borderCapStyle: "butt",
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -56,15 +100,15 @@ class ChartView extends React.Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: this.props.avg.map(d => parseFloat(d.value, 10)),
+                    data: gustObservations,
                     spanGaps: false,
                 },
                 {
-                    label: "Puuskat",
+                    label: "Puuskaennuste",
                     fill: false,
                     lineTension: 0.5,
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "rgba(75,192,192,1)",
+                    // backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(255,192,192,1)",
                     borderCapStyle: "butt",
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -78,9 +122,7 @@ class ChartView extends React.Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: this.props.gusts.map(
-                        d => parseFloat(d.value, 10) + 5
-                    ),
+                    data: gustForecasts,
                     spanGaps: false,
                 },
                 {
@@ -101,7 +143,7 @@ class ChartView extends React.Component {
                     pointHoverBorderWidth: 0,
                     pointRadius: 0,
                     pointHitRadius: 0,
-                    data: this.props.gusts.map(() => 8),
+                    data: gusts.map(() => 8),
                 },
                 {
                     label: "B+",
@@ -121,7 +163,7 @@ class ChartView extends React.Component {
                     pointHoverBorderWidth: 0,
                     pointRadius: 0,
                     pointHitRadius: 0,
-                    data: this.props.gusts.map(() => 11),
+                    data: gusts.map(() => 11),
                 },
             ],
         };
@@ -150,7 +192,7 @@ class ChartView extends React.Component {
                     x: true,
                     onHover: (a, b, c) => {
                         if (b[0]) {
-                            console.log(b[0]._index);
+                            // console.log(b[0]._index);
                             // i++;
                             // if (i > 100) {
                             //     debugger;
@@ -181,15 +223,34 @@ class ChartView extends React.Component {
     }
 }
 
-var Dz = ({gusts, windAvg}) => {
+var Dz = ({gusts, windAvg, gustForecasts}) => {
     const g = gusts ? last(gusts.points) : "ladataan";
+
     const a = windAvg ? last(windAvg.points) : "ladataan";
+
+    const dataMissing = [
+        isEmpty(getPoints(gusts)),
+        isEmpty(getPoints(windAvg)),
+        isEmpty(getPoints(gustForecasts)),
+    ].some(Boolean);
+
+    const combinedGusts = getPoints(gusts)
+        .map(d => ({
+            ...d,
+            type: "observation",
+        }))
+        .concat(
+            getPoints(gustForecasts).slice(0, 6).map(d => ({
+                ...d,
+                type: "forecast",
+            }))
+        );
 
     return (
         <View>
             dz näkymä3
-            {Boolean(windAvg && gusts) &&
-                <ChartView gusts={gusts.points} avg={windAvg.points} />}
+            {!dataMissing &&
+                <ChartView gusts={combinedGusts} avg={windAvg.points} />}
             <View>
                 {JSON.stringify(g)}
             </View>
@@ -207,7 +268,10 @@ Dz = compose(
         scope: "weatherData",
 
         mapState(state, props) {
-            return state[props.fmisid];
+            return {
+                ...state[props.fmisid],
+                ...state[asLatLonPair(props)],
+            };
         },
 
         fetchGusts() {
@@ -242,9 +306,26 @@ Dz = compose(
             }
         },
 
+        fetchGustForecasts() {
+            if (this.props.lat && this.props.lon) {
+                axios(
+                    `/api/forecasts/${asLatLonPair(this.props)}/enn-s-1-1-windgust`
+                ).then(res => {
+                    this.setState(
+                        u({
+                            [asLatLonPair(this.props)]: {
+                                gustForecasts: res.data,
+                            },
+                        })
+                    );
+                });
+            }
+        },
+
         fetchAll() {
             this.fetchGusts();
             this.fetchWindAvg();
+            this.fetchGustForecasts();
         },
     }),
     lifecycle({

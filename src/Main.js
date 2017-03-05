@@ -42,7 +42,7 @@ const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
     <Link
         to={{
             pathname: "/dz",
-            search: qs.stringify({icaocode, fmisid, latlon: `${lat},${lon}`}),
+            search: qs.stringify({icaocode, fmisid, lat, lon}),
         }}
     >
         {children}
