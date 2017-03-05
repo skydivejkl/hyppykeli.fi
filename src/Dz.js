@@ -39,10 +39,15 @@ const SubTitle = simple(View, {
     fontSize: 25,
 });
 
-const swing = css.keyframes("bounce", {
+const swing = css.keyframes({
     "0%": {transform: "rotate(60deg)"},
     "50%": {transform: "rotate(-60deg)"},
     "100%": {transform: "rotate(60deg)"},
+});
+
+const rotate = css.keyframes({
+    "0%": {transform: "rotate(0deg)"},
+    "100%": {transform: "rotate(360deg)"},
 });
 
 const Parachute = simple(
@@ -59,6 +64,10 @@ const Parachute = simple(
         swing: {
             animation: `${swing} 2s ease-in-out infinite`,
             transformOrigin: "50% 0%",
+        },
+        rotate: {
+            animation: `${rotate} 0.8s linear infinite`,
+            transformOrigin: "50% 15%",
         },
     }
 );
