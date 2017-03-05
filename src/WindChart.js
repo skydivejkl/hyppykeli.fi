@@ -125,8 +125,8 @@ class WindChart extends React.Component {
                 },
             ],
         };
-        var i = 0;
-        var myLineChart = new Chart(this.canvas, {
+
+        this.chart = new Chart(this.canvas, {
             type: "line",
             data: data,
             options: {
