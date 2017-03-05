@@ -32,11 +32,12 @@ const Row = simple(View, {
 });
 
 const Title = simple(View, {
-    fontSize: 35,
+    fontSize: 45,
+    fontWeight: "bold",
+    color: "white",
 });
 
 const SubTitle = simple(View, {
-    marginTop: 50,
     fontSize: 25,
 });
 
@@ -57,7 +58,9 @@ const Parachute = simple(
         background: "url(/parachute.svg)",
         backgroundSize: "contain",
         width: 200,
-        height: 200,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        height: "100%",
         marginTop: 10,
         opacity: 0.08,
     },
@@ -93,6 +96,12 @@ const TitleLink = simple(View.create(Link), {
     alignItems: "center",
 });
 
+const Sky = simple(View, {
+    backgroundColor: "skyblue",
+    paddingBottom: 200,
+    overflow: "hidden",
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -106,19 +115,21 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
+            <Sky>
+                <ParachuteContainer>
+                    <Parachute swing />
+                </ParachuteContainer>
 
-            <ParachuteContainer>
-                <Parachute swing />
-            </ParachuteContainer>
+                <Row>
+                    <Title>{dzProps.icaocode}</Title>
+                </Row>
 
-            <Row>
-                <Title>{dzProps.icaocode}</Title>
-            </Row>
+                <Row>
+                    <LatestGust />
+                    <LatestWindAvg />
+                </Row>
 
-            <Row>
-                <LatestGust />
-                <LatestWindAvg />
-            </Row>
+            </Sky>
 
             {!dataMissing &&
                 <View>

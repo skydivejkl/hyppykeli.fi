@@ -14,6 +14,7 @@ const WindReading = simple(View, {
 });
 
 const WindTitle = simple(View, {
+    color: "white",
     fontWeight: "bold",
     fontSize: 20,
     flexDirection: "row",
