@@ -34,6 +34,11 @@ const Title = simple(View, {
     fontSize: 35,
 });
 
+const SubTitle = simple(View, {
+    marginTop: 50,
+    fontSize: 25,
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -50,13 +55,19 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
             <Row>
                 <Title>{dzProps.icaocode}</Title>
             </Row>
+
             <Row>
                 <LatestGust />
                 <LatestWindAvg />
             </Row>
 
             {!dataMissing &&
-                <WindChart gusts={combinedGusts} avg={combinedAvg} />}
+                <View>
+                    <Row>
+                        <SubTitle>Tuulihavainnot ja ennusteet</SubTitle>
+                    </Row>
+                    <WindChart gusts={combinedGusts} avg={combinedAvg} />
+                </View>}
         </View>
     );
 };
