@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "chart.js";
+import {throttle} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
 import simple from "react-simple";
@@ -69,6 +70,7 @@ const defaultLineStyle = {
 
 class WindChart extends React.Component {
     componentDidMount() {
+        this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
         const gusts = this.props.gusts;
         const avg = this.props.avg;
 
@@ -156,7 +158,10 @@ class WindChart extends React.Component {
                     onHover: (event, chartElement) => {
                         if (chartElement[0]) {
                             const index = chartElement[0]._index;
-                            this.props.setWindPoint(gusts[index], avg[index]);
+                            this.throttledSetWindPoint(
+                                gusts[index],
+                                avg[index]
+                            );
                         }
                     },
                 },
