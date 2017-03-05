@@ -1,6 +1,7 @@
 import React from "react";
 import {compose, lifecycle} from "recompose";
 import {first, last, getOr, isEmpty, maxBy} from "lodash/fp";
+import simple from "react-simple";
 
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -20,7 +21,19 @@ const combineObsFore = (obs, avg) => getPoints(obs)
         }))
     );
 
-var Dz = ({gusts, windAvg, gustForecasts, windAvgForecasts}) => {
+const Row = simple(View, {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+});
+
+const Title = simple(View, {
+    fontSize: 35,
+});
+
+var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const g = gusts ? last(gusts.points) : "ladataan";
 
     const a = windAvg ? last(windAvg.points) : "ladataan";
@@ -37,15 +50,11 @@ var Dz = ({gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
-            dz näkymä3
+            <Row>
+                <Title>{dzProps.icaocode}</Title>
+            </Row>
             {!dataMissing &&
                 <WindChart gusts={combinedGusts} avg={combinedAvg} />}
-            <View>
-                {JSON.stringify(g)}
-            </View>
-            <View>
-                {JSON.stringify(a)}
-            </View>
         </View>
     );
 };

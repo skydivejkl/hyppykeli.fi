@@ -21,11 +21,19 @@ const Bold = simple(View, {
     paddingRight: 3,
 });
 
-const PointValue = simple(View, {
-    flexDirection: "row",
-    paddingLeft: 10,
-    paddingRight: 10,
-});
+const PointValue = simple(
+    View,
+    {
+        flexDirection: "row",
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    {
+        transparent: {
+            color: "transparent",
+        },
+    }
+);
 
 const asFloat = i => parseFloat(i, 10) + 5;
 
@@ -178,6 +186,7 @@ WindChart = connectLean({
 
 var HoveredValues = ({gust, avg}) => (
     <Row>
+        {!gust && <PointValue transparent>|</PointValue>}
         {gust &&
             <PointValue>
                 Puuska <Bold>{gust.value} m/s</Bold>
@@ -195,6 +204,6 @@ var HoveredValues = ({gust, avg}) => (
             </PointValue>}
     </Row>
 );
-HoveredValues = connect(state => state.hoveredWindValues)(HoveredValues);
+HoveredValues = connect(state => state.hoveredWindValues || {})(HoveredValues);
 
 export default WindChart;

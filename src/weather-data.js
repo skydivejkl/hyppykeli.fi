@@ -10,7 +10,7 @@ const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 export const addWeatherData = compose(
     withRouterProps(router => {
         return {
-            dzProps: qs.parse(router.location.search),
+            dzProps: qs.parse(router.location.search.slice(1)),
         };
     }),
     connectLean({

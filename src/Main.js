@@ -28,7 +28,10 @@ const Wrap = simple(View, {
 });
 
 const Title = simple(View.create(Link), {
-    fontSize: 40,
+    position: "absolute",
+    left: 1,
+    top: 1,
+    fontSize: 20,
     textDecoration: "none",
     color: "black",
 });
