@@ -117,7 +117,7 @@ const Sky = simple(View, {
     paddingBottom: 50,
     overflow: "hidden",
     marginBottom: 50,
-    minHeight: 250,
+    minHeight: 300,
 });
 
 const CloudContainer = simple(Row, {
