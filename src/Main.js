@@ -10,7 +10,7 @@ import Dz from "./Dz";
 css.global("body, html", {
     padding: 0,
     margin: 0,
-    overflow: "hidden",
+    overflowX: "hidden",
 });
 
 const Container = simple(View, {
