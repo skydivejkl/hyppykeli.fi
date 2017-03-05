@@ -95,11 +95,30 @@ export const addWeatherData = compose(
             return Promise.resolve();
         },
 
+        fetchMetars() {
+            if (this.props.dzProps.icaocode) {
+                return axios(
+                    `/api/metars/${this.props.dzProps.icaocode}`
+                ).then(res => {
+                    this.setState(
+                        u({
+                            [this.props.dzProps.icaocode]: {
+                                metars: res.data,
+                            },
+                        })
+                    );
+                });
+            }
+
+            return Promise.resolve();
+        },
+
         fetchAll() {
             this.fetchGusts().then(() => {
                 this.fetchWindAvg();
                 this.fetchGustForecasts();
                 this.fetchWindAvgForecasts();
+                this.fetchMetars();
             });
         },
     })
