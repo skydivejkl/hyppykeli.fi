@@ -10,7 +10,6 @@ import Dz from "./Dz";
 css.global("body, html", {
     padding: 0,
     margin: 0,
-    backgroundColor: "black",
 });
 
 const Container = simple(View, {
@@ -67,11 +66,11 @@ const FrontPage = () => (
 const Main = () => (
     <Container>
         <Wrap>
-            <Title to="/">Hyppykeli.fi</Title>
             <Switch>
                 <Route exact path="/" component={FrontPage} />
                 <Route path="/dz" component={Dz} />
             </Switch>
+            <Title to="/">Hyppykeli.fi</Title>
         </Wrap>
     </Container>
 );

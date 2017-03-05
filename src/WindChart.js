@@ -4,8 +4,8 @@ import {throttle} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
 import simple from "react-simple";
-import moment from "moment";
 
+import {fromNowWithClock} from "./utils";
 import {View} from "./core";
 
 const Row = simple(View, {
@@ -113,7 +113,7 @@ class WindChart extends React.Component {
                     label: "Tuuliraja",
                     data: gusts.map(() => 8),
                     ...defaultLineStyle,
-                    borderColor: "yellow",
+                    borderColor: "orange",
                     pointHoverRadius: 0,
                 },
                 {
@@ -195,17 +195,13 @@ var HoveredValues = ({gust, avg}) => (
         {gust &&
             <PointValue>
                 Puuska <Bold>{gust.value} m/s</Bold>
-                {
-                    ` ${moment(gust.time).fromNow()} (klo. ${moment(gust.time).format("HH:mm")})`
-                }
+                {` ${fromNowWithClock(gust.time)}`}
             </PointValue>}
 
         {avg &&
             <PointValue>
                 Keskituuli <Bold>{avg.value} m/s</Bold>
-                {
-                    ` ${moment(avg.time).fromNow()} (klo. ${moment(avg.time).format("HH:mm")})`
-                }
+                {` ${fromNowWithClock(avg.time)}`}
             </PointValue>}
     </Row>
 );

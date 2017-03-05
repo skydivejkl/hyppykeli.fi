@@ -1,11 +1,12 @@
 import React from "react";
-import {compose, lifecycle} from "recompose";
+import {compose, lifecycle, mapProps} from "recompose";
 import {first, last, getOr, isEmpty, maxBy} from "lodash/fp";
 import simple from "react-simple";
 
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
+import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
 
 const getPoints = getOr([], ["points"]);
 
@@ -34,10 +35,6 @@ const Title = simple(View, {
 });
 
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
-    const g = gusts ? last(gusts.points) : "ladataan";
-
-    const a = windAvg ? last(windAvg.points) : "ladataan";
-
     const dataMissing = [
         isEmpty(getPoints(gusts)),
         isEmpty(getPoints(windAvg)),
@@ -53,6 +50,11 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
             <Row>
                 <Title>{dzProps.icaocode}</Title>
             </Row>
+            <Row>
+                <LatestGust />
+                <LatestWindAvg />
+            </Row>
+
             {!dataMissing &&
                 <WindChart gusts={combinedGusts} avg={combinedAvg} />}
         </View>

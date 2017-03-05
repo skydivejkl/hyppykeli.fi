@@ -25,7 +25,7 @@ export const addWeatherData = compose(
 
         fetchGusts() {
             if (this.props.dzProps.fmisid) {
-                axios(
+                return axios(
                     `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windgust`
                 ).then(res => {
                     this.setState(
@@ -37,11 +37,13 @@ export const addWeatherData = compose(
                     );
                 });
             }
+
+            return Promise.resolve();
         },
 
         fetchWindAvg() {
             if (this.props.dzProps.fmisid) {
-                axios(
+                return axios(
                     `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
@@ -53,11 +55,13 @@ export const addWeatherData = compose(
                     );
                 });
             }
+
+            return Promise.resolve();
         },
 
         fetchGustForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
-                axios(
+                return axios(
                     `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windgust`
                 ).then(res => {
                     this.setState(
@@ -69,11 +73,13 @@ export const addWeatherData = compose(
                     );
                 });
             }
+
+            return Promise.resolve();
         },
 
         fetchWindAvgForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
-                axios(
+                return axios(
                     `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
@@ -85,13 +91,16 @@ export const addWeatherData = compose(
                     );
                 });
             }
+
+            return Promise.resolve();
         },
 
         fetchAll() {
-            this.fetchGusts();
-            this.fetchWindAvg();
-            this.fetchGustForecasts();
-            this.fetchWindAvgForecasts();
+            this.fetchGusts().then(() => {
+                this.fetchWindAvg();
+                this.fetchGustForecasts();
+                this.fetchWindAvgForecasts();
+            });
         },
     })
 );
