@@ -1,6 +1,7 @@
 import React from "react";
 import Chart from "chart.js";
 import {connectLean} from "lean-redux";
+import color from "color";
 
 import {View} from "./core";
 
@@ -23,6 +24,19 @@ const getObservations = data => data.map(d => {
     return null;
 });
 
+const defaultLineStyle = {
+    pointBorderWidth: 0,
+    fill: false,
+    backgroundColor: "transparent",
+    pointBorderColor: "transparent",
+    pointBackgroundColor: "transparent",
+    pointHoverBorderWidth: 1,
+    pointHoverBorderColor: "black",
+    pointHoverBackgroundColor: "rgba(0,0,255, 0.5)",
+    pointHoverRadius: 10,
+    pointStyle: "crossRot",
+};
+
 class WindChart extends React.Component {
     componentDidMount() {
         const gusts = this.props.gusts;
@@ -40,86 +54,28 @@ class WindChart extends React.Component {
                 {
                     label: "Puuskahavainnoit",
                     data: gustObservations,
-                    fill: false,
-                    lineTension: 0.5,
-                    // backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "blue",
-                    borderCapStyle: "butt",
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: "miter",
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    spanGaps: false,
+                    ...defaultLineStyle,
+                    borderColor: "#00b5ff",
                 },
                 {
                     label: "Puuskaennuste",
                     data: gustForecasts,
-                    fill: false,
-                    lineTension: 0.5,
-                    // backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "blue",
-                    borderCapStyle: "butt",
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: "miter",
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    spanGaps: false,
+                    ...defaultLineStyle,
+                    borderColor: "#00b5ff",
+                    borderDash: [5, 10],
                 },
                 {
                     label: "Keskituulihavainnot",
                     data: avgObservations,
-                    fill: false,
-                    lineTension: 0.5,
-                    // backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "blue",
-                    borderCapStyle: "butt",
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: "miter",
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    spanGaps: false,
+                    ...defaultLineStyle,
+                    borderColor: "#b6eaff",
                 },
                 {
                     label: "Keskituuliennuste",
                     data: avgForecasts,
-                    fill: false,
-                    lineTension: 0.5,
-                    // backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "blue",
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: "none",
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderWidth: 10,
-                    // pointRadius: 5,
-                    // pointHitRadius: 10,
-                    spanGaps: false,
+                    ...defaultLineStyle,
+                    borderDash: [5, 10],
+                    borderColor: "#b6eaff",
                 },
             ],
         };
@@ -128,6 +84,10 @@ class WindChart extends React.Component {
             type: "line",
             data: data,
             options: {
+                tooltips: {
+                    enabled: false,
+                },
+
                 scales: {
                     xAxes: [
                         {
