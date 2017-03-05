@@ -58,10 +58,10 @@ const Parachute = simple(
     {
         background: "url(/parachute.svg)",
         backgroundSize: "contain",
-        width: 200,
+        width: 230,
         backgroundRepeat: "no-repeat !important",
         backgroundPosition: "center",
-        height: "100%",
+        height: 250,
         marginTop: 10,
         opacity: 0.08,
     },
@@ -78,6 +78,7 @@ const Parachute = simple(
 );
 
 var ConnectedParachute = ({value}) => {
+    // value = 8;
     var gust = parseFloat(value, 10);
     if (gust >= 11) {
         return <Parachute rotate />;
@@ -116,6 +117,7 @@ const Sky = simple(View, {
     paddingBottom: 50,
     overflow: "hidden",
     marginBottom: 50,
+    minHeight: 250,
 });
 
 const CloudContainer = simple(Row, {
