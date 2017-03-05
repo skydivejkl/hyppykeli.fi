@@ -26,8 +26,7 @@ const Row = simple(View, {
     marginTop: 10,
     flexDirection: "row",
     justifyContent: "center",
-    paddingLeft: 10,
-    paddingRight: 10,
+    flexWrap: "wrap",
 });
 
 const Title = simple(View, {

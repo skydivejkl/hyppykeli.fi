@@ -10,12 +10,12 @@ import Dz from "./Dz";
 css.global("body, html", {
     padding: 0,
     margin: 0,
+    overflow: "hidden",
 });
 
 const Container = simple(View, {
     alignItems: "center",
 });
-
 
 const Wrap = simple(View, {
     backgroundColor: "white",

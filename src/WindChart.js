@@ -11,6 +11,7 @@ import {View} from "./core";
 const Row = simple(View, {
     marginTop: 10,
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
     paddingLeft: 10,
     paddingRight: 10,
