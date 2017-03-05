@@ -1,7 +1,7 @@
 import React from "react";
 import {compose, lifecycle, mapProps} from "recompose";
-import {first, last, getOr, isEmpty, maxBy} from "lodash/fp";
-import simple from "react-simple";
+import {getOr, isEmpty} from "lodash/fp";
+import simple, {css} from "react-simple";
 
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -39,6 +39,39 @@ const SubTitle = simple(View, {
     fontSize: 25,
 });
 
+const swing = css.keyframes("bounce", {
+    "0%": {transform: "rotate(60deg)"},
+    "50%": {transform: "rotate(-60deg)"},
+    "100%": {transform: "rotate(60deg)"},
+});
+
+const Parachute = simple(
+    View,
+    {
+        background: "url(/parachute.svg)",
+        backgroundSize: "contain",
+        width: 200,
+        height: 200,
+        marginTop: 10,
+        opacity: 0.08,
+    },
+    {
+        swing: {
+            animation: `${swing} 2s ease-in-out infinite`,
+            transformOrigin: "50% 0%",
+        },
+    }
+);
+
+const ParachuteContainer = simple(View, {
+    position: "absolute",
+    alignItems: "center",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -52,6 +85,9 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
+            <ParachuteContainer>
+                <Parachute swing />
+            </ParachuteContainer>
             <Row>
                 <Title>{dzProps.icaocode}</Title>
             </Row>

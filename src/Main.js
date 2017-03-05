@@ -16,6 +16,7 @@ const Container = simple(View, {
     alignItems: "center",
 });
 
+
 const Wrap = simple(View, {
     backgroundColor: "white",
     flex: 1,
