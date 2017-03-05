@@ -1,7 +1,9 @@
 import React from "react";
-import {compose, lifecycle, mapProps} from "recompose";
+import {compose, lifecycle} from "recompose";
 import {getOr, isEmpty} from "lodash/fp";
 import simple, {css} from "react-simple";
+import {Link} from "react-router-dom";
+import FaBeer from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -80,6 +82,17 @@ const ParachuteContainer = simple(View, {
     bottom: 0,
 });
 
+const TitleLink = simple(View.create(Link), {
+    flexDirection: "row",
+    position: "absolute",
+    left: 1,
+    top: 1,
+    fontSize: 20,
+    textDecoration: "none",
+    color: "black",
+    alignItems: "center",
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -93,9 +106,11 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
+
             <ParachuteContainer>
                 <Parachute swing />
             </ParachuteContainer>
+
             <Row>
                 <Title>{dzProps.icaocode}</Title>
             </Row>
@@ -112,6 +127,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     </Row>
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
+            <TitleLink to="/"><FaBeer />hyppykeli.fi</TitleLink>
         </View>
     );
 };

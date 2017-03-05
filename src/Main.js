@@ -27,15 +27,6 @@ const Wrap = simple(View, {
     // },
 });
 
-const Title = simple(View.create(Link), {
-    position: "absolute",
-    left: 1,
-    top: 1,
-    fontSize: 20,
-    textDecoration: "none",
-    color: "black",
-});
-
 const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
     <Link
         to={{
@@ -71,7 +62,6 @@ const Main = () => (
                 <Route exact path="/" component={FrontPage} />
                 <Route path="/dz" component={Dz} />
             </Switch>
-            <Title to="/">Hyppykeli.fi</Title>
         </Wrap>
     </Container>
 );
