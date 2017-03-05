@@ -34,4 +34,3 @@ const Root = () => (
 const container = document.getElementById("app-container");
 
 ReactDOM.render(<Root />, container);
-console.log("test");

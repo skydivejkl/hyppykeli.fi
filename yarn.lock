@@ -3468,6 +3468,10 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
+metar@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/metar/-/metar-0.3.0.tgz#1951ca5ce5c19fc088855eb9892b64448130aca2"
+
 methods@^1.0.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"

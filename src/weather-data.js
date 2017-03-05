@@ -1,9 +1,11 @@
 import {connectLean} from "lean-redux";
 import {withRouterProps} from "./utils";
 import {compose} from "recompose";
+import {getOr} from "lodash/fp";
 import qs from "querystring";
 import u from "updeep";
 import axios from "axios";
+import parseMetar from "metar";
 
 const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 
@@ -17,7 +19,14 @@ export const addWeatherData = compose(
         scope: "weatherData",
 
         mapState(state, props) {
+            const metars = getOr(
+                [],
+                [props.dzProps.icaocode, "metars"],
+                state
+            ).map(parseMetar);
+
             return {
+                metars,
                 ...state[props.dzProps.fmisid],
                 ...state[asLatLonPair(props.dzProps)],
             };

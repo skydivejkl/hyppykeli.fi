@@ -8,6 +8,7 @@ import FaBeer from "react-icons/lib/fa/backward";
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
+import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
 
 const getPoints = getOr([], ["points"]);
@@ -98,8 +99,13 @@ const TitleLink = simple(View.create(Link), {
 
 const Sky = simple(View, {
     backgroundColor: "skyblue",
-    paddingBottom: 200,
+    paddingBottom: 50,
     overflow: "hidden",
+    marginBottom: 50,
+});
+
+const CloudContainer = simple(Row, {
+    marginTop: 35,
 });
 
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
@@ -128,6 +134,10 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     <LatestGust />
                     <LatestWindAvg />
                 </Row>
+
+                <CloudContainer>
+                    <LatestClouds />
+                </CloudContainer>
 
             </Sky>
 

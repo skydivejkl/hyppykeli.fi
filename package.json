@@ -29,6 +29,7 @@
     "koa-static": "^3.0.0",
     "lean-redux": "^3.2.1",
     "lodash": "^4.17.4",
+    "metar": "^0.3.0",
     "moment": "^2.17.1",
     "nodemon": "^1.11.0",
     "prettier": "^0.21.0",
