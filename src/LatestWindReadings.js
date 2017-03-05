@@ -53,13 +53,15 @@ const LatestReading = ({title, time, value}) => (
     </WindReading>
 );
 
-export var LatestGust = compose(
+export const addLatestGust = compose(
     addWeatherData,
     mapProps(({gusts}) => {
         const gust = gusts ? last(gusts.points) : null;
         return {...gust, title: "Puuska"};
     })
-)(LatestReading);
+);
+
+export const LatestGust = addLatestGust(LatestReading);
 
 export var LatestWindAvg = compose(
     addWeatherData,

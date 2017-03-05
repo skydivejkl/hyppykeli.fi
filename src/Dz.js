@@ -9,7 +9,7 @@ import {View} from "./core";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
-import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
+import {LatestGust, LatestWindAvg, addLatestGust} from "./LatestWindReadings";
 
 const getPoints = getOr([], ["points"]);
 
@@ -59,7 +59,7 @@ const Parachute = simple(
         background: "url(/parachute.svg)",
         backgroundSize: "contain",
         width: 200,
-        backgroundRepeat: "no-repeat",
+        backgroundRepeat: "no-repeat !important",
         backgroundPosition: "center",
         height: "100%",
         marginTop: 10,
@@ -76,6 +76,20 @@ const Parachute = simple(
         },
     }
 );
+
+var ConnectedParachute = ({value}) => {
+    var gust = parseFloat(value, 10);
+    if (gust >= 11) {
+        return <Parachute rotate />;
+    }
+
+    if (gust >= 8) {
+        return <Parachute swing />;
+    }
+
+    return <Parachute />;
+};
+ConnectedParachute = addLatestGust(ConnectedParachute);
 
 const ParachuteContainer = simple(View, {
     position: "absolute",
@@ -123,7 +137,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
         <View>
             <Sky>
                 <ParachuteContainer>
-                    <Parachute swing />
+                    <ConnectedParachute />
                 </ParachuteContainer>
 
                 <Row>
