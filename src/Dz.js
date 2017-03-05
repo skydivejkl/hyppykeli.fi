@@ -86,13 +86,13 @@ const ParachuteContainer = simple(View, {
 });
 
 const TitleLink = simple(View.create(Link), {
+    color: "white",
     flexDirection: "row",
     position: "absolute",
     left: 1,
     top: 1,
     fontSize: 20,
     textDecoration: "none",
-    color: "black",
     alignItems: "center",
 });
 
@@ -138,6 +138,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     </Row>
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
+
             <TitleLink to="/"><FaBeer />hyppykeli.fi</TitleLink>
         </View>
     );
