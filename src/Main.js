@@ -4,8 +4,9 @@ import {Route, Switch, Link} from "react-router-dom";
 import qs from "querystring";
 
 import {View} from "./core";
-
 import Dz from "./Dz";
+
+import dropzones from "../dropzones";
 
 css.global("body, html", {
     padding: 0,
@@ -64,17 +65,12 @@ const FrontPage = () => (
         <Title>
             Hyppykeli.fi
         </Title>
-        <DZLink icaocode="EFJY" fmisid="101339" lat="62.407390" lon="62.407390">
-            EFJY
-        </DZLink>
+        {Object.keys(dropzones).map(key => (
+            <DZLink key={key} {...dropzones[key]}>
+                {dropzones[key].icaocode}
+            </DZLink>
+        ))}
 
-        <DZLink icaocode="EFUT" fmisid="101191" lat="60.898498" lon="26.924409">
-            EFUT
-        </DZLink>
-
-        <DZLink icaocode="EFKU" fmisid="101570" lat="63.012165" lon="27.790366">
-            EFKU
-        </DZLink>
     </FrontPageContainer>
 );
 

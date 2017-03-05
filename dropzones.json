@@ -1,0 +1,38 @@
+{
+  "efjy": {
+    "icaocode": "EFJY",
+    "lat": 62.40739,
+    "lon": 25.66362,
+    "fmisid": 101339
+  },
+  "efut": {
+    "icaocode": "EFUT",
+    "lat": 60.898498,
+    "lon": 26.924409,
+    "fmisid": 101191
+  },
+  "efku": {
+    "icaocode": "EFKU",
+    "lat": 63.012165,
+    "lon": 27.790366,
+    "fmisid": 101570
+  },
+  "efva": {
+    "icaocode": "EFVA",
+    "lat": 63.040419,
+    "lon": 21.773248,
+    "fmisid": 101485
+  },
+  "efla": {
+    "icaocode": "EFLA",
+    "lat": 61.147442,
+    "lon": 25.693681,
+    "fmisid": 101185
+  },
+  "efpo": {
+    "icaocode": "EFPO",
+    "lat": 61.46169,
+    "lon": 21.79998,
+    "fmisid": 101064
+  }
+}
