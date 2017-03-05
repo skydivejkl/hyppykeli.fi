@@ -26,7 +26,7 @@ const renderHtml = script => `
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     </head>
     <body>
-        <div id="app-container"></div>
+        <div id="app-container">hetki!</div>
         <script src="${script}" charset="utf-8"></script>
     </body>
 </html>

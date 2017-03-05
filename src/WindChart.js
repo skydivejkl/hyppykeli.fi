@@ -62,11 +62,10 @@ const defaultLineStyle = {
     backgroundColor: "transparent",
     pointBorderColor: "transparent",
     pointBackgroundColor: "transparent",
-    pointHoverBorderWidth: 1,
+    pointHoverBorderWidth: 0,
     pointHoverBorderColor: "black",
-    pointHoverBackgroundColor: "rgba(0,0,255, 0.5)",
-    pointHoverRadius: 10,
-    pointStyle: "crossRot",
+    pointHoverBackgroundColor: "black",
+    pointHoverRadius: 5,
 };
 
 class WindChart extends React.Component {
@@ -174,7 +173,7 @@ class WindChart extends React.Component {
         return (
             <View>
                 <HoveredValues />
-                <canvas ref={el => this.canvas = el} />
+                <canvas height="400" ref={el => this.canvas = el} />
             </View>
         );
     }

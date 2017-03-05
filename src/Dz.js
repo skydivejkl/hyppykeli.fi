@@ -116,7 +116,7 @@ const Sky = simple(View, {
     backgroundColor: "skyblue",
     paddingBottom: 50,
     overflow: "hidden",
-    marginBottom: 50,
+    marginBottom: 25,
     minHeight: 300,
 });
 
