@@ -27,9 +27,9 @@ const Wrap = simple(View, {
     flex: 1,
     width: "100%",
     // overflowX: "auto",
-    "@media (min-width: 450px)": {
-        width: 450,
-    },
+    // "@media (min-width: 450px)": {
+    //     width: 450,
+    // },
 });
 
 const Title = simple(View.create(Link), {
