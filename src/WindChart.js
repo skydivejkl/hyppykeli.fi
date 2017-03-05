@@ -1,9 +1,31 @@
 import React from "react";
 import Chart from "chart.js";
 import {connectLean} from "lean-redux";
-import color from "color";
+import {connect} from "react-redux";
+import simple from "react-simple";
+import moment from "moment";
 
 import {View} from "./core";
+
+const Row = simple(View, {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+});
+
+const Bold = simple(View, {
+    fontWeight: "bold",
+    paddingLeft: 3,
+    paddingRight: 3,
+});
+
+const PointValue = simple(View, {
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10,
+});
 
 const asFloat = i => parseFloat(i, 10) + 5;
 
@@ -137,13 +159,14 @@ class WindChart extends React.Component {
     render() {
         return (
             <View>
+                <HoveredValues />
                 <canvas ref={el => this.canvas = el} />
             </View>
         );
     }
 }
 WindChart = connectLean({
-    scope: "windPoint",
+    scope: "hoveredWindValues",
 
     setWindPoint(gust, avg) {
         this.setState({
@@ -152,5 +175,26 @@ WindChart = connectLean({
         });
     },
 })(WindChart);
+
+var HoveredValues = ({gust, avg}) => (
+    <Row>
+        {gust &&
+            <PointValue>
+                Puuska <Bold>{gust.value} m/s</Bold>
+                {
+                    ` ${moment(gust.time).fromNow()} (klo. ${moment(gust.time).format("HH:mm")})`
+                }
+            </PointValue>}
+
+        {avg &&
+            <PointValue>
+                Keskituuli <Bold>{avg.value} m/s</Bold>
+                {
+                    ` ${moment(avg.time).fromNow()} (klo. ${moment(avg.time).format("HH:mm")})`
+                }
+            </PointValue>}
+    </Row>
+);
+HoveredValues = connect(state => state.hoveredWindValues)(HoveredValues);
 
 export default WindChart;

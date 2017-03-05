@@ -9,5 +9,6 @@ export const View = simple("div", {
     flexShrink: 0,
     alignContent: "flex-start",
     minWidth: 0,
-    fontFamily: 'Futura, "Trebuchet MS", Arial, sans-serif',
+    fontSize: 12,
+    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 });
