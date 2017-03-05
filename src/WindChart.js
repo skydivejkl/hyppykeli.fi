@@ -77,6 +77,20 @@ class WindChart extends React.Component {
                     borderDash: [5, 10],
                     borderColor: "#b6eaff",
                 },
+                {
+                    label: "Tuuliraja",
+                    data: gusts.map(() => 8),
+                    ...defaultLineStyle,
+                    borderColor: "yellow",
+                    pointHoverRadius: 0,
+                },
+                {
+                    label: "Tuuliraja B+",
+                    data: gusts.map(() => 11),
+                    ...defaultLineStyle,
+                    borderColor: "red",
+                    pointHoverRadius: 0,
+                },
             ],
         };
         var i = 0;

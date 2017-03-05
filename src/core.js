@@ -1,6 +1,5 @@
 import simple from "react-simple";
 
-
 export const View = simple("div", {
     boxSizing: "border-box",
     position: "relative",
