@@ -15,4 +15,4 @@ export const withRouterProps = mapper => compose(
 
 
 export const fromNowWithClock = t => 
-                    ` ${moment(t).fromNow()} (klo. ${moment(t).format("HH:mm")})`
+                    ` ${moment(t).fromNow()} (klo ${moment(t).format("HH:mm")})`
