@@ -12,7 +12,7 @@ import Cloud from "./Cloud";
 import {View} from "./core";
 
 const ParachuteContainer = simple(View, {
-    position: "absolute",
+    position: "fixed",
     height: 250,
     width: 250,
 });
@@ -31,11 +31,27 @@ const Title = simple(View, {
 });
 
 const FrontPageBackground = simple(View, {
-    flex: 1,
     backgroundColor: "skyblue",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
 });
 
-const FrontPageContainer = simple(View, {
+const Container = simple(
+    View,
+    {
+        // alignItems: "center",
+        // position: "absolute",
+        // top: 0,
+        // left: 0,
+        // right: 0,
+        // bottom: 0,
+    }
+);
+
+const Center = simple(View, {
     alignItems: "center",
     flexWrap: "wrap",
     margin: "0 auto",
@@ -73,8 +89,9 @@ const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
 );
 
 const FrontPage = () => (
-    <FrontPageBackground>
-        <FrontPageContainer>
+    <Container>
+        <FrontPageBackground />
+        <Center>
             <BrowserTitle full title="Hyppykeli.fi" />
             <ParachuteContainer>
                 <Parachute />
@@ -97,8 +114,8 @@ const FrontPage = () => (
                 ))}
             </LinkListWrap>
 
-        </FrontPageContainer>
-    </FrontPageBackground>
+        </Center>
+    </Container>
 );
 
 export default FrontPage;
