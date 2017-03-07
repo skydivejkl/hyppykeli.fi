@@ -1,6 +1,7 @@
 import React from "react";
 import {compose, lifecycle} from "recompose";
-import {getOr, isEmpty} from "lodash/fp";
+import {getOr, isEmpty, throttle} from "lodash/fp";
+const throttleWithOptions = throttle.convert({fixed: false});
 import simple, {css} from "react-simple";
 import {Link} from "react-router-dom";
 import BackArrow from "react-icons/lib/fa/backward";
@@ -194,7 +195,11 @@ Dz = compose(
                 this.props.setTimeout(
                     () => {
                         this.props.fetchAllWeatherData();
-                        console.log("automatic refresh", icaocode, ++i);
+                        console.log(
+                            "Automatic refresh from timer",
+                            icaocode,
+                            ++i
+                        );
                         refreshTimeout();
                     },
                     1000 * 30
@@ -204,10 +209,18 @@ Dz = compose(
             refreshTimeout();
         },
     }),
-    withBrowserEvent(window, "focus", ({props}) => {
-        props.clearWeatherData();
-        props.fetchAllWeatherData();
-    })
+    withBrowserEvent(
+        window,
+        "focus",
+        throttleWithOptions(
+            1000 * 30,
+            ({props}) => {
+                console.log("Triggering refresh from window focus");
+                props.fetchAllWeatherData();
+            },
+            {trailing: false}
+        )
+    )
 )(Dz);
 
 export default Dz;
