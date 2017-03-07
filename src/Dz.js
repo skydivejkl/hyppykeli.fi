@@ -159,7 +159,9 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
 
-            <TitleLink to="/" />
+            <TitleLink to="/">
+                Hyppykeli.fi
+            </TitleLink>
             <RefreshButton />
         </View>
     );

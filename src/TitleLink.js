@@ -14,7 +14,7 @@ const BackArrowIcon = simple(View.create(BackArrowIcon_), {
 const Row = simple(View, {
     flexDirection: "row",
     alignItems: "center",
-    fontSize: 20,
+    fontSize: 15,
 });
 
 const Sep = simple(View, {
