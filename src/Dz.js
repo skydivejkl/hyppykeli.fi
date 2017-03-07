@@ -154,7 +154,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
             {!dataMissing &&
                 <View>
                     <Row>
-                        <SubTitle>Tuulihavainnot ja ennusteet</SubTitle>
+                        <SubTitle>Tuulihavainnot ja -ennusteet</SubTitle>
                     </Row>
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
