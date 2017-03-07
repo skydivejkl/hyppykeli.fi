@@ -26,6 +26,7 @@ const Bold = simple(View, {
 const PointValue = simple(
     View,
     {
+        color: "black",
         flexDirection: "row",
         paddingLeft: 10,
         paddingRight: 10,
