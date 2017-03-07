@@ -10,6 +10,7 @@ import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg, addLatestGust} from "./LatestWindReadings";
+import BrowserTitle from "./BrowserTitle";
 
 const getPoints = getOr([], ["points"]);
 
@@ -137,6 +138,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
+            <BrowserTitle title={dzProps.icaocode} />
             <Sky>
                 <ParachuteContainer>
                     <ConnectedParachute />

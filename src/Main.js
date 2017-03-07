@@ -5,6 +5,7 @@ import qs from "querystring";
 
 import {View} from "./core";
 import Dz from "./Dz";
+import BrowserTitle from "./BrowserTitle";
 
 import dropzones from "../dropzones";
 
@@ -62,6 +63,7 @@ const FrontPageContainer = simple(View, {
 
 const FrontPage = () => (
     <FrontPageContainer>
+        <BrowserTitle full title="Hyppykeli.fi" />
         <Title>
             Hyppykeli.fi
         </Title>
