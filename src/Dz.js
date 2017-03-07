@@ -3,8 +3,6 @@ import {compose, lifecycle} from "recompose";
 import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
 import simple, {css} from "react-simple";
-import {Link} from "react-router-dom";
-import BackArrow from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
 import {withBrowserEvent, addSetTimeout} from "./utils";
@@ -14,6 +12,7 @@ import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg, addLatestGust} from "./LatestWindReadings";
 import BrowserTitle from "./BrowserTitle";
 import RefreshButton from "./RefreshButton";
+import TitleLink from "./TitleLink";
 
 const getPoints = getOr([], ["points"]);
 
@@ -34,11 +33,6 @@ const Row = simple(View, {
     flexDirection: "row",
     justifyContent: "center",
     flexWrap: "wrap",
-});
-
-const Sep = simple(View, {
-    width: 10,
-    height: 10,
 });
 
 const Title = simple(View, {
@@ -110,17 +104,6 @@ const ParachuteContainer = simple(View, {
     bottom: 0,
 });
 
-const TitleLink = simple(View.create(Link), {
-    color: "white",
-    flexDirection: "row",
-    position: "absolute",
-    left: 1,
-    top: 1,
-    fontSize: 25,
-    textDecoration: "none",
-    alignItems: "center",
-});
-
 const Sky = simple(View, {
     backgroundColor: "skyblue",
     paddingBottom: 50,
@@ -176,7 +159,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
 
-            <TitleLink to="/"><BackArrow /><Sep />Hyppykeli.fi</TitleLink>
+            <TitleLink to="/" />
             <RefreshButton />
         </View>
     );

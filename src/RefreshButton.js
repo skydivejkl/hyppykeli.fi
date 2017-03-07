@@ -9,27 +9,26 @@ import {addWeatherData} from "./weather-data";
 import RefreshIcon_ from "react-icons/lib/fa/refresh";
 
 const RefreshIcon = simple(View.create(RefreshIcon_), {
-    width: "70%",
-    height: "70%",
     color: "white",
-});
-
-const rotate = css.keyframes({
-    "0%": {transform: "rotate(0deg)"},
-    "100%": {transform: "rotate(360deg)"},
+    width: "100%",
+    height: "100%",
 });
 
 const RefreshButtonContainer = simple(View.create("a"), {
     position: "absolute",
     top: 0,
     right: 0,
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
+    alignItems: "flex-end",
+    textDecoration: "none",
+});
+
+const SizeWrap = simple(View, {
+    width: 30,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
-    ":hover": {
-        animation: `${rotate} 3s linear infinite`,
-    },
 });
 
 const Background = simple(View, {
@@ -45,8 +44,10 @@ const Background = simple(View, {
 
 var RefreshButton = ({requestCount, refresh}) => (
     <RefreshButtonContainer href="#" onClick={refresh}>
-        {requestCount !== 0 && <Background>{requestCount}</Background>}
-        {requestCount === 0 ? <RefreshIcon /> : <Spinner />}
+        <SizeWrap>
+            {requestCount !== 0 && <Background>{requestCount}</Background>}
+            {requestCount === 0 ? <RefreshIcon /> : <Spinner />}
+        </SizeWrap>
     </RefreshButtonContainer>
 );
 RefreshButton = compose(
