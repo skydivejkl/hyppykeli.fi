@@ -27,6 +27,9 @@ export const withBrowserEvent = (source, eventName, cb, capture) => {
                     event,
                     state: this.state,
                     props: this.props,
+                    setProps: props => {
+                        this.setState(props);
+                    },
                 });
                 if (newProps) {
                     this.setState(newProps);

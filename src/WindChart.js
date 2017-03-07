@@ -1,11 +1,11 @@
 import React from "react";
 import Chart from "chart.js";
-import {throttle} from "lodash/fp";
+import {throttle, debounce} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
 import simple from "react-simple";
 
-import {fromNowWithClock} from "./utils";
+import {fromNowWithClock, withBrowserEvent} from "./utils";
 import {View} from "./core";
 
 const Row = simple(View, {
@@ -55,6 +55,24 @@ const getObservations = data => data.map(d => {
     }
     return null;
 });
+
+var HoveredValues = ({gust, avg}) => (
+    <Row>
+        {!gust && <PointValue transparent>|</PointValue>}
+        {gust &&
+            <PointValue>
+                Puuska <Bold>{gust.value} m/s</Bold>
+                {` ${fromNowWithClock(gust.time)}`}
+            </PointValue>}
+
+        {avg &&
+            <PointValue>
+                Keskituuli <Bold>{avg.value} m/s</Bold>
+                {` ${fromNowWithClock(avg.time)}`}
+            </PointValue>}
+    </Row>
+);
+HoveredValues = connect(state => state.hoveredWindValues || {})(HoveredValues);
 
 const defaultLineStyle = {
     pointBorderWidth: 0,
@@ -189,22 +207,16 @@ WindChart = connectLean({
     },
 })(WindChart);
 
-var HoveredValues = ({gust, avg}) => (
-    <Row>
-        {!gust && <PointValue transparent>|</PointValue>}
-        {gust &&
-            <PointValue>
-                Puuska <Bold>{gust.value} m/s</Bold>
-                {` ${fromNowWithClock(gust.time)}`}
-            </PointValue>}
-
-        {avg &&
-            <PointValue>
-                Keskituuli <Bold>{avg.value} m/s</Bold>
-                {` ${fromNowWithClock(avg.time)}`}
-            </PointValue>}
-    </Row>
+var WindChartWrap = ({resizeCount, ...props}) => (
+    <WindChart key={resizeCount} {...props} />
 );
-HoveredValues = connect(state => state.hoveredWindValues || {})(HoveredValues);
+var i = 0;
+WindChartWrap = withBrowserEvent(
+    window,
+    "resize",
+    debounce(100, ({setProps}) => setProps({
+        resizeCount: ++i,
+    }))
+)(WindChartWrap);
 
-export default WindChart;
+export default WindChartWrap;
