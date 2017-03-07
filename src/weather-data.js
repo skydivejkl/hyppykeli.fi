@@ -21,26 +21,57 @@ export const addWeatherData = compose(
         mapState(state, props) {
             const metars = getOr(
                 [],
-                [props.dzProps.icaocode, "metars"],
+                ["data", props.dzProps.icaocode, "metars"],
                 state
             ).map(parseMetar);
 
             return {
+                requestCount: state.requestCount,
                 metars,
-                ...state[props.dzProps.fmisid],
-                ...state[asLatLonPair(props.dzProps)],
+                ...state.data[props.dzProps.fmisid],
+                ...state.data[asLatLonPair(props.dzProps)],
             };
+        },
+
+        getInitialState() {
+            return {requestCount: 0, data: {}};
+        },
+
+        clearWeatherData() {
+            this.setState({data: {}});
+        },
+
+        request(url) {
+            this.setState({
+                requestCount: this.state.requestCount + 1,
+            });
+
+            return axios(url)
+                .then(res => {
+                    this.setState({
+                        requestCount: this.state.requestCount - 1,
+                    });
+                    return res;
+                })
+                .catch(error => {
+                    this.setState({
+                        requestCount: this.state.requestCount - 1,
+                    });
+                    throw error;
+                });
         },
 
         fetchGusts() {
             if (this.props.dzProps.fmisid) {
-                return axios(
+                return this.request(
                     `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windgust`
                 ).then(res => {
                     this.setState(
                         u({
-                            [this.props.dzProps.fmisid]: {
-                                gusts: res.data,
+                            data: {
+                                [this.props.dzProps.fmisid]: {
+                                    gusts: res.data,
+                                },
                             },
                         })
                     );
@@ -52,13 +83,15 @@ export const addWeatherData = compose(
 
         fetchWindAvg() {
             if (this.props.dzProps.fmisid) {
-                return axios(
+                return this.request(
                     `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
                         u({
-                            [this.props.dzProps.fmisid]: {
-                                windAvg: res.data,
+                            data: {
+                                [this.props.dzProps.fmisid]: {
+                                    windAvg: res.data,
+                                },
                             },
                         })
                     );
@@ -70,13 +103,15 @@ export const addWeatherData = compose(
 
         fetchGustForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
-                return axios(
+                return this.request(
                     `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windgust`
                 ).then(res => {
                     this.setState(
                         u({
-                            [asLatLonPair(this.props.dzProps)]: {
-                                gustForecasts: res.data,
+                            data: {
+                                [asLatLonPair(this.props.dzProps)]: {
+                                    gustForecasts: res.data,
+                                },
                             },
                         })
                     );
@@ -88,13 +123,15 @@ export const addWeatherData = compose(
 
         fetchWindAvgForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
-                return axios(
+                return this.request(
                     `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
                         u({
-                            [asLatLonPair(this.props.dzProps)]: {
-                                windAvgForecasts: res.data,
+                            data: {
+                                [asLatLonPair(this.props.dzProps)]: {
+                                    windAvgForecasts: res.data,
+                                },
                             },
                         })
                     );
@@ -106,13 +143,15 @@ export const addWeatherData = compose(
 
         fetchMetars() {
             if (this.props.dzProps.icaocode) {
-                return axios(
+                return this.request(
                     `/api/metars/${this.props.dzProps.icaocode}`
                 ).then(res => {
                     this.setState(
                         u({
-                            [this.props.dzProps.icaocode]: {
-                                metars: res.data,
+                            data: {
+                                [this.props.dzProps.icaocode]: {
+                                    metars: res.data,
+                                },
                             },
                         })
                     );
@@ -122,7 +161,7 @@ export const addWeatherData = compose(
             return Promise.resolve();
         },
 
-        fetchAll() {
+        fetchAllWeatherData() {
             this.fetchGusts().then(() => {
                 this.fetchWindAvg();
                 this.fetchGustForecasts();

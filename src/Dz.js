@@ -11,6 +11,7 @@ import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg, addLatestGust} from "./LatestWindReadings";
 import BrowserTitle from "./BrowserTitle";
+import RefreshButton from "./RefreshButton";
 
 const getPoints = getOr([], ["points"]);
 
@@ -174,6 +175,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                 </View>}
 
             <TitleLink to="/"><BackArrow /><Sep />Hyppykeli.fi</TitleLink>
+            <RefreshButton />
         </View>
     );
 };
@@ -181,7 +183,7 @@ Dz = compose(
     addWeatherData,
     lifecycle({
         componentDidMount() {
-            this.props.fetchAll();
+            this.props.fetchAllWeatherData();
         },
     })
 )(Dz);

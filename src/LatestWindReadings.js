@@ -1,5 +1,6 @@
-import Spinner from "./Spinner";
 import React from "react";
+
+import Spinner from "./Spinner";
 import {compose, mapProps} from "recompose";
 import {last} from "lodash/fp";
 import simple from "react-simple";
