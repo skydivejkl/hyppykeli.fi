@@ -1,11 +1,4 @@
 {
-  "name": "TODO",
-  "version": "0.0.0",
-  "description": "TODO",
-  "repository": "TODO",
-  "main": "index.js",
-  "author": "Esa-Matti Suuronen",
-  "license": "UNLICENSED",
   "dependencies": {
     "axios": "^0.15.3",
     "babel-core": "^6.23.1",
