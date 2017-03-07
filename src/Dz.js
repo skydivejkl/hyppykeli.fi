@@ -54,6 +54,7 @@ const Row = simple(View, {
 });
 
 const SubTitle = simple(View, {
+    color: "black",
     fontSize: 25,
 });
 
