@@ -30,6 +30,15 @@ const renderHtml = script => `
         <meta name="msapplication-navbutton-color" content="skyblue">
         <!-- iOS Safari -->
         <meta name="apple-mobile-web-app-status-bar-style" content="skyblue">
+        <style>
+        body, html {
+            color: white;
+            padding: 0;
+            margin: 0;
+            overflowX: hidden;
+            backgroundColor: skyblue;
+        }
+        </style>
     </head>
     <body>
         <div id="app-container">hetki!</div>

@@ -6,13 +6,6 @@ import {View} from "./core";
 import Dz from "./Dz";
 import FrontPage from "./FrontPage";
 
-css.global("body, html", {
-    padding: 0,
-    margin: 0,
-    overflowX: "hidden",
-    backgroundColor: "skyblue",
-});
-
 css.global("a", {
     WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
 });
