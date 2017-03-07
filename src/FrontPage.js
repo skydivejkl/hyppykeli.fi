@@ -11,14 +11,6 @@ import Cloud from "./Cloud";
 
 import {View} from "./core";
 
-const Header = simple(View, {
-    backgroundColor: "skyblue",
-    paddingBottom: 50,
-    paddingTop: 25,
-    overflow: "hidden",
-    marginBottom: 25,
-});
-
 const ParachuteContainer = simple(View, {
     position: "absolute",
     height: 250,
