@@ -2,10 +2,11 @@ import React from "react";
 import {compose, lifecycle} from "recompose";
 import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
-import simple, {css} from "react-simple";
+import simple from "react-simple";
 
 import {View} from "./core";
 import {withBrowserEvent, addSetTimeout} from "./utils";
+import Header from "./Header";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
@@ -29,7 +30,6 @@ const combineObsFore = (obs, avg) => getPoints(obs)
     );
 
 const Row = simple(View, {
-    marginTop: 10,
     flexDirection: "row",
     justifyContent: "center",
     flexWrap: "wrap",
@@ -45,76 +45,9 @@ const SubTitle = simple(View, {
     fontSize: 25,
 });
 
-const swing = css.keyframes({
-    "0%": {transform: "rotate(60deg)"},
-    "50%": {transform: "rotate(-60deg)"},
-    "100%": {transform: "rotate(60deg)"},
-});
-
-const rotate = css.keyframes({
-    "0%": {transform: "rotate(0deg)"},
-    "100%": {transform: "rotate(360deg)"},
-});
-
-const Parachute = simple(
-    View,
-    {
-        background: "url(/parachute.svg)",
-        backgroundSize: "contain",
-        width: 230,
-        backgroundRepeat: "no-repeat !important",
-        backgroundPosition: "center",
-        height: 250,
-        marginTop: 10,
-        opacity: 0.08,
-    },
-    {
-        swing: {
-            animation: `${swing} 2s ease-in-out infinite`,
-            transformOrigin: "50% 0%",
-        },
-        rotate: {
-            animation: `${rotate} 0.8s linear infinite`,
-            transformOrigin: "50% 15%",
-        },
-    }
-);
-
-var ConnectedParachute = ({value}) => {
-    // value = 8;
-    var gust = parseFloat(value, 10);
-    if (gust >= 11) {
-        return <Parachute rotate />;
-    }
-
-    if (gust >= 8) {
-        return <Parachute swing />;
-    }
-
-    return <Parachute />;
-};
-ConnectedParachute = addLatestGust(ConnectedParachute);
-
-const ParachuteContainer = simple(View, {
-    position: "absolute",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-});
-
-const Sky = simple(View, {
-    backgroundColor: "skyblue",
-    paddingBottom: 50,
-    paddingTop: 25,
-    overflow: "hidden",
-    marginBottom: 25,
-    minHeight: 300,
-});
-
-const CloudContainer = simple(Row, {
-    marginTop: 35,
+const Sep = simple(View, {
+    width: 15,
+    height: 15,
 });
 
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
@@ -131,25 +64,27 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     return (
         <View>
             <BrowserTitle title={dzProps.icaocode} />
-            <Sky>
-                <ParachuteContainer>
-                    <ConnectedParachute />
-                </ParachuteContainer>
+            <Header>
 
                 <Row>
                     <Title>{dzProps.icaocode}</Title>
                 </Row>
+
+                <Sep />
 
                 <Row>
                     <LatestGust />
                     <LatestWindAvg />
                 </Row>
 
-                <CloudContainer>
-                    <LatestClouds />
-                </CloudContainer>
+                <Sep />
+                <Sep />
 
-            </Sky>
+                <Row>
+                    <LatestClouds />
+                </Row>
+
+            </Header>
 
             {!dataMissing &&
                 <View>
