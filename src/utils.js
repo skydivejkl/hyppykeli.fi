@@ -1,4 +1,5 @@
 import React from "react";
+import {values, omit} from "lodash/fp";
 import {compose, mapProps} from "recompose";
 import {withRouter} from "react-router-dom";
 import moment from "moment";
@@ -48,6 +49,35 @@ export const withBrowserEvent = (source, eventName, cb, capture) => {
         }
     };
 };
+
+export function addSetTimeout(Component) {
+    return React.createClass({
+        displayName: "addSetTimeout",
+
+        componentWillMount() {
+            this.counter = 0;
+            this.timeouts = {};
+        },
+
+        setTimeout(cb, t) {
+            const i = this.counter++;
+            const wrap = () => {
+                this.timeouts = omit(i, this.timeouts);
+                cb();
+            };
+
+            this.timeouts[i] = setTimeout(wrap, t);
+        },
+
+        componentWillUnmount() {
+            values(this.timeouts).forEach(clearTimeout);
+        },
+
+        render() {
+            return <Component {...this.props} setTimeout={this.setTimeout} />;
+        },
+    });
+}
 
 export const fromNowWithClock = t =>
     ` ${moment(t).fromNow()} (klo ${moment(t).format("HH:mm")})`;

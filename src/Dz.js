@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import BackArrow from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
-import {withBrowserEvent} from "./utils";
+import {withBrowserEvent, addSetTimeout} from "./utils";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
@@ -180,14 +180,32 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
         </View>
     );
 };
+var i = 0;
 Dz = compose(
     addWeatherData,
+    addSetTimeout,
     lifecycle({
         componentDidMount() {
-            this.props.fetchAllWeatherData();
+            this.props.fetchAllWeatherData({force: true});
+
+            const {icaocode} = this.props.dzProps;
+
+            const refreshTimeout = () => {
+                this.props.setTimeout(
+                    () => {
+                        this.props.fetchAllWeatherData();
+                        console.log("automatic refresh", icaocode, ++i);
+                        refreshTimeout();
+                    },
+                    1000 * 30
+                );
+            };
+
+            refreshTimeout();
         },
     }),
     withBrowserEvent(window, "focus", ({props}) => {
+        props.clearWeatherData();
         props.fetchAllWeatherData();
     })
 )(Dz);

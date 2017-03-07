@@ -41,24 +41,31 @@ export const addWeatherData = compose(
             this.setState({data: {}});
         },
 
-        request(url) {
-            this.setState({
-                requestCount: this.state.requestCount + 1,
-            });
+        _inc() {
+            this.setState(s => ({
+                requestCount: s.requestCount + 1,
+            }));
+        },
 
-            return axios(url)
-                .then(res => {
-                    this.setState({
-                        requestCount: this.state.requestCount - 1,
-                    });
+        _dec() {
+            this.setState(s => ({
+                requestCount: s.requestCount - 1,
+            }));
+        },
+
+        request(url) {
+            this._inc();
+
+            return axios(url).then(
+                res => {
+                    this._dec();
                     return res;
-                })
-                .catch(error => {
-                    this.setState({
-                        requestCount: this.state.requestCount - 1,
-                    });
+                },
+                error => {
+                    this._dec();
                     throw error;
-                });
+                }
+            );
         },
 
         fetchGusts() {
@@ -161,7 +168,12 @@ export const addWeatherData = compose(
             return Promise.resolve();
         },
 
-        fetchAllWeatherData() {
+        fetchAllWeatherData(options = {}) {
+            if (!options.force && this.state.requestCount > 0) {
+                console.warn("Request already in progress. Skipping fetch.");
+                return;
+            }
+
             this.fetchGusts().then(() => {
                 this.fetchWindAvg();
                 this.fetchGustForecasts();
