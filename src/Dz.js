@@ -3,7 +3,7 @@ import {compose, lifecycle} from "recompose";
 import {getOr, isEmpty} from "lodash/fp";
 import simple, {css} from "react-simple";
 import {Link} from "react-router-dom";
-import FaBeer from "react-icons/lib/fa/backward";
+import BackArrow from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -31,6 +31,11 @@ const Row = simple(View, {
     flexDirection: "row",
     justifyContent: "center",
     flexWrap: "wrap",
+});
+
+const Sep = simple(View, {
+    width: 10,
+    height: 10,
 });
 
 const Title = simple(View, {
@@ -108,7 +113,7 @@ const TitleLink = simple(View.create(Link), {
     position: "absolute",
     left: 1,
     top: 1,
-    fontSize: 20,
+    fontSize: 25,
     textDecoration: "none",
     alignItems: "center",
 });
@@ -116,6 +121,7 @@ const TitleLink = simple(View.create(Link), {
 const Sky = simple(View, {
     backgroundColor: "skyblue",
     paddingBottom: 50,
+    paddingTop: 25,
     overflow: "hidden",
     marginBottom: 25,
     minHeight: 300,
@@ -167,7 +173,7 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
                 </View>}
 
-            <TitleLink to="/"><FaBeer />hyppykeli.fi</TitleLink>
+            <TitleLink to="/"><BackArrow /><Sep />Hyppykeli.fi</TitleLink>
         </View>
     );
 };
