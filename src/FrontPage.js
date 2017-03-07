@@ -89,33 +89,30 @@ const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
 );
 
 const FrontPage = () => (
-    <Container>
-        <FrontPageBackground />
-        <Center>
-            <BrowserTitle full title="Hyppykeli.fi" />
-            <ParachuteContainer>
-                <Parachute />
-            </ParachuteContainer>
+    <Center>
+        <BrowserTitle full title="Hyppykeli.fi" />
+        <ParachuteContainer>
+            <Parachute />
+        </ParachuteContainer>
 
-            <Sep />
-            <Sep />
+        <Sep />
+        <Sep />
 
-            <Title>
-                Hyppykeli.fi
-            </Title>
+        <Title>
+            Hyppykeli.fi
+        </Title>
 
-            <Sep />
+        <Sep />
 
-            <LinkListWrap>
-                {Object.keys(dropzones).map(key => (
-                    <DZLink key={key} {...dropzones[key]}>
-                        {dropzones[key].icaocode}
-                    </DZLink>
-                ))}
-            </LinkListWrap>
+        <LinkListWrap>
+            {Object.keys(dropzones).map(key => (
+                <DZLink key={key} {...dropzones[key]}>
+                    {dropzones[key].icaocode}
+                </DZLink>
+            ))}
+        </LinkListWrap>
 
-        </Center>
-    </Container>
+    </Center>
 );
 
 export default FrontPage;

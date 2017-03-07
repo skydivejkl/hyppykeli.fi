@@ -10,9 +10,15 @@ css.global("body, html", {
     padding: 0,
     margin: 0,
     overflowX: "hidden",
+    backgroundColor: "skyblue",
+});
+
+css.global("a", {
+    WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
 });
 
 const Container = simple(View, {
+    backgroundColor: "skyblue",
     alignItems: "center",
     position: "absolute",
     top: 0,
@@ -22,7 +28,6 @@ const Container = simple(View, {
 });
 
 const Wrap = simple(View, {
-    backgroundColor: "white",
     flex: 1,
     width: "100%",
 });

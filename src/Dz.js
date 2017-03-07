@@ -21,7 +21,6 @@ const Header = simple(View, {
     backgroundColor: "skyblue",
     paddingBottom: 50,
     overflow: "hidden",
-    marginBottom: 25,
     minHeight: 300,
 });
 
@@ -83,6 +82,10 @@ const CloudText = simple(View, {
     fontWeight: "bold",
 });
 
+const ChartContainer = simple(View, {
+    backgroundColor: "white",
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -126,12 +129,13 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
             </Header>
 
             {!dataMissing &&
-                <View>
+                <ChartContainer>
+                    <Sep />
                     <Row>
                         <SubTitle>Tuulihavainnot ja -ennusteet</SubTitle>
                     </Row>
                     <WindChart gusts={combinedGusts} avg={combinedAvg} />
-                </View>}
+                </ChartContainer>}
 
             <TitleLink to="/">
                 Hyppykeli.fi
