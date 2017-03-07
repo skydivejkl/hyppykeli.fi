@@ -87,10 +87,9 @@ const defaultLineStyle = {
 };
 
 class WindChart extends React.Component {
-    componentDidMount() {
-        this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
-        const gusts = this.props.gusts;
-        const avg = this.props.avg;
+    getChartData(props) {
+        const gusts = props.gusts;
+        const avg = props.avg;
 
         const gustObservations = getObservations(gusts);
         const gustForecasts = getForecastPoints(gusts);
@@ -98,7 +97,7 @@ class WindChart extends React.Component {
         const avgObservations = getObservations(avg);
         const avgForecasts = getForecastPoints(avg);
 
-        var data = {
+        return {
             labels: gusts.map(d => d.time),
             datasets: [
                 {
@@ -143,10 +142,16 @@ class WindChart extends React.Component {
                 },
             ],
         };
+    }
 
+    componentDidMount() {
+        this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
+        this.debouncedChartUpdate = debounce(2000, this.updateChart.bind(this));
+
+        console.log("Creating Chart.js instance");
         this.chart = new Chart(this.canvas, {
             type: "line",
-            data: data,
+            data: this.getChartData(this.props),
             options: {
                 tooltips: {
                     enabled: false,
@@ -177,14 +182,27 @@ class WindChart extends React.Component {
                         if (chartElement[0]) {
                             const index = chartElement[0]._index;
                             this.throttledSetWindPoint(
-                                gusts[index],
-                                avg[index]
+                                this.props.gusts[index],
+                                this.props.avg[index]
                             );
                         }
                     },
                 },
             },
         });
+    }
+
+    updateChart(props) {
+        console.log("Updating WindChart canvas");
+        this.chart.config.data = this.getChartData(props);
+        this.chart.update(0);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // TODO: actual check whether the data changed
+        if (this.chart) {
+            this.debouncedChartUpdate(nextProps);
+        }
     }
 
     render() {
