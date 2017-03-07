@@ -36,6 +36,8 @@ var config = {
             GIT_COMMIT_MESSAGE_FULL: JSON.stringify(gitMessageFull),
             GIT_COMMIT_DATE: JSON.stringify(gitDate),
         }),
+        // Drop unused locales from moment
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fi/),
     ],
 };
 
