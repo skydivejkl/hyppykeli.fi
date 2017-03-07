@@ -6,14 +6,33 @@ import simple from "react-simple";
 
 import {View} from "./core";
 import {withBrowserEvent, addSetTimeout} from "./utils";
-import Header from "./Header";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
-import {LatestGust, LatestWindAvg, addLatestGust} from "./LatestWindReadings";
+import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
 import BrowserTitle from "./BrowserTitle";
 import RefreshButton from "./RefreshButton";
 import TitleLink from "./TitleLink";
+import Parachute from "./Parachute";
+import Cloud from "./Cloud";
+
+const Header = simple(View, {
+    paddingTop: 170,
+    backgroundColor: "skyblue",
+    paddingBottom: 50,
+    overflow: "hidden",
+    marginBottom: 25,
+    minHeight: 300,
+});
+
+const Background = simple(View, {
+    position: "absolute",
+    alignItems: "center",
+    top: -10,
+    left: 0,
+    right: 0,
+    bottom: 0,
+});
 
 const getPoints = getOr([], ["points"]);
 
@@ -35,12 +54,6 @@ const Row = simple(View, {
     flexWrap: "wrap",
 });
 
-const Title = simple(View, {
-    fontSize: 45,
-    fontWeight: "bold",
-    color: "white",
-});
-
 const SubTitle = simple(View, {
     fontSize: 25,
 });
@@ -48,6 +61,26 @@ const SubTitle = simple(View, {
 const Sep = simple(View, {
     width: 15,
     height: 15,
+});
+
+const CloudContainer = simple(View, {
+    position: "absolute",
+    top: -40,
+    width: "100%",
+    height: 240,
+});
+
+const ParachuteContainer = simple(View, {
+    position: "absolute",
+    top: 25,
+    height: 250,
+    width: 250,
+});
+
+const CloudText = simple(View, {
+    color: "skyblue",
+    fontSize: 50,
+    fontWeight: "bold",
 });
 
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
@@ -65,12 +98,18 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
         <View>
             <BrowserTitle title={dzProps.icaocode} />
             <Header>
-
-                <Row>
-                    <Title>{dzProps.icaocode}</Title>
-                </Row>
-
-                <Sep />
+                <Background>
+                    <CloudContainer>
+                        <Cloud>
+                            <CloudText>
+                                {dzProps.icaocode}
+                            </CloudText>
+                        </Cloud>
+                    </CloudContainer>
+                    <ParachuteContainer>
+                        <Parachute />
+                    </ParachuteContainer>
+                </Background>
 
                 <Row>
                     <LatestGust />

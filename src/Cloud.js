@@ -5,7 +5,7 @@ import CloudFa from "react-icons/lib/fa/cloud";
 import {View} from "./core";
 
 const CloudFlex = simple(View.create(CloudFa), {
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "white",
     height: "100%",
     width: "100%",
 });
@@ -21,18 +21,10 @@ const CloudBackground = simple(View, {
 });
 
 const CloudContainer = simple(View, {
-    marginLeft: 10,
-    marginRight: 10,
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
     width: "100%",
-});
-
-const LinkText = simple(View, {
-    textAlign: "center",
-    color: "skyblue",
-    fontSize: 40,
 });
 
 const Cloud = ({children}) => (
@@ -40,7 +32,7 @@ const Cloud = ({children}) => (
         <CloudBackground>
             <CloudFlex />
         </CloudBackground>
-        <LinkText>{children}</LinkText>
+        {children}
     </CloudContainer>
 );
 

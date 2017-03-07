@@ -20,10 +20,10 @@ const Parachute = simple(
     {
         background: "url(/parachute.svg)",
         backgroundSize: "contain",
-        width: 230,
         backgroundRepeat: "no-repeat !important",
         backgroundPosition: "center",
-        height: 250,
+        width: "100%",
+        height: "100%",
         marginTop: 10,
         opacity: 0.08,
     },
