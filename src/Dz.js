@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import BackArrow from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
+import {withBrowserEvent} from "./utils";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
@@ -185,6 +186,9 @@ Dz = compose(
         componentDidMount() {
             this.props.fetchAllWeatherData();
         },
+    }),
+    withBrowserEvent(window, "focus", ({props}) => {
+        props.fetchAllWeatherData();
     })
 )(Dz);
 
