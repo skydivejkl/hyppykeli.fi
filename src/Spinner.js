@@ -6,7 +6,7 @@ import ReactSpinner from "react-spinner";
 import {View} from "./core";
 
 css.global(".react-spinner_bar", {
-    backgroundColor: "gray !important",
+    backgroundColor: "white !important",
 });
 
 const Spinner = simple(ReactSpinner, {

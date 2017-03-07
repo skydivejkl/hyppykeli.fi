@@ -26,8 +26,8 @@ const WindDesc = simple(View, {
 });
 
 const SpinnerContainer = simple(View, {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     display: "inline-flex",
     marginRight: 4,
     marginLeft: 4,
