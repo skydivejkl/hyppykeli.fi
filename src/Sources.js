@@ -3,6 +3,7 @@ import simple from "react-simple";
 import gpsDistanceKm from "gps-distance";
 import {last} from "lodash/fp";
 import GithubIcon_ from "react-icons/lib/fa/github";
+import {defaultProps} from "recompose";
 
 import {View, Title, Sep} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -59,7 +60,7 @@ const Bold = simple("span", {
 const createMapLink = ({lat, lon}) =>
     `https://www.google.fi/maps/place/${lat},${lon}`;
 
-const Link = simple(Bold.create("a"), {
+var Link = simple(Bold.create("a"), {
     color: "skyblue",
     textDecoration: "none",
     ":visited": {
@@ -69,6 +70,7 @@ const Link = simple(Bold.create("a"), {
         color: "skyblue",
     },
 });
+Link = defaultProps({target: "_blank"})(Link);
 
 const StationDesc = ({name, from, to}) => (
     <span>
