@@ -54,7 +54,6 @@ const Row = simple(View, {
     flexWrap: "wrap",
 });
 
-
 const CloudContainer = simple(View, {
     position: "absolute",
     top: -40,

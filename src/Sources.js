@@ -2,24 +2,38 @@ import React from "react";
 import simple from "react-simple";
 import gpsDistanceKm from "gps-distance";
 import {last} from "lodash/fp";
+import GithubIcon_ from "react-icons/lib/fa/github";
 
 import {View, Title, Sep} from "./core";
 import {addWeatherData} from "./weather-data";
 
+const blue = "#1d576f";
+
+const GithubIcon = simple(GithubIcon_, {
+    height: 50,
+    width: 50,
+});
+
+const SourcesTitle = simple(Title, {
+    color: "white",
+    marginTop: 10,
+    marginBottom: 20,
+});
+
 const SourcesContainer = simple(View, {
-    backgroundColor: "white",
+    backgroundColor: blue,
     alignItems: "center",
 });
 
 const SourcesContent = simple(View, {
-    maxWidth: 600,
+    // maxWidth: 400,
     alignItems: "center",
 });
 
-const SourceText = simple(View, {
-    color: "gray",
-    marginTop: 2,
-    marginBottom: 2,
+const SourceText = simple("div", {
+    textAlign: "center",
+    color: "white",
+    marginBottom: 20,
 });
 
 const parseFmiLatLon = s => {
@@ -70,90 +84,102 @@ const StationDesc = ({name, from, to}) => (
         päässä{" "}
         <Link href={createMapLink(to)}>
             laskeutumisalueesta
-        </Link>.
+        </Link>
     </span>
 );
 
 const Metar = simple("span", {
-    backgroundColor: "#DDD",
+    backgroundColor: "white",
+    color: blue,
     padding: 5,
     borderRadius: 5,
     fontFamily: "monospace",
-    border: "1px solid gray",
+    fontWeight: "bold",
+    // border: "1px solid ",
 });
 
 var Sources = (
     {dzProps, gusts, windAvg, windAvgForecasts, gustForecasts, metars}
 ) => (
     <SourcesContainer>
+        <Sep />
+        <Sep />
         <SourcesContent>
-            <Title>Lähteet</Title>
-
-            <Sep />
+            <SourcesTitle>Lähteet</SourcesTitle>
 
             <SourceText>
-                <span>
-                    Kaikki data on haettu Ilmatieteen laitoksen
-                    {" "}
-                    <Link href="https://ilmatieteenlaitos.fi/avoin-data">
-                        avoimista rajapinnoista.
-                    </Link>
-                </span>
+                Kaikki data on haettu Ilmatieteen laitoksen
+                {" "}
+                <Link href="https://ilmatieteenlaitos.fi/avoin-data">
+                    avoimista rajapinnoista
+                </Link>
             </SourceText>
 
             {gusts &&
                 <SourceText>
-                    <center>
-                        Puuskatiedot saatiin mittausasemalta{" "}
-                        <StationDesc
-                            name={gusts.stationName}
-                            from={parseFmiLatLon(gusts.stationCoordinates)}
-                            to={dzProps}
-                        />
-                    </center>
+                    Puuskatiedot saatiin mittausasemalta{" "}
+                    <StationDesc
+                        name={gusts.stationName}
+                        from={parseFmiLatLon(gusts.stationCoordinates)}
+                        to={dzProps}
+                    />
                 </SourceText>}
 
             {windAvg &&
                 <SourceText>
-                    <center>
-                        Keskituulitiedot saatiin mittausasemalta{" "}
-                        <StationDesc
-                            name={windAvg.stationName}
-                            from={parseFmiLatLon(windAvg.stationCoordinates)}
-                            to={dzProps}
-                        />
-                    </center>
+                    Keskituulitiedot saatiin mittausasemalta{" "}
+                    <StationDesc
+                        name={windAvg.stationName}
+                        from={parseFmiLatLon(windAvg.stationCoordinates)}
+                        to={dzProps}
+                    />
                 </SourceText>}
 
             {gustForecasts &&
                 <SourceText>
-                    <center>
-                        Puuskaennustus on annettu alueelle
-                        {" "}
-                        <Bold>{gustForecasts.locationName}</Bold>
-                    </center>
+                    Puuskaennustus on annettu alueelle
+                    {" "}
+                    <Bold>{gustForecasts.locationName}</Bold>
                 </SourceText>}
 
             {windAvgForecasts &&
                 <SourceText>
-                    <center>
-                        Keskituuliennustus on annettu alueelle
-                        {" "}
-                        <Bold>{windAvgForecasts.locationName}</Bold>
-                    </center>
+                    Keskituuliennustus on annettu alueelle
+                    {" "}
+                    <Bold>{windAvgForecasts.locationName}</Bold>
                 </SourceText>}
 
             {Boolean(metars && metars.length > 0) &&
                 <SourceText>
-                    <center>
-                        Pilvikerrokset parsittiin METAR-sanomasta:
-                        <br />
-                        <br />
-                        <Metar>{last(metars).raw}</Metar>
-                    </center>
+                    Pilvikerrokset parsittiin METAR-sanomasta:
+                    <br />
+                    <br />
+                    <Metar>{last(metars).raw}</Metar>
                 </SourceText>}
 
-            <Sep />
+            <SourcesTitle>Tietoja</SourcesTitle>
+
+            <SourceText>
+                Tällä sivulla annettujen tietojen käyttö omalla vastuulla.
+                Kukaan tai mikään ei takaa, että lähdetiedot tai niiden tulkinta
+                olisi millään tapaan järjellistä.
+            </SourceText>
+
+            <SourceText>
+                Tämän tunkin rakensi
+                {" "}
+                <Link href="https://www.facebook.com/esamattisuuronen">
+                    Esa-Matti Suuronen.
+                </Link>
+            </SourceText>
+
+            <SourceText>
+                <Link href="https://github.com/skydivejkl/hyppykeli.fi">
+                    Lähdekoodit Githubista
+                    <br />
+                    <GithubIcon />
+                </Link>
+            </SourceText>
 
         </SourcesContent>
     </SourcesContainer>
