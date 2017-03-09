@@ -1,28 +1,25 @@
 
 # Hyppykeli.fi
 
-Hyppysäätä suomen dropzoneille.
+Skydiving weather for Finnish Dropzones.
 
 
 ## Hacking
 
-Get with node.js 7.6 and yarn 0.20 or later
-
-Install yarn using
-
-    npm install -g yarn
+Get with node.js 7.6 and yarn 0.2 or later
 
 Start by installing all the deps from `package.json`
 
-    make
+    make deps
 
-Start development server
+Start backend server
 
-    make js-server
+    make server-watch
 
-and open <http://localhost:8080/> and hack on `src/index.js`
+and Javascript client bundle server
 
-Build production bundle with
+    make js-watch
 
-    make js
+and open <http://localhost:8080/>
 
+Server side-code is in `server/´` and client code in `src/`.

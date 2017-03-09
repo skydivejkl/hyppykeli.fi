@@ -59,11 +59,13 @@ router.get("/*", (ctx, next) => {
         return next();
     }
 
+    const hostname = ctx.header.host.split(":")[0];
+
     ctx.type = "text/html";
     ctx.body = renderHtml(
         process.env.NODE_ENV === "production"
             ? "dist/bundle.js?v=" + gitRev
-            : "http://sihteeri:8081/dist/bundle.js"
+            : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`
     );
 });
 

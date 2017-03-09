@@ -1,11 +1,12 @@
 export PATH := node_modules/.bin:$(PATH)
 export SHELL := /bin/bash # Required for OS X for some reason
+export JS_SERVER_PORT := 8081
 bundle = static/dist/bundle.js
 
 
-all: yarn js add-production
+all: deps js add-production
 
-yarn:
+deps:
 	yarn
 
 js:
@@ -18,7 +19,7 @@ server-watch:
 	nodemon --watch server/ server/server.js
 
 js-server:
-	webpack-dev-server -d --progress --inline --port 8081 --host 0.0.0.0
+	webpack-dev-server -d --progress --inline --port $(JS_SERVER_PORT) --host 0.0.0.0
 
 assert-clean-git:
 	@test -z "$(shell git status . --porcelain)" || (echo "Dirty git tree: " && git status . --porcelain ; exit 1)
