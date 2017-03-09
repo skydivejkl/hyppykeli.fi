@@ -12,3 +12,13 @@ export const View = simple("div", {
     fontSize: 12,
     fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 });
+
+export  const Title = simple(View, {
+    color: "black",
+    fontSize: 25,
+});
+
+export const Sep = simple(View, {
+    width: 15,
+    height: 15,
+});

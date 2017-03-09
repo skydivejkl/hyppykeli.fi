@@ -4,7 +4,7 @@ import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
 
-import {View} from "./core";
+import {View, Title, Sep} from "./core";
 import {withBrowserEvent, addSetTimeout} from "./utils";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
@@ -15,6 +15,7 @@ import RefreshButton from "./RefreshButton";
 import TitleLink from "./TitleLink";
 import Parachute from "./Parachute";
 import Cloud from "./Cloud";
+import Sources from "./Sources";
 
 const Header = simple(View, {
     paddingTop: 170,
@@ -53,15 +54,6 @@ const Row = simple(View, {
     flexWrap: "wrap",
 });
 
-const SubTitle = simple(View, {
-    color: "black",
-    fontSize: 25,
-});
-
-const Sep = simple(View, {
-    width: 15,
-    height: 15,
-});
 
 const CloudContainer = simple(View, {
     position: "absolute",
@@ -83,7 +75,7 @@ const CloudText = simple(View, {
     fontWeight: "bold",
 });
 
-const ChartContainer = simple(View, {
+const Details = simple(View, {
     backgroundColor: "white",
 });
 
@@ -129,18 +121,25 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
             </Header>
 
-            {!dataMissing &&
-                <ChartContainer>
-                    <Sep />
-                    <Row>
-                        <SubTitle>Tuulihavainnot ja -ennusteet</SubTitle>
-                    </Row>
-                    <WindChart gusts={combinedGusts} avg={combinedAvg} />
-                </ChartContainer>}
+            <Details>
+                {!dataMissing &&
+                    <View>
+                        <Sep />
+                        <Row>
+                            <Title>Tuulihavainnot ja -ennusteet</Title>
+                        </Row>
+                        <WindChart gusts={combinedGusts} avg={combinedAvg} />
+
+                        <Sep />
+                        <Sep />
+                    </View>}
+                <Sources />
+            </Details>
 
             <TitleLink to="/">
                 Hyppykeli.fi
             </TitleLink>
+
             <RefreshButton />
         </View>
     );

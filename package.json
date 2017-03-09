@@ -17,6 +17,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-react": "^6.10.0",
     "glamor": "^2.20.24",
+    "gps-distance": "^0.0.4",
     "koa": "^2.0.1",
     "koa-convert": "^1.2.0",
     "koa-router": "7",
