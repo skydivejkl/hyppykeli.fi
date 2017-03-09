@@ -35,7 +35,7 @@ const renderHtml = script => `
             color: white;
             padding: 0;
             margin: 0;
-            overflowX: hidden;
+            overflow-x: hidden;
             background-color: skyblue;
         }
         </style>
