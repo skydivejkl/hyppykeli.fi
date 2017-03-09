@@ -17,6 +17,8 @@ const SourcesContent = simple(View, {
 
 const SourceText = simple(View, {
     color: "black",
+    marginTop: 2,
+    marginBottom: 2,
 });
 
 const parseFmiLatLon = s => {
@@ -42,13 +44,22 @@ const Bold = simple("span", {
 const createMapLink = ({lat, lon}) =>
     `https://www.google.fi/maps/place/${lat},${lon}`;
 
-const MapLink = simple(Bold.create("a"), {});
+const Link = simple(Bold.create("a"), {
+    color: "skyblue",
+    textDecoration: "none",
+    ":visited": {
+        color: "skyblue",
+    },
+    ":active": {
+        color: "skyblue",
+    },
+});
 
 const StationDesc = ({name, from, to}) => (
     <span>
-        <MapLink href={createMapLink(from)}>
+        <Link href={createMapLink(from)}>
             {name}
-        </MapLink>
+        </Link>
         {" "}
         <Bold>
             {gpsDistanceM(from, to)}
@@ -56,9 +67,9 @@ const StationDesc = ({name, from, to}) => (
             metrin
         </Bold>{" "}
         päässä{" "}
-        <MapLink href={createMapLink(to)}>
+        <Link href={createMapLink(to)}>
             laskeutumisalueesta
-        </MapLink>.
+        </Link>.
     </span>
 );
 
@@ -72,7 +83,13 @@ var Sources = (
             <Sep />
 
             <SourceText>
-                Kaikki data on haettu Ilmatieteen laitoksen avoimista rajapinnoista.
+                <span>
+                    Kaikki data on haettu Ilmatieteen laitoksen
+                    {" "}
+                    <Link href="https://ilmatieteenlaitos.fi/avoin-data">
+                        avoimista rajapinnoista.
+                    </Link>
+                </span>
             </SourceText>
 
             {gusts &&
@@ -96,6 +113,24 @@ var Sources = (
                             from={parseFmiLatLon(windAvg.stationCoordinates)}
                             to={dzProps}
                         />
+                    </span>
+                </SourceText>}
+
+            {gustForecasts &&
+                <SourceText>
+                    <span>
+                        Puuskaennustus on annettu alueelle
+                        {" "}
+                        <Bold>{gustForecasts.locationName}</Bold>
+                    </span>
+                </SourceText>}
+
+            {windAvgForecasts &&
+                <SourceText>
+                    <span>
+                        Keskituuliennustus on annettu alueelle
+                        {" "}
+                        <Bold>{windAvgForecasts.locationName}</Bold>
                     </span>
                 </SourceText>}
 
