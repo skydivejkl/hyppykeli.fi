@@ -51,8 +51,8 @@ router.get("/api/observations/:fmisid", async ctx => {
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
-            starttime: moment().subtract(6, "hours").toISOString(),
-            endtime: moment().toISOString(),
+            starttime: moment().subtract(8, "hours").toISOString(),
+            // endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
         },
@@ -94,8 +94,8 @@ router.get("/api/observations/:fmisid/:feature", async ctx => {
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
-            starttime: moment().subtract(6, "hours").toISOString(),
-            endtime: moment().toISOString(),
+            starttime: moment().subtract(8, "hours").toISOString(),
+            // endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
         },
