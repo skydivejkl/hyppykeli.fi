@@ -1,6 +1,7 @@
 import React from "react";
 import simple from "react-simple";
 import gpsDistanceKm from "gps-distance";
+import {last} from "lodash/fp";
 
 import {View, Title, Sep} from "./core";
 import {addWeatherData} from "./weather-data";
@@ -16,7 +17,7 @@ const SourcesContent = simple(View, {
 });
 
 const SourceText = simple(View, {
-    color: "black",
+    color: "gray",
     marginTop: 2,
     marginBottom: 2,
 });
@@ -73,6 +74,14 @@ const StationDesc = ({name, from, to}) => (
     </span>
 );
 
+const Metar = simple("span", {
+    backgroundColor: "#DDD",
+    padding: 5,
+    borderRadius: 5,
+    fontFamily: "monospace",
+    border: "1px solid gray",
+});
+
 var Sources = (
     {dzProps, gusts, windAvg, windAvgForecasts, gustForecasts, metars}
 ) => (
@@ -94,44 +103,54 @@ var Sources = (
 
             {gusts &&
                 <SourceText>
-                    <span>
+                    <center>
                         Puuskatiedot saatiin mittausasemalta{" "}
                         <StationDesc
                             name={gusts.stationName}
                             from={parseFmiLatLon(gusts.stationCoordinates)}
                             to={dzProps}
                         />
-                    </span>
+                    </center>
                 </SourceText>}
 
             {windAvg &&
                 <SourceText>
-                    <span>
+                    <center>
                         Keskituulitiedot saatiin mittausasemalta{" "}
                         <StationDesc
                             name={windAvg.stationName}
                             from={parseFmiLatLon(windAvg.stationCoordinates)}
                             to={dzProps}
                         />
-                    </span>
+                    </center>
                 </SourceText>}
 
             {gustForecasts &&
                 <SourceText>
-                    <span>
+                    <center>
                         Puuskaennustus on annettu alueelle
                         {" "}
                         <Bold>{gustForecasts.locationName}</Bold>
-                    </span>
+                    </center>
                 </SourceText>}
 
             {windAvgForecasts &&
                 <SourceText>
-                    <span>
+                    <center>
                         Keskituuliennustus on annettu alueelle
                         {" "}
                         <Bold>{windAvgForecasts.locationName}</Bold>
-                    </span>
+                    </center>
+                </SourceText>}
+
+            {Boolean(metars && metars.length > 0) &&
+                <SourceText>
+                    <center>
+                        Pilvikerrokset parsittiin METAR-sanomasta:
+                        <br />
+                        <br />
+                        <Metar>{last(metars).raw}</Metar>
+                    </center>
                 </SourceText>}
 
             <Sep />

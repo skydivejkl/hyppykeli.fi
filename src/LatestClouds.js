@@ -1,7 +1,7 @@
 import React from "react";
 import {compose, mapProps} from "recompose";
 import simple from "react-simple";
-import {last, first} from "lodash/fp";
+import {last} from "lodash/fp";
 
 import {addWeatherData} from "./weather-data";
 import {View} from "./core";

@@ -23,7 +23,12 @@ export const addWeatherData = compose(
                 [],
                 ["data", props.dzProps.icaocode, "metars"],
                 state
-            ).map(parseMetar);
+            ).map(raw => {
+                return {
+                    raw,
+                    ...parseMetar(raw),
+                };
+            });
 
             return {
                 requestCount: state.requestCount,
