@@ -21,7 +21,7 @@ export const gpsDistance = (from, to) => {
         ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10))
     );
 
-    return (km * 1000);
+    return km;
 };
 
 export const withBrowserEvent = (source, eventName, cb, capture) => {

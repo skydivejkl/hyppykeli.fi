@@ -72,9 +72,9 @@ const StationDesc = ({name, from, to}) => (
         </Link>
         {" "}
         <Bold>
-            {Math.round(gpsDistance(from, to))}
+            {gpsDistance(from, to).toFixed(1)}
             {" "}
-            metrin
+            km
         </Bold>{" "}
         päässä{" "}
         <Link href={createMapLink(to)}>

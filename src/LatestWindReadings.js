@@ -6,7 +6,7 @@ import {last} from "lodash/fp";
 import simple from "react-simple";
 
 import {View} from "./core";
-import {fromNowWithClock} from "./utils";
+import {fromNowWithClock, gpsDistance} from "./utils";
 import {addWeatherData} from "./weather-data";
 
 const WindReading = simple(View, {
