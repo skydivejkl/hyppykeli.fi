@@ -5,9 +5,9 @@ import {View} from "./core";
 import {addLatestGust} from "./LatestWindReadings";
 
 const swing = css.keyframes({
-    "0%": {transform: "rotate(60deg)"},
-    "50%": {transform: "rotate(-60deg)"},
-    "100%": {transform: "rotate(60deg)"},
+    "0%": {transform: "rotate(30deg)"},
+    "50%": {transform: "rotate(-30deg)"},
+    "100%": {transform: "rotate(30deg)"},
 });
 
 const rotate = css.keyframes({
@@ -33,7 +33,7 @@ const Parachute = simple(
             transformOrigin: "50% 0%",
         },
         rotate: {
-            animation: `${rotate} 0.8s linear infinite`,
+            animation: `${rotate} 1s linear infinite`,
             transformOrigin: "50% 15%",
         },
     }
