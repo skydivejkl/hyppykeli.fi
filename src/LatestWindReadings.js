@@ -5,7 +5,7 @@ import {compose, mapProps} from "recompose";
 import {last} from "lodash/fp";
 import simple from "react-simple";
 
-import {View} from "./core";
+import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 import {fromNowWithClock, gpsDistance} from "./utils";
 import {addWeatherData} from "./weather-data";
 
@@ -29,9 +29,16 @@ const WindDesc = simple(View, {
 });
 
 const Warning = simple(WindDesc.create("a"), {
-    color: "red",
+    marginTop: 2,
+    backgroundColor: "red",
+    color: "yellow",
+    padding: 5,
+    fontWeight: "bold",
+    textAlign: "center",
     textDecoration: "none",
 });
+
+const WarningLink = Warning.create("a");
 
 const SpinnerContainer = simple(View, {
     width: 40,
@@ -52,16 +59,39 @@ const ValueOrSpinner = ({children}) =>
         ? <Value>{children}</Value>
         : <SpinnerContainer><Spinner /></SpinnerContainer>;
 
+const gustLimitWarning = gust => {
+    if (gust > GUST_LIMIT_B) {
+        return (
+            <Warning>
+                Tuuliraja B+ ylittyy
+            </Warning>
+        );
+    }
+
+    if (gust > GUST_LIMIT) {
+        return (
+            <Warning>
+                Tuuliraja ylittyy
+            </Warning>
+        );
+    }
+
+    return null;
+};
+
 const LatestReading = ({title, time, value, distance}) => (
     <WindReading>
         <WindTitle>
             {title} <ValueOrSpinner>{value}</ValueOrSpinner> m/s
         </WindTitle>
         {Boolean(time) && <WindDesc>{fromNowWithClock(time)}</WindDesc>}
+
+        {gustLimitWarning(value)}
+
         {Boolean(distance > DISTANCE_WARN_THRESHOLD) &&
-            <Warning href="#sources">
-                Mittausasema on {Math.round(distance)} km päässä
-            </Warning>}
+            <WarningLink href="#sources">
+                Etäisyys mittausasemalle {Math.round(distance)} km
+            </WarningLink>}
     </WindReading>
 );
 

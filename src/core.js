@@ -1,5 +1,8 @@
 import simple from "react-simple";
 
+export const GUST_LIMIT = 8;
+export const GUST_LIMIT_B = 11;
+
 export const View = simple("div", {
     boxSizing: "border-box",
     position: "relative",

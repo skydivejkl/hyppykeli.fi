@@ -7,7 +7,7 @@ import {withProps, compose, pure} from "recompose";
 import simple from "react-simple";
 
 import {fromNowWithClock, withBrowserEvent} from "./utils";
-import {View} from "./core";
+import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 
 const Row = simple(View, {
     marginTop: 10,
@@ -130,14 +130,14 @@ class WindChart extends React.Component {
                 },
                 {
                     label: "Tuuliraja",
-                    data: gusts.map(() => 8),
+                    data: gusts.map(() => GUST_LIMIT),
                     ...defaultLineStyle,
                     borderColor: "orange",
                     pointHoverRadius: 0,
                 },
                 {
                     label: "Tuuliraja B+",
-                    data: gusts.map(() => 11),
+                    data: gusts.map(() => GUST_LIMIT_B),
                     ...defaultLineStyle,
                     borderColor: "red",
                     pointHoverRadius: 0,
