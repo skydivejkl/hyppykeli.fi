@@ -23,6 +23,8 @@ const SourcesTitle = simple(Title, {
 
 const SourcesContainer = simple(View, {
     backgroundColor: blue,
+    paddingLeft: 25,
+    paddingRight: 25,
     alignItems: "center",
 });
 
