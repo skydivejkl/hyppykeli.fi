@@ -40,7 +40,6 @@ const renderHtml = script => `
     </head>
     <body>
         <div id="app-container">hetki!</div>
-        <script src="${script}" charset="utf-8"></script>
         <script>
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
         ga('create', 'UA-41768455-1', 'auto');
@@ -51,6 +50,7 @@ const renderHtml = script => `
 
         ga('send', 'pageview');
         </script>
+        <script src="${script}" charset="utf-8"></script>
         <script async src='https://www.google-analytics.com/analytics.js'></script>
         <script async src='https://unpkg.com/autotrack@2.1.0/autotrack.js'></script>
     </body>

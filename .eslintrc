@@ -20,6 +20,7 @@
   },
   "globals": {
     "Promise": true,
+    "ga": true,
     "GIT_COMMIT_DATE": true,
     "GIT_COMMIT_REV": true,
     "GIT_COMMIT_MESSAGE": true
