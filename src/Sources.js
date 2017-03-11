@@ -28,7 +28,7 @@ const SourcesContainer = simple(View, {
 });
 
 const SourcesContent = simple(View, {
-    // maxWidth: 400,
+    maxWidth: 600,
     alignItems: "center",
 });
 
@@ -150,7 +150,7 @@ var Sources = (
                 Tällä sivulla annettujen tietojen käyttö omalla vastuulla.
                 Kukaan tai mikään ei takaa, että lähdetiedot tai niiden
                 tulkinta olisi millään tapaan järjellistä. Muistetaan jatkossakin
-                myös katsella sitä tuulipussia.
+                katsella sitä tuulipussia ja käyttää omia aivoja.
             </SourceText>
 
             <SourceText>
