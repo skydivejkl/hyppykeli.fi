@@ -9,6 +9,17 @@ import parseMetar from "metar";
 
 const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 
+const parseFmiLatLon = s => {
+    if (!s) {
+        return null;
+    }
+    const [latS, lonS] = s.trim().split(" ");
+    return {
+        lat: parseFloat(latS, 10),
+        lon: parseFloat(lonS, 10),
+    };
+};
+
 export const addWeatherData = compose(
     withRouterProps(router => {
         return {
@@ -30,12 +41,30 @@ export const addWeatherData = compose(
                 };
             });
 
-            return {
+            var out = {
                 requestCount: state.requestCount,
                 metars,
                 ...state.data[props.dzProps.fmisid],
                 ...state.data[asLatLonPair(props.dzProps)],
             };
+
+            if (out.gusts) {
+                out = u({
+                    gusts: {
+                        stationCoordinates: parseFmiLatLon,
+                    },
+                })(out);
+            }
+
+            if (out.windAvg) {
+                out = u({
+                    windAvg: {
+                        stationCoordinates: parseFmiLatLon,
+                    },
+                })(out);
+            }
+
+            return out;
         },
 
         getInitialState() {

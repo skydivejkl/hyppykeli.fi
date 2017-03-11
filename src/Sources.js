@@ -38,14 +38,6 @@ const SourceText = simple("div", {
     marginBottom: 20,
 });
 
-const parseFmiLatLon = s => {
-    const [latS, lonS] = s.trim().split(" ");
-    return {
-        lat: parseFloat(latS, 10),
-        lon: parseFloat(lonS, 10),
-    };
-};
-
 const Bold = simple("span", {
     fontWeight: "bold",
 });
@@ -115,7 +107,7 @@ var Sources = (
                     Puuskatiedot saatiin mittausasemalta{" "}
                     <StationDesc
                         name={gusts.stationName}
-                        from={parseFmiLatLon(gusts.stationCoordinates)}
+                        from={gusts.stationCoordinates}
                         to={dzProps}
                     />
                 </SourceText>}
@@ -125,7 +117,7 @@ var Sources = (
                     Keskituulitiedot saatiin mittausasemalta{" "}
                     <StationDesc
                         name={windAvg.stationName}
-                        from={parseFmiLatLon(windAvg.stationCoordinates)}
+                        from={windAvg.stationCoordinates}
                         to={dzProps}
                     />
                 </SourceText>}
