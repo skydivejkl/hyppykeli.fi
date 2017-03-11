@@ -73,7 +73,7 @@ router.get("/*", (ctx, next) => {
     ctx.type = "text/html";
     ctx.body = renderHtml(
         process.env.NODE_ENV === "production"
-            ? "dist/bundle.js?v=" + gitRev
+            ? "/dist/bundle.js?v=" + gitRev
             : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`
     );
 });
