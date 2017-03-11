@@ -148,8 +148,9 @@ var Sources = (
 
             <SourceText>
                 Tällä sivulla annettujen tietojen käyttö omalla vastuulla.
-                Kukaan tai mikään ei takaa, että lähdetiedot tai niiden tulkinta
-                olisi millään tapaan järjellistä.
+                Kukaan tai mikään ei takaa, että lähdetiedot tai niiden
+                tulkinta olisi millään tapaan järjellistä. Muistetaan jatkossakin
+                myös katsella sitä tuulipussia.
             </SourceText>
 
             <SourceText>
