@@ -3,6 +3,7 @@ import Chart from "chart.js";
 import {throttle, debounce} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
+import {withProps, compose, pure} from "recompose";
 import simple from "react-simple";
 
 import {fromNowWithClock, withBrowserEvent} from "./utils";
@@ -226,16 +227,21 @@ WindChart = connectLean({
     },
 })(WindChart);
 
-var WindChartWrap = ({resizeCount, ...props}) => (
-    <WindChart key={resizeCount} {...props} />
-);
-var i = 0;
-WindChartWrap = withBrowserEvent(
-    window,
-    "resize",
-    debounce(100, ({setProps}) => setProps({
-        resizeCount: ++i,
-    }))
+var WindChartWrap = ({instanceKey, ...props}) => {
+    console.log("rendering!");
+
+    return <WindChart key={instanceKey} {...props} />;
+};
+WindChartWrap = compose(
+    withProps({instanceKey: window.innerWidth}),
+    withBrowserEvent(
+        window,
+        "resize",
+        debounce(100, ({setProps}) => setProps({
+            instanceKey: window.innerWidth,
+        }))
+    ),
+    pure
 )(WindChartWrap);
 
 export default WindChartWrap;
