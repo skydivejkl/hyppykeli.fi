@@ -17,23 +17,17 @@
     "lon": 27.790366,
     "fmisid": 101570
   },
-  "efva": {
-    "icaocode": "EFVA",
-    "lat": 63.040419,
-    "lon": 21.773248,
-    "fmisid": 101485
-  },
-  "efla": {
-    "icaocode": "EFLA",
-    "lat": 61.147442,
-    "lon": 25.693681,
-    "fmisid": 101185
-  },
   "efpo": {
     "icaocode": "EFPO",
     "lat": 61.46169,
     "lon": 21.79998,
     "fmisid": 101064
+  },
+  "efou": {
+    "icaocode": "EFOU",
+    "lat": 64.93054,
+    "lon": 25.358608,
+    "fmisid": 101799
   },
   "eftu": {
     "icaocode": "EFTU",
@@ -41,11 +35,17 @@
     "lon": 22.264629,
     "fmisid": 100949
   },
-  "efou": {
-    "icaocode": "EFOU",
-    "lat": 64.93054,
-    "lon": 25.358608,
-    "fmisid": 101799
+  "efla": {
+    "icaocode": "EFLA",
+    "lat": 61.147442,
+    "lon": 25.693681,
+    "fmisid": 101185
+  },
+  "efva": {
+    "icaocode": "EFVA",
+    "lat": 63.040419,
+    "lon": 21.773248,
+    "fmisid": 101485
   },
   "eftp": {
     "icaocode": "EFTP",
