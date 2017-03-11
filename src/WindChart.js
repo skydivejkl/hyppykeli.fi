@@ -228,8 +228,6 @@ WindChart = connectLean({
 })(WindChart);
 
 var WindChartWrap = ({instanceKey, ...props}) => {
-    console.log("rendering!");
-
     return <WindChart key={instanceKey} {...props} />;
 };
 WindChartWrap = compose(
