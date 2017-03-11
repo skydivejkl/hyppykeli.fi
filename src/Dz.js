@@ -16,10 +16,11 @@ import TitleLink from "./TitleLink";
 import Parachute from "./Parachute";
 import Cloud from "./Cloud";
 import Sources from "./Sources";
+import * as colors from "./colors";
 
 const Header = simple(View, {
     paddingTop: 170,
-    backgroundColor: "skyblue",
+    backgroundColor: colors.skyblue,
     paddingBottom: 50,
     overflow: "hidden",
     minHeight: 300,
@@ -69,7 +70,7 @@ const ParachuteContainer = simple(View, {
 });
 
 const CloudText = simple(View, {
-    color: "skyblue",
+    color: colors.skyblue,
     fontSize: 50,
     fontWeight: "bold",
 });

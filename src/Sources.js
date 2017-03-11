@@ -7,8 +7,7 @@ import {defaultProps} from "recompose";
 
 import {View, Title, Sep} from "./core";
 import {addWeatherData} from "./weather-data";
-
-const blue = "#1d576f";
+import * as colors from "./colors";
 
 const GithubIcon = simple(GithubIcon_, {
     height: 50,
@@ -22,7 +21,7 @@ const SourcesTitle = simple(Title, {
 });
 
 const SourcesContainer = simple(View, {
-    backgroundColor: blue,
+    backgroundColor: colors.darkBlue,
     paddingLeft: 25,
     paddingRight: 25,
     alignItems: "center",
@@ -63,13 +62,13 @@ const createMapLink = ({lat, lon}) =>
     `https://www.google.fi/maps/place/${lat},${lon}`;
 
 var Link = simple(Bold.create("a"), {
-    color: "skyblue",
+    color: colors.skyblue,
     textDecoration: "none",
     ":visited": {
-        color: "skyblue",
+        color: colors.skyblue,
     },
     ":active": {
-        color: "skyblue",
+        color: colors.skyblue,
     },
 });
 Link = defaultProps({target: "_blank"})(Link);
@@ -94,7 +93,7 @@ const StationDesc = ({name, from, to}) => (
 
 const Metar = simple("span", {
     backgroundColor: "white",
-    color: blue,
+    color: colors.darkBlue,
     padding: 5,
     borderRadius: 5,
     fontFamily: "monospace",
