@@ -34,4 +34,4 @@ and Javascript client bundle server
 
 and open <http://localhost:8080/>
 
-Server side-code is in `server/´` and client code in `src/`.
+Server side-code is in `server/` and client code in `src/`.
