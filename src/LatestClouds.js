@@ -8,6 +8,16 @@ import {View} from "./core";
 import Spinner from "./Spinner";
 import {fromNowWithClock} from "./utils";
 
+const CLOUDS = {
+    NSC: "Yksittäisiä",
+    FEW: "Muutamia",
+    SCT: "Hajanaisia",
+    BKN: "Rakoileva",
+    OVC: "Täysi pilvikatto",
+};
+
+const getHumanMeaning = code => CLOUDS[code] || code;
+
 const CloudTitle = simple(View, {
     color: "white",
     fontWeight: "bold",
@@ -51,7 +61,7 @@ var LatestClouds = ({metar}) => {
             {metar.clouds.map((cloud, i) => (
                 <Cloud key={i}>
                     {
-                        `${cloud.abbreviation} ${Math.round(cloud.altitude * 0.3048)} M`
+                        `${getHumanMeaning(cloud.abbreviation)} ${Math.round(cloud.altitude * 0.3048)} M`
                     }
                 </Cloud>
             ))}
