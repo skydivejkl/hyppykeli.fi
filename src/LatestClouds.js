@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 import {fromNowWithClock} from "./utils";
 
 const CLOUDS = {
+    NCD: "Ei pilviä",
     NSC: "Yksittäisiä",
     FEW: "Muutamia",
     SCT: "Hajanaisia",
@@ -35,7 +36,7 @@ const Cloud = simple(View, {
 });
 
 const TimeContainer = simple(View, {
-    textAlign: "center !important",
+    textAlign: "left !important",
 });
 
 var LatestClouds = ({metar}) => {
@@ -46,7 +47,8 @@ var LatestClouds = ({metar}) => {
     if (metar.cavok) {
         return (
             <View>
-                <CloudTitle>Ei pilviä alle 1500M (CAVOK)</CloudTitle>
+                <CloudTitle>Pilvikerrokset</CloudTitle>
+                <Cloud>Ei pilviä alle 1500M (CAVOK)</Cloud>
                 <TimeContainer>
                     {fromNowWithClock(metar.time)}
                 </TimeContainer>
@@ -58,13 +60,19 @@ var LatestClouds = ({metar}) => {
         <View>
             <CloudTitle>Pilvikerrokset</CloudTitle>
 
-            {metar.clouds.map((cloud, i) => (
-                <Cloud key={i}>
-                    {
-                        `${getHumanMeaning(cloud.abbreviation)} ${Math.round(cloud.altitude * 0.3048)} M`
-                    }
-                </Cloud>
-            ))}
+            {metar.clouds.map((cloud, i) => {
+                var altText = "";
+
+                if (cloud.altitude > 0) {
+                    altText = Math.round(cloud.altitude * 0.3048) + " M";
+                }
+
+                return (
+                    <Cloud key={i}>
+                        {`${getHumanMeaning(cloud.abbreviation)} ${altText}`}
+                    </Cloud>
+                );
+            })}
 
             <TimeContainer>
                 {fromNowWithClock(metar.time)}
