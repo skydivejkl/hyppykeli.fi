@@ -15,19 +15,42 @@ const getMetar = get(
 );
 
 router.get("/api/metars/:icaocode", async ctx => {
-    const data = await fmiRequest({
-        apikey: ctx.state.fmiApikey,
-        query,
-        cacheKey: ctx.params.icaocode,
-        params: {
-            icaocode: ctx.params.icaocode,
-            starttime: moment().subtract(1, "days").toISOString(),
-            endtime: moment().toISOString(),
-        },
-    });
+    let data = null;
 
-    const points = getPoints(data);
-    ctx.body = points.map(getMetar);
+    try {
+        data = await fmiRequest({
+            apikey: ctx.state.fmiApikey,
+            query,
+            cacheKey: ctx.params.icaocode,
+            params: {
+                icaocode: ctx.params.icaocode,
+                starttime: moment().subtract(1, "days").toISOString(),
+                // endtime: moment().toISOString(),
+            },
+        });
+    } catch (error) {
+        if (String(error.response.status)[0] === "4") {
+            ctx.status = error.response.status;
+            ctx.body = {
+                error: "Unknown icaocode " + ctx.params.icaocode,
+            };
+            return;
+        } else {
+            throw error;
+        }
+    }
+
+    if (data) {
+        const points = getPoints(data);
+        if (points) {
+            ctx.body = points.map(getMetar);
+        } else {
+            ctx.status = 400;
+            ctx.body = {
+                error: "No data for icaocode " + ctx.params.icaocode,
+            };
+        }
+    }
 });
 
 module.exports = router;

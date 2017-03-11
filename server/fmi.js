@@ -103,6 +103,7 @@ router.get("/api/observations/:fmisid/:feature", async ctx => {
 
     const features = getFeatures(data);
     if (!features) {
+        ctx.status = 404;
         ctx.body = {error: "No data for fmisid: " + ctx.params.fmisid};
         return;
     }
@@ -112,6 +113,7 @@ router.get("/api/observations/:fmisid/:feature", async ctx => {
     })[0];
 
     if (!feature) {
+        ctx.status = 404;
         ctx.body = {
             stationName: getFeatureStationName(feature),
             stationCoordinates: getFeatureStationCoordinates(feature),
