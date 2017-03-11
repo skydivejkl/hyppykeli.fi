@@ -91,7 +91,7 @@ const StationDesc = ({name, from, to}) => (
     </span>
 );
 
-const Metar = simple("span", {
+const Metar = simple("div", {
     backgroundColor: "white",
     color: colors.darkBlue,
     padding: 5,
