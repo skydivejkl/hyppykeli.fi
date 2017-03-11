@@ -3,6 +3,7 @@ import {values, omit} from "lodash/fp";
 import {compose, mapProps} from "recompose";
 import {withRouter} from "react-router-dom";
 import moment from "moment";
+import gpsDistanceKm from "gps-distance";
 
 export const withRouterProps = mapper => compose(
     mapProps(props => ({originalProps: props})),
@@ -14,6 +15,14 @@ export const withRouterProps = mapper => compose(
         };
     })
 );
+
+export const gpsDistance = (from, to) => {
+    const km = gpsDistanceKm(
+        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10))
+    );
+
+    return (km * 1000);
+};
 
 export const withBrowserEvent = (source, eventName, cb, capture) => {
     return Component => class BrowserEvent extends React.Component {

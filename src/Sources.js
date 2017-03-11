@@ -1,10 +1,10 @@
 import React from "react";
 import simple from "react-simple";
-import gpsDistanceKm from "gps-distance";
 import {last} from "lodash/fp";
 import GithubIcon_ from "react-icons/lib/fa/github";
 import {defaultProps} from "recompose";
 
+import {gpsDistance} from "./utils";
 import {View, Title, Sep} from "./core";
 import {addWeatherData} from "./weather-data";
 import * as colors from "./colors";
@@ -46,14 +46,6 @@ const parseFmiLatLon = s => {
     };
 };
 
-const gpsDistanceM = (from, to) => {
-    const km = gpsDistanceKm(
-        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10))
-    );
-
-    return Math.round(km * 1000);
-};
-
 const Bold = simple("span", {
     fontWeight: "bold",
 });
@@ -80,7 +72,7 @@ const StationDesc = ({name, from, to}) => (
         </Link>
         {" "}
         <Bold>
-            {gpsDistanceM(from, to)}
+            {Math.round(gpsDistance(from, to))}
             {" "}
             metrin
         </Bold>{" "}
