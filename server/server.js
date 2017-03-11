@@ -24,12 +24,10 @@ const renderHtml = script => `
         <title>Hyppykeli.fi</title>
         <link href="/parachute.ico" rel="icon">
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <!-- Chrome, Firefox OS and Opera -->
         <meta name="theme-color" content="skyblue">
-        <!-- Windows Phone -->
         <meta name="msapplication-navbutton-color" content="skyblue">
-        <!-- iOS Safari -->
         <meta name="apple-mobile-web-app-status-bar-style" content="skyblue">
+        <link rel="manifest" href="/manifest.json">
         <style>
         body, html {
             color: white;
