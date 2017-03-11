@@ -33,7 +33,7 @@
     "react-fastclick": "^3.0.1",
     "react-icons": "^2.2.3",
     "react-redux": "^5.0.3",
-    "react-router-dom": "4",
+    "react-router-dom": "^4.0.0",
     "react-simple": "^1.2.3",
     "react-spinner": "^0.2.6",
     "recompose": "^0.22.0",

@@ -30,7 +30,7 @@ const Main = () => (
         <Wrap>
             <Switch>
                 <Route exact path="/" component={FrontPage} />
-                <Route path="/dz" component={Dz} />
+                <Route path="/dz/:dz?" component={Dz} />
             </Switch>
         </Wrap>
     </Container>

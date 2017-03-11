@@ -7,6 +7,8 @@ import u from "updeep";
 import axios from "axios";
 import parseMetar from "metar";
 
+import dropzones from "../dropzones";
+
 const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 
 const parseFmiLatLon = s => {
@@ -22,8 +24,16 @@ const parseFmiLatLon = s => {
 
 export const addWeatherData = compose(
     withRouterProps(router => {
+        var predifedProps = null;
+        if (router.match.params.dz) {
+            predifedProps = dropzones[router.match.params.dz];
+        }
+
         return {
-            dzProps: qs.parse(router.location.search.slice(1)),
+            dzProps: {
+                ...predifedProps,
+                ...qs.parse(router.location.search.slice(1)),
+            },
         };
     }),
     connectLean({

@@ -77,13 +77,8 @@ const DZLinkStyled = simple(View.create(Link), {
     textDecoration: "none",
 });
 
-const DZLink = ({icaocode, fmisid, lat, lon, children}) => (
-    <DZLinkStyled
-        to={{
-            pathname: "/dz",
-            search: qs.stringify({icaocode, fmisid, lat, lon}),
-        }}
-    >
+const DZLink = ({dz, children}) => (
+    <DZLinkStyled to={"/dz/" + dz}>
         <Cloud><LinkText>{children}</LinkText></Cloud>
     </DZLinkStyled>
 );
@@ -105,9 +100,9 @@ const FrontPage = () => (
         <Sep />
 
         <LinkListWrap>
-            {Object.keys(dropzones).map(key => (
-                <DZLink key={key} {...dropzones[key]}>
-                    {dropzones[key].icaocode}
+            {Object.keys(dropzones).map(dz => (
+                <DZLink key={dz} dz={dz}>
+                    {dz}
                 </DZLink>
             ))}
         </LinkListWrap>
