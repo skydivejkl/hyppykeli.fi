@@ -1,5 +1,5 @@
 import React from "react";
-import {compose, lifecycle} from "recompose";
+import {pure, compose, lifecycle} from "recompose";
 import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
@@ -183,7 +183,8 @@ Dz = compose(
             },
             {trailing: false}
         )
-    )
+    ),
+    pure
 )(Dz);
 
 export default Dz;
