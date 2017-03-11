@@ -40,6 +40,12 @@ const Main = () => (
                     exact
                     path="/previous"
                     render={() => {
+                        ga(
+                            "send",
+                            "event",
+                            "HomeScreen",
+                            "start-from-home-screen-app"
+                        );
                         if (window.localStorage.previous) {
                             return (
                                 <Redirect to={window.localStorage.previous} />
