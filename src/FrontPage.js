@@ -14,7 +14,9 @@ import {View} from "./core";
 const ParachuteContainer = simple(View, {
     position: "fixed",
     height: 250,
-    width: 250,
+    top: 0,
+    left: 0,
+    right: 0,
 });
 
 const LinkText = simple(View, {

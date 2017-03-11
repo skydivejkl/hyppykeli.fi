@@ -60,13 +60,16 @@ const CloudContainer = simple(View, {
     top: -40,
     width: "100%",
     height: 240,
+    left: 0,
+    right: 0,
 });
 
 const ParachuteContainer = simple(View, {
     position: "absolute",
     top: 25,
     height: 250,
-    width: 250,
+    left: 0,
+    right: 0,
 });
 
 const CloudText = simple(View, {
