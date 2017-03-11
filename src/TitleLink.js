@@ -4,11 +4,12 @@ import {Link} from "react-router-dom";
 import BackArrowIcon_ from "react-icons/lib/fa/backward";
 
 import {View} from "./core";
+import * as colors from "./colors";
 
 const BackArrowIcon = simple(View.create(BackArrowIcon_), {
     width: 30,
     height: 30,
-    color: "white",
+    color: colors.gray,
 });
 
 const Row = simple(View, {
@@ -23,9 +24,9 @@ const Sep = simple(View, {
 });
 
 const TitleLinkContainer = simple(View.create(Link), {
-    color: "white",
+    color: colors.gray,
     flexDirection: "row",
-    position: "absolute",
+    position: "fixed",
     left: 0,
     top: 0,
     height: 70,

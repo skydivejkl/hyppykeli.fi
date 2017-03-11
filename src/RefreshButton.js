@@ -4,18 +4,19 @@ import {compose, withHandlers} from "recompose";
 
 import Spinner from "./Spinner";
 import {View} from "./core";
+import * as colors from "./colors";
 
 import {addWeatherData} from "./weather-data";
 import RefreshIcon_ from "react-icons/lib/fa/refresh";
 
 const RefreshIcon = simple(View.create(RefreshIcon_), {
-    color: "white",
+    color: colors.gray,
     width: "100%",
     height: "100%",
 });
 
 const RefreshButtonContainer = simple(View.create("a"), {
-    position: "absolute",
+    position: "fixed",
     top: 0,
     right: 0,
     width: 70,
@@ -39,7 +40,7 @@ const Background = simple(View, {
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
-    color: "white",
+    color: colors.gray,
 });
 
 var RefreshButton = ({requestCount, refresh}) => (
