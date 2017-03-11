@@ -16,6 +16,7 @@ import "moment/locale/fi";
 moment.locale("fi");
 
 import Main from "./Main";
+import ScrollToTop from "./ScrollToTop";
 
 const store = createStore(
     leanReducer,
@@ -26,7 +27,9 @@ const store = createStore(
 const Root = () => (
     <BrowserRouter>
         <Provider store={store}>
-            <Main />
+            <ScrollToTop>
+                <Main />
+            </ScrollToTop>
         </Provider>
     </BrowserRouter>
 );
