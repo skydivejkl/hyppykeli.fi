@@ -47,6 +47,12 @@
     "lon": 25.358608,
     "fmisid": 101799
   },
+  "eftp": {
+    "icaocode": "EFTP",
+    "lat": 61.420148,
+    "lon":  23.624397,
+    "fmisid": 101118
+  },
   "eflp": {
     "icaocode": "EFLP",
     "lat": 61.042674,
