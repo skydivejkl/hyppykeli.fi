@@ -153,6 +153,8 @@ Dz = compose(
     addSetTimeout,
     lifecycle({
         componentDidMount() {
+            window.localStorage.previous = window.location.pathname +
+                window.location.search;
             this.props.fetchAllWeatherData({force: true});
 
             const {icaocode} = this.props.dzProps;

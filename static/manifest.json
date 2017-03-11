@@ -14,6 +14,6 @@
   ],
   "theme_color": "skyblue",
   "background_color": "skyblue",
-  "start_url": "/",
+  "start_url": "/previous",
   "display": "standalone"
 }

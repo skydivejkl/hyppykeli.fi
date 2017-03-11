@@ -1,6 +1,6 @@
 import React from "react";
 import simple, {css} from "react-simple";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 
 import {View} from "./core";
 import Dz from "./Dz";
@@ -25,12 +25,32 @@ const Wrap = simple(View, {
     width: "100%",
 });
 
+const NotFound = () => (
+    <View>
+        Tuntematon näkymä
+    </View>
+);
+
 const Main = () => (
     <Container>
         <Wrap>
             <Switch>
                 <Route exact path="/" component={FrontPage} />
+                <Route
+                    exact
+                    path="/previous"
+                    render={() => {
+                        if (window.localStorage.previous) {
+                            return (
+                                <Redirect to={window.localStorage.previous} />
+                            );
+                        } else {
+                            return <Redirect to="/" />;
+                        }
+                    }}
+                />
                 <Route path="/dz/:dz?" component={Dz} />
+                <Route component={NotFound} />
             </Switch>
         </Wrap>
     </Container>
