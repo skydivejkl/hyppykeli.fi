@@ -24,6 +24,7 @@ export const gpsDistance = (from, to) => {
     return km;
 };
 
+
 export const withBrowserEvent = (source, eventName, cb, capture) => {
     return Component => class BrowserEvent extends React.Component {
         constructor(props) {

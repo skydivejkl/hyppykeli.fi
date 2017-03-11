@@ -92,7 +92,7 @@ var Sources = (
         <Sep />
         <Sep />
         <SourcesContent>
-            <SourcesTitle>Lähteet</SourcesTitle>
+            <SourcesTitle id="sources">Lähteet</SourcesTitle>
 
             <SourceText>
                 Kaikki data on haettu Ilmatieteen laitoksen
