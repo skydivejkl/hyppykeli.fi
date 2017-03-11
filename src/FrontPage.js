@@ -32,27 +32,6 @@ const Title = simple(View, {
     color: "white",
 });
 
-const FrontPageBackground = simple(View, {
-    backgroundColor: "skyblue",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-});
-
-const Container = simple(
-    View,
-    {
-        // alignItems: "center",
-        // position: "absolute",
-        // top: 0,
-        // left: 0,
-        // right: 0,
-        // bottom: 0,
-    }
-);
-
 const Center = simple(View, {
     alignItems: "center",
     flexWrap: "wrap",
