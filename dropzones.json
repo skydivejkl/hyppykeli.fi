@@ -35,6 +35,12 @@
     "lon": 22.264629,
     "fmisid": 100949
   },
+  "efjm": {
+    "icaocode": "EFJM",
+    "lat": 61.773331,
+    "lon": 22.717113,
+    "fmisid": 101291
+  },
   "efla": {
     "icaocode": "EFLA",
     "lat": 61.147442,
