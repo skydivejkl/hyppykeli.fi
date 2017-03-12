@@ -5,6 +5,9 @@ const url = require("url");
 
 const {fmiRequest, fmiRawRequest} = require("./utils");
 
+const getStartTime = () =>
+    moment().subtract(7, "hours").startOf("hour").toISOString();
+
 // Get the paths with https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en
 
 const getFeatures = get("wfs:FeatureCollection.wfs:member");
@@ -51,7 +54,7 @@ router.get("/api/observations/:fmisid", async ctx => {
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
-            starttime: moment().subtract(8, "hours").toISOString(),
+            starttime: getStartTime(),
             // endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
@@ -94,7 +97,7 @@ router.get("/api/observations/:fmisid/:feature", async ctx => {
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
-            starttime: moment().subtract(8, "hours").toISOString(),
+            starttime: getStartTime(),
             // endtime: moment().toISOString(),
             parameters: OBSERVATION_PARAMETERS,
             fmisid: ctx.params.fmisid,
