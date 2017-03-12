@@ -22,10 +22,19 @@ const xml2js = xml => new Promise((resove, reject) => {
 
 const fmiRequestCache = {};
 
+const fmiStats = {
+    requests: 0,
+    real: 0,
+    cached: 0,
+    errored: 0,
+};
+
 const fmiRawRequest = async (url, options) => {
     if (!options) {
         throw new Error("options missing from fmiRawRequest");
     }
+
+    fmiStats.requests++;
 
     if (!options.cacheAge) {
         options.cacheAge = 30;
@@ -39,6 +48,7 @@ const fmiRawRequest = async (url, options) => {
         await existingRequest.promise;
         const age = Date.now() - existingRequest.created;
         if (age / 1000 < options.cacheAge) {
+            fmiStats.cached++;
             console.log("Cache fresh.");
             return existingRequest.promise;
         }
@@ -48,6 +58,7 @@ const fmiRawRequest = async (url, options) => {
         console.log("No cache.");
     }
 
+    fmiStats.real++;
     const promise = axios(url)
         .then(res => {
             console.log("FMI request completed", url);
@@ -55,6 +66,7 @@ const fmiRawRequest = async (url, options) => {
         })
         .catch(error => {
             console.error("FMI request failed", error);
+            fmiStats.errored++;
             delete fmiRequestCache[options.cacheKey];
             throw error;
         });
@@ -88,4 +100,5 @@ module.exports = {
     xml2js,
     fmiRequest,
     fmiRawRequest,
+    fmiStats,
 };

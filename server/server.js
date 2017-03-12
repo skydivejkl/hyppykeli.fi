@@ -8,6 +8,7 @@ const config = require("../config");
 
 const app = new Koa();
 
+const {fmiStats} = require("./utils");
 const metar = require("./metar");
 const fmi = require("./fmi");
 
@@ -62,6 +63,10 @@ const started = new Date();
 router.get("/uptime", ctx => {
     ctx.type = "text/html";
     ctx.body = started.toString();
+});
+
+router.get("/stats", ctx => {
+    ctx.body = fmiStats;
 });
 
 router.get("/*", (ctx, next) => {
