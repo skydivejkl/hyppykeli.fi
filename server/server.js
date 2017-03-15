@@ -38,6 +38,8 @@ const renderHtml = script => `
             background-color: skyblue;
         }
         </style>
+        <script type="text/javascript">window._trackJs = { token: '3333e432505347958ec3649474d80ef4' };</script>
+        <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
     </head>
     <body>
         <div id="app-container">hetki!</div>
