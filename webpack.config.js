@@ -17,7 +17,7 @@ var config = {
         filename: "[name].js",
         publicPath: "/dist",
     },
-    devtool: "sourceMap",
+    devtool: "source-map",
     module: {
         rules: [
             {
