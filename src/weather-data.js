@@ -31,6 +31,7 @@ export const addWeatherData = compose(
 
         return {
             dzProps: {
+                name: router.match.params.dz,
                 ...predifedProps,
                 ...qs.parse(router.location.search.slice(1)),
             },

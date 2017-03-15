@@ -95,13 +95,13 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
 
     return (
         <View>
-            <BrowserTitle title={dzProps.icaocode} />
+            <BrowserTitle title={dzProps.name} />
             <Header>
                 <Background>
                     <CloudContainer>
                         <Cloud>
                             <CloudText>
-                                {dzProps.icaocode}
+                                {dzProps.name}
                             </CloudText>
                         </Cloud>
                     </CloudContainer>
