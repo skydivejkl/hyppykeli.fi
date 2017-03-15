@@ -56,6 +56,7 @@ RefreshButton = compose(
     withHandlers({
         refresh: props => e => {
             e.preventDefault();
+            ga("send", "event", "Refresh", "manual-button");
             props.clearWeatherData();
             props.fetchAllWeatherData();
         },
