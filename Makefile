@@ -4,7 +4,7 @@ export JS_SERVER_PORT := 8081
 bundle = static/dist/bundle.js
 
 
-all: deps js prerender
+all: deps prerender js
 
 deps:
 	yarn
