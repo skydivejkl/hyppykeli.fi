@@ -6,10 +6,7 @@ const router = require("koa-router")();
 const serveStatic = require("koa-static");
 var {execSync} = require("child_process");
 
-const polyfillLoaderScript = fs
-    .readFileSync(__dirname + "/../src/polyfill-loader.js")
-    .toString();
-var gitRev = execSync("git rev-parse HEAD").toString().trim();
+const gitRev = execSync("git rev-parse HEAD").toString().trim();
 const config = require("../config");
 
 const app = new Koa();
@@ -27,6 +24,10 @@ const trackJSTags = `
 <script type="text/javascript">window._trackJs = { token: '3333e432505347958ec3649474d80ef4' };</script>
 <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
 `.trim();
+
+const polyfillLoaderScript = fs
+    .readFileSync(__dirname + "/../src/polyfill-loader.js")
+    .toString();
 
 const renderHtml = script => `
 <!doctype html>

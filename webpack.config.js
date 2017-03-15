@@ -1,5 +1,4 @@
 var webpack = require("webpack");
-var path = require("path");
 var {execSync} = require("child_process");
 
 var gitRev = execSync("git rev-parse HEAD").toString().trim();
