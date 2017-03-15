@@ -1,3 +1,5 @@
+const PRODUCTION = process.env.NODE_ENV === "production";
+
 const fs = require("fs");
 const Koa = require("koa");
 const router = require("koa-router")();
@@ -21,6 +23,11 @@ app.use((ctx, next) => {
     return next();
 });
 
+const trackJSTags = `
+<script type="text/javascript">window._trackJs = { token: '3333e432505347958ec3649474d80ef4' };</script>
+<script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
+`.trim();
+
 const renderHtml = script => `
 <!doctype html>
 <html>
@@ -42,9 +49,8 @@ const renderHtml = script => `
             background-color: skyblue;
         }
         </style>
-        <script type="text/javascript">window._trackJs = { token: '3333e432505347958ec3649474d80ef4' };</script>
-        <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
         <script>${polyfillLoaderScript}</script>
+        ${PRODUCTION ? trackJSTags : ""}
     </head>
     <body>
         <div id="app-container">hetki!</div>
@@ -85,7 +91,7 @@ router.get("/*", (ctx, next) => {
 
     ctx.type = "text/html";
     ctx.body = renderHtml(
-        process.env.NODE_ENV === "production"
+        PRODUCTION
             ? "/dist/bundle.js?v=" + gitRev
             : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`
     );
