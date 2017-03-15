@@ -5,7 +5,7 @@ const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
 
 import {View, Title, Sep} from "./core";
-import {withBrowserEvent, addSetTimeout} from "./utils";
+import {withBrowserEvent, addSetTimeout, getWindowOr} from "./utils";
 import {addWeatherData} from "./weather-data";
 import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
@@ -184,7 +184,7 @@ Dz = compose(
         },
     }),
     withBrowserEvent(
-        window,
+        getWindowOr(null),
         "focus",
         throttleWithOptions(
             1000 * 30,

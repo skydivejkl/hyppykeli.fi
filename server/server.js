@@ -29,7 +29,15 @@ const polyfillLoaderScript = fs
     .readFileSync(__dirname + "/../src/polyfill-loader.js")
     .toString();
 
-const renderHtml = script => `
+const prerenderedHTML = fs
+    .readFileSync(__dirname + "/../static/dist/prerender.html")
+    .toString();
+
+const prerenderedCSS = fs
+    .readFileSync(__dirname + "/../static/dist/prerender.css")
+    .toString();
+
+const renderHtml = ({scriptPath, css, html}) => `
 <!doctype html>
 <html>
     <head>
@@ -50,12 +58,13 @@ const renderHtml = script => `
             overflow-x: hidden;
             background-color: skyblue;
         }
+        ${css}
         </style>
         <script>${polyfillLoaderScript}</script>
         ${PRODUCTION ? trackJSTags : ""}
     </head>
     <body>
-        <div id="app-container">hetki!</div>
+        <div id="app-container">${html ? html : "hetki!"}</div>
         <script>
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
         ga('create', 'UA-41768455-1', 'auto');
@@ -66,7 +75,7 @@ const renderHtml = script => `
 
         ga('send', 'pageview');
         </script>
-        <script src="${script}" charset="utf-8"></script>
+        <script src="${scriptPath}" charset="utf-8"></script>
         <script async src='https://www.google-analytics.com/analytics.js'></script>
         <script async src='https://unpkg.com/autotrack@2.1.0/autotrack.js'></script>
     </body>
@@ -91,11 +100,20 @@ router.get("/*", (ctx, next) => {
 
     const hostname = ctx.header.host.split(":")[0];
 
+    const prerender = ctx.path === "/"
+        ? {css: prerenderedCSS, html: prerenderedHTML}
+        : null;
+
     ctx.type = "text/html";
     ctx.body = renderHtml(
-        PRODUCTION
-            ? "/dist/bundle.js?v=" + gitRev
-            : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`
+        Object.assign(
+            {
+                scriptPath: PRODUCTION
+                    ? "/dist/bundle.js?v=" + gitRev
+                    : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`,
+            },
+            prerender
+        )
     );
 });
 

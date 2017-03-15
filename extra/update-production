@@ -9,11 +9,8 @@ chmod +x .git/hooks/post-receive
 # Use local n
 PATH=$HOME/n/bin:$PATH
 
-# update deps
-yarn
-
-# build bundle
-make js
+# update deps, bundles and prerenders
+make
 
 # restart (lol)
 killall node

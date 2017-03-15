@@ -91,3 +91,5 @@ export function addSetTimeout(Component) {
 
 export const fromNowWithClock = t =>
     ` ${moment(t).fromNow()} (klo ${moment(t).format("HH:mm")})`;
+
+export const getWindowOr = (mock) => typeof window !== "undefined" ? window : mock;

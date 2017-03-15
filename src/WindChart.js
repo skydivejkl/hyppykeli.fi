@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {withProps, compose, pure} from "recompose";
 import simple from "react-simple";
 
-import {fromNowWithClock, withBrowserEvent} from "./utils";
+import {fromNowWithClock, withBrowserEvent, getWindowOr} from "./utils";
 import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 
 const Row = simple(View, {
@@ -231,12 +231,12 @@ var WindChartWrap = ({instanceKey, ...props}) => {
     return <WindChart key={instanceKey} {...props} />;
 };
 WindChartWrap = compose(
-    withProps({instanceKey: window.innerWidth}),
+    withProps({instanceKey: getWindowOr({innerWidth: 0}).innerWidth}),
     withBrowserEvent(
-        window,
+        getWindowOr(null),
         "resize",
         debounce(100, ({setProps}) => setProps({
-            instanceKey: window.innerWidth,
+            instanceKey: getWindowOr({innerWidth: 0}),
         }))
     ),
     pure
