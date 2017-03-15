@@ -12,6 +12,9 @@ deps:
 js:
 	NODE_ENV=production webpack -p --progress
 
+server-production:
+	NODE_ENV=production node server/server.js
+
 server:
 	node server/server.js
 
