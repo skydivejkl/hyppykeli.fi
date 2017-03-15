@@ -36,13 +36,11 @@
     "fmisid": 100949
   },
   "EFJM": {
-    "icaocode": "EFJM",
     "lat": 61.773331,
     "lon": 22.717113,
     "fmisid": 101291
   },
   "EFLA": {
-    "icaocode": "EFLA",
     "lat": 61.147442,
     "lon": 25.693681,
     "fmisid": 101185
@@ -54,7 +52,6 @@
     "fmisid": 101485
   },
   "EFAL": {
-    "icaocode": "EFAL",
     "lat": 62.5551416,
     "lon": 23.571403,
     "fmisid": 101310
@@ -66,7 +63,6 @@
     "fmisid": 101118
   },
   "EFHF": {
-    "icaocode": "EFHF",
     "lat": 60.251799,
     "lon": 25.051025,
     "fmisid": 101009

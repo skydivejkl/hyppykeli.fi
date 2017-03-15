@@ -119,7 +119,13 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                 <Sep />
 
                 <Row>
-                    <LatestClouds />
+                    {Boolean(dzProps.icaocode) && <LatestClouds />}
+                    {Boolean(!dzProps.icaocode) &&
+                        <View>
+                            EI tietoa pilvistä.
+                            <br />
+                            Kentälle ei tiedettävästi tehdä METAR-sanomia :(
+                        </View>}
                 </Row>
 
             </Header>
