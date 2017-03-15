@@ -36,6 +36,7 @@ const renderHtml = script => `
         <meta charset="utf-8">
         <title>Hyppykeli.fi</title>
         <link href="/parachute.ico" rel="icon">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <meta name="theme-color" content="skyblue">
         <meta name="msapplication-navbutton-color" content="skyblue">
