@@ -8,10 +8,13 @@ var gitMessageFull = execSync("git log -1 --pretty=%B").toString().trim();
 var gitDate = execSync("git log -1 --format=%cd ").toString().trim();
 
 var config = {
-    entry: "./src/index.js",
+    entry: {
+        polyfill: "./src/polyfill.js",
+        bundle: "./src/index.js",
+    },
     output: {
         path: __dirname + "/static/dist",
-        filename: "bundle.js",
+        filename: "[name].js",
         publicPath: "/dist",
     },
     devtool: "sourceMap",

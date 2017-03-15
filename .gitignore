@@ -1,3 +1,4 @@
 node_modules
 config.json
 static/dist/bundle.js
+static/dist/polyfill.js
