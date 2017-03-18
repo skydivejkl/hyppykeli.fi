@@ -54,6 +54,9 @@ var Link = simple(Bold.create("a"), {
     ":active": {
         color: colors.skyblue,
     },
+    ":hover": {
+        textDecoration: "underline",
+    },
 });
 Link = defaultProps({target: "_blank"})(Link);
 
