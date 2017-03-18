@@ -2,13 +2,15 @@ import React from "react";
 
 import Spinner from "./Spinner";
 import {compose, mapProps} from "recompose";
-import {last} from "lodash/fp";
+import {findLast} from "lodash/fp";
 import simple from "react-simple";
 
 import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 import {fromNowWithClock, gpsDistance} from "./utils";
 import {addWeatherData} from "./weather-data";
 import * as colors from "./colors";
+
+const findLatestProperValue = findLast(point => !isNaN(point.value));
 
 const DISTANCE_WARN_THRESHOLD = 5;
 
@@ -110,7 +112,7 @@ export const addLatestGust = compose(
 
         if (gusts) {
             distance = gpsDistance(gusts.stationCoordinates, dzProps);
-            gust = last(gusts.points);
+            gust = findLatestProperValue(gusts.points);
         }
 
         return {
@@ -127,7 +129,7 @@ export const LatestGust = addLatestGust(LatestReading);
 export var LatestWindAvg = compose(
     addWeatherData,
     mapProps(({windAvg}) => {
-        const avg = windAvg ? last(windAvg.points) : null;
+        const avg = windAvg ? findLatestProperValue(windAvg.points) : null;
         return {...avg, title: "Keskituuli"};
     })
 )(LatestReading);
