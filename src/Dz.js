@@ -116,9 +116,6 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                     <LatestWindAvg />
                 </Row>
 
-                <Sep />
-                <Sep />
-
                 <Row>
                     {Boolean(dzProps.icaocode) && <LatestClouds />}
                     {Boolean(!dzProps.icaocode) &&

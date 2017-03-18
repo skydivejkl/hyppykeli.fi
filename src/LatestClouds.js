@@ -49,25 +49,43 @@ const TimeContainer = simple(View, {
     textAlign: "left !important",
 });
 
+const LatestCloudsContainer = simple(View, {
+    minHeight: 100,
+    width: "100%",
+    alignItems: "center",
+});
+
+const SpinnerContainer = simple(View, {
+    width: 40,
+    height: 40,
+});
+
 var LatestClouds = ({metar}) => {
     if (!metar) {
-        return <Spinner />;
+        return (
+            <LatestCloudsContainer>
+                <CloudTitle>Pilvikerrokset</CloudTitle>
+                <SpinnerContainer>
+                    <Spinner />
+                </SpinnerContainer>
+            </LatestCloudsContainer>
+        );
     }
 
     if (metar.cavok) {
         return (
-            <View>
+            <LatestCloudsContainer>
                 <CloudTitle>Pilvikerrokset</CloudTitle>
                 <Cloud>Ei pilviä alle 1500M (CAVOK)</Cloud>
                 <TimeContainer>
                     {fromNowWithClock(metar.time)}
                 </TimeContainer>
-            </View>
+            </LatestCloudsContainer>
         );
     }
 
     return (
-        <View>
+        <LatestCloudsContainer>
             <CloudTitle>Pilvikerrokset</CloudTitle>
 
             {metar.clouds.map((cloud, i) => {
@@ -89,7 +107,7 @@ var LatestClouds = ({metar}) => {
                 {fromNowWithClock(metar.time)}
             </TimeContainer>
 
-        </View>
+        </LatestCloudsContainer>
     );
 };
 

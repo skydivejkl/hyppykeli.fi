@@ -13,8 +13,9 @@ import * as colors from "./colors";
 const DISTANCE_WARN_THRESHOLD = 5;
 
 const WindReading = simple(View, {
-    paddingLeft: 10,
-    paddingRight: 10,
+    alignItems: "center",
+    minHeight: 80,
+    minWidth: 235,
 });
 
 const WindTitle = simple(View, {
