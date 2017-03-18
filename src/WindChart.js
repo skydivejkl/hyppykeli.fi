@@ -169,7 +169,7 @@ class WindChart extends React.Component {
 
     componentDidMount() {
         this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
-        this.debouncedChartUpdate = debounce(1000, this.updateChart.bind(this));
+        this.debouncedChartUpdate = debounce(400, this.updateChart.bind(this));
 
         console.log("Creating Chart.js instance");
         this.chart = new Chart(this.canvas, {
