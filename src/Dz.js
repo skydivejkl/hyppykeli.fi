@@ -83,6 +83,11 @@ const Details = simple(View, {
     backgroundColor: "white",
 });
 
+const NoClouds = simple(View, {
+    marginTop: 40,
+    textAlign: "center",
+});
+
 var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
     const dataMissing = [
         isEmpty(getPoints(gusts)),
@@ -119,11 +124,11 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
                 <Row>
                     {Boolean(dzProps.icaocode) && <LatestClouds />}
                     {Boolean(!dzProps.icaocode) &&
-                        <View>
+                        <NoClouds>
                             EI tietoa pilvistä.
                             <br />
                             Kentälle ei tiedettävästi tehdä METAR-sanomia :(
-                        </View>}
+                        </NoClouds>}
                 </Row>
 
             </Header>
