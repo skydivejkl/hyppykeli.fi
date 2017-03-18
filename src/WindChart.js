@@ -1,13 +1,17 @@
 import React from "react";
 import Chart from "chart.js";
-import {throttle, debounce} from "lodash/fp";
+import {throttle, debounce, isEmpty, getOr, maxBy} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
-import {withProps, compose, pure} from "recompose";
+import {withProps, withPropsOnChange, compose, pure} from "recompose";
 import simple from "react-simple";
 
+import {addWeatherData} from "./weather-data";
 import {fromNowWithClock, withBrowserEvent, getWindowOr} from "./utils";
 import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
+import Spinner from "./Spinner";
+
+const getLongestArray = maxBy(a => a.length);
 
 const Row = simple(View, {
     marginTop: 10,
@@ -22,6 +26,21 @@ const Bold = simple(View, {
     fontWeight: "bold",
     paddingLeft: 3,
     paddingRight: 3,
+});
+
+const SpinnerContainer = simple(View, {
+    alignSelf: "center",
+    width: 40,
+    height: 40,
+});
+
+const Flex = simple(View, {
+    flex: 1,
+});
+
+const WindChartContainer = simple(View, {
+    width: "100%",
+    height: 420,
 });
 
 const PointValue = simple(
@@ -99,8 +118,10 @@ class WindChart extends React.Component {
         const avgObservations = getObservations(avg);
         const avgForecasts = getForecastPoints(avg);
 
+        const createLabels = fn => getLongestArray([gusts, avg]).map(fn);
+
         return {
-            labels: gusts.map(d => d.time),
+            labels: createLabels(d => d.time),
             datasets: [
                 {
                     label: "Puuskahavainnoit",
@@ -130,14 +151,14 @@ class WindChart extends React.Component {
                 },
                 {
                     label: "Tuuliraja",
-                    data: gusts.map(() => GUST_LIMIT),
+                    data: createLabels(() => GUST_LIMIT),
                     ...defaultLineStyle,
                     borderColor: "orange",
                     pointHoverRadius: 0,
                 },
                 {
                     label: "Tuuliraja B+",
-                    data: gusts.map(() => GUST_LIMIT_B),
+                    data: createLabels(() => GUST_LIMIT_B),
                     ...defaultLineStyle,
                     borderColor: "red",
                     pointHoverRadius: 0,
@@ -148,7 +169,7 @@ class WindChart extends React.Component {
 
     componentDidMount() {
         this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
-        this.debouncedChartUpdate = debounce(2000, this.updateChart.bind(this));
+        this.debouncedChartUpdate = debounce(1000, this.updateChart.bind(this));
 
         console.log("Creating Chart.js instance");
         this.chart = new Chart(this.canvas, {
@@ -209,15 +230,15 @@ class WindChart extends React.Component {
 
     render() {
         return (
-            <View>
+            <Flex>
                 <HoveredValues />
                 <canvas height="400" ref={el => this.canvas = el} />
-            </View>
+            </Flex>
         );
     }
 }
 WindChart = connectLean({
-    scope: "hoveredWindValues",
+    scope: () => "hoveredWindValues",
 
     setWindPoint(gust, avg) {
         this.setState({
@@ -227,10 +248,45 @@ WindChart = connectLean({
     },
 })(WindChart);
 
-var WindChartWrap = ({instanceKey, ...props}) => {
-    return <WindChart key={instanceKey} {...props} />;
-};
+const getPoints = getOr([], ["points"]);
+
+const combineObsFore = (obs, avg) => getPoints(obs)
+    .map(d => ({
+        ...d,
+        type: "observation",
+    }))
+    .concat(
+        getPoints(avg).slice(0, 6).map(d => ({
+            ...d,
+            type: "forecast",
+        }))
+    );
+
+var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
+    <WindChartContainer>
+        {hasSomeChartData
+            ? <WindChart key={instanceKey} {...props} />
+            : <SpinnerContainer><Spinner color="black" /></SpinnerContainer>}
+        }
+    </WindChartContainer>
+);
 WindChartWrap = compose(
+    addWeatherData,
+    withPropsOnChange(
+        ["gusts", "windAvg", "gustForecasts", "windAvgForecasts"],
+        ({gusts, windAvg, gustForecasts, windAvgForecasts}) => {
+            // console.log("mapping data");
+            const combinedGusts = combineObsFore(gusts, gustForecasts);
+            const combinedAvg = combineObsFore(windAvg, windAvgForecasts);
+
+            const hasSomeChartData = [
+                combinedGusts.length > 0,
+                combinedAvg.length > 0,
+            ].some(Boolean);
+
+            return {hasSomeChartData, gusts: combinedGusts, avg: combinedAvg};
+        }
+    ),
     withProps({instanceKey: getWindowOr({innerWidth: 0}).innerWidth}),
     withBrowserEvent(
         getWindowOr(null),

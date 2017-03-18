@@ -1,17 +1,26 @@
 import "react-spinner/react-spinner.css";
-import React from "react";
 import simple, {css} from "react-simple";
+import cn from "classnames";
 import ReactSpinner from "react-spinner";
+import {mapProps} from "recompose";
 
-import {View} from "./core";
-
-css.global(".react-spinner_bar", {
+css.global(".color-white .react-spinner_bar", {
     backgroundColor: "white !important",
 });
 
-const Spinner = simple(ReactSpinner, {
+css.global(".color-black .react-spinner_bar", {
+    backgroundColor: "black !important",
+});
+
+var Spinner = simple(ReactSpinner, {
     width: "100% !important",
     height: "100% !important",
 });
+Spinner = mapProps(({color, className, ...props}) => {
+    return {
+        ...props,
+        className: cn(className, "color-" + color),
+    };
+})(Spinner);
 
 export default Spinner;

@@ -88,17 +88,7 @@ const NoClouds = simple(View, {
     textAlign: "center",
 });
 
-var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
-    const dataMissing = [
-        isEmpty(getPoints(gusts)),
-        isEmpty(getPoints(windAvg)),
-        isEmpty(getPoints(gustForecasts)),
-        isEmpty(getPoints(windAvgForecasts)),
-    ].some(Boolean);
-
-    const combinedGusts = combineObsFore(gusts, gustForecasts);
-    const combinedAvg = combineObsFore(windAvg, windAvgForecasts);
-
+var Dz = ({dzProps}) => {
     return (
         <View>
             <BrowserTitle title={dzProps.name} />
@@ -134,17 +124,16 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
             </Header>
 
             <Details>
-                {!dataMissing &&
-                    <View>
-                        <Sep />
-                        <Row>
-                            <Title>Tuulihavainnot ja -ennusteet</Title>
-                        </Row>
-                        <WindChart gusts={combinedGusts} avg={combinedAvg} />
+                <View>
+                    <Sep />
+                    <Row>
+                        <Title>Tuulihavainnot ja -ennusteet</Title>
+                    </Row>
+                    <WindChart />
 
-                        <Sep />
-                        <Sep />
-                    </View>}
+                    <Sep />
+                    <Sep />
+                </View>
                 <Sources />
             </Details>
 
