@@ -98,7 +98,7 @@ const LatestReading = ({title, time, value, distance}) => (
 
         {Boolean(distance > DISTANCE_WARN_THRESHOLD) &&
             <NoteLink important href="#sources">
-                Etäisyys mittausasemalle {Math.round(distance)} km
+                Etäisyys havaintoasemalle {Math.round(distance)} km
             </NoteLink>}
     </WindReading>
 );

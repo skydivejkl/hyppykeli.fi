@@ -104,7 +104,7 @@ var Sources = (
 
             {gusts &&
                 <SourceText>
-                    Puuskatiedot saatiin mittausasemalta{" "}
+                    Puuskatiedot saatiin havaintoasemalta{" "}
                     <StationDesc
                         name={gusts.stationName}
                         from={gusts.stationCoordinates}
@@ -114,7 +114,7 @@ var Sources = (
 
             {windAvg &&
                 <SourceText>
-                    Keskituulitiedot saatiin mittausasemalta{" "}
+                    Keskituulitiedot saatiin havaintoasemalta{" "}
                     <StationDesc
                         name={windAvg.stationName}
                         from={windAvg.stationCoordinates}
