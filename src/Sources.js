@@ -137,7 +137,7 @@ var Sources = (
                 </SourceText>}
 
             {Boolean(metars && metars.length > 0) &&
-                <SourceText>
+                <SourceText id="metar">
                     Pilvikerrokset parsittiin METAR-sanomasta:
                     <br />
                     <br />

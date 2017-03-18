@@ -5,10 +5,9 @@ import {compose, mapProps} from "recompose";
 import {findLast} from "lodash/fp";
 import simple from "react-simple";
 
-import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
+import {Note, GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 import {fromNowWithClock, gpsDistance} from "./utils";
 import {addWeatherData} from "./weather-data";
-import * as colors from "./colors";
 
 const findLatestProperValue = findLast(point => !isNaN(point.value));
 
@@ -27,26 +26,6 @@ const WindTitle = simple(View, {
     flexDirection: "row",
     alignItems: "center",
 });
-
-const Note = simple(
-    View,
-    {
-        marginTop: 2,
-        fontWeight: "bold",
-        textDecoration: "none",
-    },
-    {
-        warning: {
-            color: colors.darkBlue,
-        },
-        important: {
-            textAlign: "center",
-            padding: 5,
-            backgroundColor: "red",
-            color: "yellow",
-        },
-    }
-);
 
 const NoteLink = Note.create("a");
 

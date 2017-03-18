@@ -1,11 +1,11 @@
 import React from "react";
 import {compose, mapProps} from "recompose";
 import simple from "react-simple";
-import {last} from "lodash/fp";
+import {last, isEmpty} from "lodash/fp";
 import Bolt_ from "react-icons/lib/fa/bolt";
 
 import {addWeatherData} from "./weather-data";
-import {View} from "./core";
+import {View, Note} from "./core";
 import Spinner from "./Spinner";
 import {fromNowWithClock} from "./utils";
 import * as colors from "./colors";
@@ -27,13 +27,11 @@ const CLOUDS = {
 
 const getHumanMeaning = code => CLOUDS[code] || code;
 
-const CloudTitle = simple(View, {
+const CloudTitle = simple("div", {
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
     flexDirection: "row",
-    // alignItems: "center",
-    // textAlign: "center",
 });
 
 const Cloud = simple(View, {
@@ -58,6 +56,14 @@ const LatestCloudsContainer = simple(View, {
 const SpinnerContainer = simple(View, {
     width: 40,
     height: 40,
+});
+
+const NoteLink = simple(Note.create("a"), {
+    display: "inline",
+    marginLeft: 4,
+    ":hover": {
+        textDecoration: "underline",
+    },
 });
 
 var LatestClouds = ({metar}) => {
@@ -88,20 +94,31 @@ var LatestClouds = ({metar}) => {
         <LatestCloudsContainer>
             <CloudTitle>Pilvikerrokset</CloudTitle>
 
-            {metar.clouds.map((cloud, i) => {
-                var altText = "";
+            {isEmpty(metar.clouds) &&
+                <Cloud>
+                    Ei tietoa.
+                    <NoteLink warning href="#metar">
+                        Tarkista METAR.
+                    </NoteLink>
+                </Cloud>}
 
-                if (cloud.altitude > 0) {
-                    altText = Math.round(cloud.altitude * 0.3048) + " M";
-                }
+            {!isEmpty(metar.clouds) &&
+                metar.clouds.map((cloud, i) => {
+                    var altText = "";
 
-                return (
-                    <Cloud key={i}>
-                        {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
-                        {`${getHumanMeaning(cloud.abbreviation)} ${altText}`}
-                    </Cloud>
-                );
-            })}
+                    if (cloud.altitude > 0) {
+                        altText = Math.round(cloud.altitude * 0.3048) + " M";
+                    }
+
+                    return (
+                        <Cloud key={i}>
+                            {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
+                            {
+                                `${getHumanMeaning(cloud.abbreviation)} ${altText}`
+                            }
+                        </Cloud>
+                    );
+                })}
 
             <TimeContainer>
                 {fromNowWithClock(metar.time)}
