@@ -2,11 +2,19 @@ import React from "react";
 import {compose, mapProps} from "recompose";
 import simple from "react-simple";
 import {last} from "lodash/fp";
+import Bolt_ from "react-icons/lib/fa/bolt";
 
 import {addWeatherData} from "./weather-data";
 import {View} from "./core";
 import Spinner from "./Spinner";
 import {fromNowWithClock} from "./utils";
+import * as colors from "./colors";
+
+const Bolt = simple(View.create(Bolt_), {
+    width: 20,
+    height: 20,
+    color: colors.darkBlue,
+});
 
 const CLOUDS = {
     NCD: "Ei pilviä",
@@ -29,6 +37,8 @@ const CloudTitle = simple(View, {
 });
 
 const Cloud = simple(View, {
+    flexDirection: "row",
+    alignItems: "center",
     color: "white",
     fontWeight: "bold",
     fontSize: 15,
@@ -69,6 +79,7 @@ var LatestClouds = ({metar}) => {
 
                 return (
                     <Cloud key={i}>
+                        {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
                         {`${getHumanMeaning(cloud.abbreviation)} ${altText}`}
                     </Cloud>
                 );
