@@ -236,7 +236,7 @@ WindChartWrap = compose(
         getWindowOr(null),
         "resize",
         debounce(100, ({setProps}) => setProps({
-            instanceKey: getWindowOr({innerWidth: 0}),
+            instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
         }))
     ),
     pure
