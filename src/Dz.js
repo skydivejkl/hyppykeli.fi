@@ -1,4 +1,5 @@
 import React from "react";
+import store from "store";
 import {pure, compose, lifecycle} from "recompose";
 import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
@@ -159,8 +160,11 @@ Dz = compose(
     addSetTimeout,
     lifecycle({
         componentDidMount() {
-            window.localStorage.previous = window.location.pathname +
-                window.location.search;
+            store.set(
+                "previous",
+                window.location.pathname + window.location.search
+            );
+
             this.props.fetchAllWeatherData({force: true});
 
             const {icaocode} = this.props.dzProps;

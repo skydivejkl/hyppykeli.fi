@@ -1,4 +1,5 @@
 import React from "react";
+import store from "store";
 import simple, {css} from "react-simple";
 import {Route, Switch, Redirect} from "react-router-dom";
 
@@ -46,10 +47,11 @@ const Main = () => (
                             "HomeScreen",
                             "start-from-home-screen-app"
                         );
-                        if (window.localStorage.previous) {
-                            return (
-                                <Redirect to={window.localStorage.previous} />
-                            );
+
+                        const previous = store.get("previous");
+
+                        if (previous) {
+                            return <Redirect to={previous} />;
                         } else {
                             return <Redirect to="/" />;
                         }
