@@ -101,7 +101,7 @@ var Dz = ({dzProps}) => {
                     {Boolean(dzProps.icaocode) && <LatestClouds />}
                     {Boolean(!dzProps.icaocode) &&
                         <NoClouds>
-                            EI tietoa pilvistä.
+                            Ei tietoa pilvistä.
                             <br />
                             Kentälle ei tiedettävästi tehdä METAR-sanomia :(
                         </NoClouds>}
