@@ -1,6 +1,6 @@
 import React from "react";
 import store from "store";
-import {pure, compose, lifecycle} from "recompose";
+import {pure, compose, lifecycle, withPropsOnChange} from "recompose";
 import {getOr, isEmpty, throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
@@ -154,9 +154,28 @@ var Dz = ({dzProps, gusts, windAvg, gustForecasts, windAvgForecasts}) => {
         </View>
     );
 };
-var i = 0;
 Dz = compose(
     addWeatherData,
+    withPropsOnChange(["fetchAllWeatherData"], props => {
+        const throttledRefresh = throttleWithOptions(
+            1000 * 60,
+            () => {
+                console.log("ACTUAL REFRESH");
+                props.fetchAllWeatherData();
+            },
+            {trailing: false}
+        );
+
+        return {
+            throttledRefresh() {
+                if (document.hidden) {
+                    console.log("Window hidden. Skipping refresh");
+                } else {
+                    throttledRefresh();
+                }
+            },
+        };
+    }),
     addSetTimeout,
     lifecycle({
         componentDidMount() {
@@ -167,38 +186,31 @@ Dz = compose(
 
             this.props.fetchAllWeatherData({force: true});
 
-            const {icaocode} = this.props.dzProps;
-
-            const refreshTimeout = () => {
+            const scheduleRefresh = () => {
                 this.props.setTimeout(
                     () => {
-                        this.props.fetchAllWeatherData();
-                        console.log(
-                            "Automatic refresh from timer",
-                            icaocode,
-                            ++i
-                        );
-                        refreshTimeout();
+                        console.log("Trying refresh from timer");
+
+                        this.props.throttledRefresh();
+                        scheduleRefresh();
                     },
-                    1000 * 30
+                    1000 * 120
                 );
             };
 
-            refreshTimeout();
+            scheduleRefresh();
         },
     }),
-    withBrowserEvent(
-        getWindowOr(null),
-        "focus",
-        throttleWithOptions(
-            1000 * 30,
-            ({props}) => {
-                console.log("Triggering refresh from window focus");
-                props.fetchAllWeatherData();
-            },
-            {trailing: false}
-        )
-    ),
+    withBrowserEvent(getWindowOr(null), "focus", ({props}) => {
+        console.log("Trying refresh from window focus");
+        props.throttledRefresh();
+    }),
+    withBrowserEvent(getWindowOr(null), "visibilitychange", ({props}) => {
+        if (!document.hidden) {
+            console.log("Trying refresh from visibilitychange");
+            props.throttledRefresh();
+        }
+    }),
     pure
 )(Dz);
 
