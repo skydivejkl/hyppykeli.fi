@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "chart.js";
-import {throttle, debounce, isEmpty, getOr, maxBy} from "lodash/fp";
+import {throttle, debounce, getOr, maxBy} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
 import {withProps, withPropsOnChange, compose, pure} from "recompose";

@@ -211,7 +211,7 @@ export const addWeatherData = compose(
             return Promise.resolve();
         },
 
-        fetchAllWeatherData(options = {}) {
+        fetchAllWeatherData(options = emptyObject) {
             if (!options.force && this.state.requestCount > 0) {
                 console.warn("Request already in progress. Skipping fetch.");
                 return;
