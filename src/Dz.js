@@ -1,7 +1,7 @@
 import React from "react";
 import store from "store";
 import {pure, compose, lifecycle, withPropsOnChange} from "recompose";
-import {getOr, isEmpty, throttle} from "lodash/fp";
+import {throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
 
@@ -35,20 +35,6 @@ const Background = simple(View, {
     right: 0,
     bottom: 0,
 });
-
-const getPoints = getOr([], ["points"]);
-
-const combineObsFore = (obs, avg) => getPoints(obs)
-    .map(d => ({
-        ...d,
-        type: "observation",
-    }))
-    .concat(
-        getPoints(avg).slice(0, 6).map(d => ({
-            ...d,
-            type: "forecast",
-        }))
-    );
 
 const Row = simple(View, {
     flexDirection: "row",
