@@ -106,7 +106,7 @@ export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
         {Boolean(time) && <Note>{fromNowWithClock(time)}</Note>}
 
         {Boolean(gust >= 5 && difference > 30) &&
-            <Note warning={difference >= 50 && value}>
+            <Note warning={difference >= 50}>
                 Puuska on {difference}% voimakkaampi
             </Note>}
 
