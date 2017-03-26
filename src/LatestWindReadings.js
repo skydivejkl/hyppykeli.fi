@@ -68,10 +68,10 @@ const gustLimitWarning = gust => {
     return null;
 };
 
-const LatestReading = ({title, time, value, distance}) => (
+export var LatestGust = ({time, value, distance}) => (
     <WindReading>
         <WindTitle>
-            {title} <ValueOrSpinner>{value}</ValueOrSpinner> m/s
+            Puuska <ValueOrSpinner>{value}</ValueOrSpinner> m/s
         </WindTitle>
         {Boolean(time) && <Note>{fromNowWithClock(time)}</Note>}
 
@@ -83,8 +83,7 @@ const LatestReading = ({title, time, value, distance}) => (
             </NoteLink>}
     </WindReading>
 );
-
-export const addLatestGust = compose(
+LatestGust = compose(
     addWeatherData,
     mapProps(({gusts, dzProps}) => {
         var distance, gust;
@@ -94,21 +93,56 @@ export const addLatestGust = compose(
             gust = findLatestProperValue(gusts.points);
         }
 
+        return {...gust, distance};
+    })
+)(LatestGust);
+
+export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
+    <WindReading>
+        <WindTitle>
+            Keskituuli <ValueOrSpinner>{value}</ValueOrSpinner> m/s
+        </WindTitle>
+
+        {Boolean(time) && <Note>{fromNowWithClock(time)}</Note>}
+
+        {Boolean(gust >= 5 && difference > 30) &&
+            <Note warning={difference >= 50 && value}>
+                Puuska on {difference}% voimakkaampi
+            </Note>}
+
+        {Boolean(distance > DISTANCE_WARN_THRESHOLD) &&
+            <NoteLink important href="#sources">
+                Etäisyys havaintoasemalle {Math.round(distance)} km
+            </NoteLink>}
+    </WindReading>
+);
+LatestWindAvg = compose(
+    addWeatherData,
+    mapProps(({windAvg, gusts}) => {
+        const avg = windAvg ? findLatestProperValue(windAvg.points) : null;
+
+        let difference = 0;
+        let gust = null;
+        if (gusts && avg !== null) {
+            gust = findLatestProperValue(gusts.points);
+            difference = Math.round(gust.value / avg.value * 100 - 100);
+        }
+
         return {
-            ...gust,
-            distance,
-            title: "Puuska",
-            // value: 8,
+            value: avg ? avg.value : null,
+            time: avg ? avg.time : null,
+            gust: gust ? gust.value : 0,
+            difference,
         };
     })
-);
+)(LatestWindAvg);
 
-export const LatestGust = addLatestGust(LatestReading);
-
-export var LatestWindAvg = compose(
+export const addLatestGust = compose(
     addWeatherData,
-    mapProps(({windAvg}) => {
-        const avg = windAvg ? findLatestProperValue(windAvg.points) : null;
-        return {...avg, title: "Keskituuli"};
+    mapProps(({gusts}) => {
+        if (gusts) {
+            return findLatestProperValue(gusts.points);
+        }
+        return {value: 0};
     })
-)(LatestReading);
+);
