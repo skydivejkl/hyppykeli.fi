@@ -60,11 +60,11 @@ const renderHtml = ({scriptPath, css, html}) => `
         }
         ${css}
         </style>
-        <script>${polyfillLoaderScript}</script>
     </head>
     <body>
         <div id="app-container">${html ? html : "hetki!"}</div>
         ${PRODUCTION ? trackJSTags : ""}
+        <script>${polyfillLoaderScript}</script>
         <script>
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
         ga('create', 'UA-41768455-1', 'auto');
