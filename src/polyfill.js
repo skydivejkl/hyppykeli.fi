@@ -1,2 +1,2 @@
-console.log("executing polyfill");
 import "babel-polyfill";
+console.log("Polyfill loaded OK");

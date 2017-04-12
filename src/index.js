@@ -1,3 +1,4 @@
+console.log("Main bundle loaded OK");
 console.log("git date", GIT_COMMIT_DATE);
 console.log("git message", GIT_COMMIT_MESSAGE);
 console.log(

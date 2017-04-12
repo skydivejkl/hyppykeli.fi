@@ -25,8 +25,8 @@ const trackJSTags = `
 <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
 `.trim();
 
-const polyfillLoaderScript = fs
-    .readFileSync(__dirname + "/../src/polyfill-loader.js")
+const bootstrapScript = fs
+    .readFileSync(__dirname + "/../src/bootstrap.js")
     .toString();
 
 const prerenderedHTML = fs
@@ -37,7 +37,7 @@ const prerenderedCSS = fs
     .readFileSync(__dirname + "/../static/dist/prerender.css")
     .toString();
 
-const renderHtml = ({scriptPath, css, html}) => `
+const renderHtml = ({mainBundlePath, css, html}) => `
 <!doctype html>
 <html>
     <head>
@@ -64,7 +64,6 @@ const renderHtml = ({scriptPath, css, html}) => `
     <body>
         <div id="app-container">${html ? html : "hetki!"}</div>
         ${PRODUCTION ? trackJSTags : ""}
-        <script>${polyfillLoaderScript}</script>
         <script>
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
         ga('create', 'UA-41768455-1', 'auto');
@@ -75,7 +74,11 @@ const renderHtml = ({scriptPath, css, html}) => `
 
         ga('send', 'pageview');
         </script>
-        <script src="${scriptPath}" charset="utf-8"></script>
+        <script>
+        ${bootstrapScript}
+        console.log("Loading main bundle");
+        loadSync("${mainBundlePath}");
+        </script>
         <script async src='https://www.google-analytics.com/analytics.js'></script>
         <script async src='https://unpkg.com/autotrack@2.1.0/autotrack.js'></script>
     </body>
@@ -108,7 +111,7 @@ router.get("/*", (ctx, next) => {
     ctx.body = renderHtml(
         Object.assign(
             {
-                scriptPath: PRODUCTION
+                mainBundlePath: PRODUCTION
                     ? "/dist/bundle.js?v=" + gitRev
                     : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`,
             },
