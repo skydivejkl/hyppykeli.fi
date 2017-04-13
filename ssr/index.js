@@ -21,10 +21,9 @@ const Root = () => (
     </MemoryRouter>
 );
 
-const {
-    html,
-    css,
-} = renderStaticOptimized(() => ReactDOMServer.renderToString(<Root />));
+const {html, css} = renderStaticOptimized(() =>
+    ReactDOMServer.renderToString(<Root />)
+);
 
 const fs = require("fs");
 

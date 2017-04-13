@@ -60,22 +60,24 @@ const PointValue = simple(
 
 const asFloat = i => parseFloat(i, 10);
 
-const getForecastPoints = data => data.map((d, i, array) => {
-    if (d.type === "forecast") {
-        return asFloat(d.value);
-    } else if (array[i + 1] && array[i + 1].type === "forecast") {
-        return asFloat(d.value);
-    }
+const getForecastPoints = data =>
+    data.map((d, i, array) => {
+        if (d.type === "forecast") {
+            return asFloat(d.value);
+        } else if (array[i + 1] && array[i + 1].type === "forecast") {
+            return asFloat(d.value);
+        }
 
-    return null;
-});
+        return null;
+    });
 
-const getObservations = data => data.map(d => {
-    if (d.type === "observation") {
-        return asFloat(d.value);
-    }
-    return null;
-});
+const getObservations = data =>
+    data.map(d => {
+        if (d.type === "observation") {
+            return asFloat(d.value);
+        }
+        return null;
+    });
 
 var HoveredValues = ({gust, avg}) => (
     <Row>
@@ -250,17 +252,18 @@ WindChart = connectLean({
 
 const getPoints = getOr([], ["points"]);
 
-const combineObsFore = (obs, avg) => getPoints(obs)
-    .map(d => ({
-        ...d,
-        type: "observation",
-    }))
-    .concat(
-        getPoints(avg).slice(0, 6).map(d => ({
+const combineObsFore = (obs, avg) =>
+    getPoints(obs)
+        .map(d => ({
             ...d,
-            type: "forecast",
+            type: "observation",
         }))
-    );
+        .concat(
+            getPoints(avg).slice(0, 6).map(d => ({
+                ...d,
+                type: "forecast",
+            }))
+        );
 
 var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
     <WindChartContainer>
@@ -291,9 +294,11 @@ WindChartWrap = compose(
     withBrowserEvent(
         getWindowOr(null),
         "resize",
-        debounce(100, ({setProps}) => setProps({
-            instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
-        }))
+        debounce(100, ({setProps}) =>
+            setProps({
+                instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
+            })
+        )
     ),
     pure
 )(WindChartWrap);

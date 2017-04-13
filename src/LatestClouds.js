@@ -113,9 +113,7 @@ var LatestClouds = ({metar}) => {
                     return (
                         <Cloud key={i}>
                             {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
-                            {
-                                `${getHumanMeaning(cloud.abbreviation)} ${altText}`
-                            }
+                            {`${getHumanMeaning(cloud.abbreviation)} ${altText}`}
                         </Cloud>
                     );
                 })}

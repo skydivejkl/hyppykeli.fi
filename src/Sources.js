@@ -88,9 +88,14 @@ const Metar = simple("div", {
     // border: "1px solid ",
 });
 
-var Sources = (
-    {dzProps, gusts, windAvg, windAvgForecasts, gustForecasts, metars}
-) => (
+var Sources = ({
+    dzProps,
+    gusts,
+    windAvg,
+    windAvgForecasts,
+    gustForecasts,
+    metars,
+}) => (
     <SourcesContainer>
         <Sep />
         <Sep />

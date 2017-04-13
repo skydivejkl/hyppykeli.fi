@@ -164,15 +164,12 @@ Dz = compose(
             this.props.fetchAllWeatherData({force: true});
 
             const scheduleRefresh = () => {
-                this.props.setTimeout(
-                    () => {
-                        console.log("Trying refresh from timer");
+                this.props.setTimeout(() => {
+                    console.log("Trying refresh from timer");
 
-                        this.props.throttledRefresh();
-                        scheduleRefresh();
-                    },
-                    1000 * 120
-                );
+                    this.props.throttledRefresh();
+                    scheduleRefresh();
+                }, 1000 * 120);
             };
 
             scheduleRefresh();

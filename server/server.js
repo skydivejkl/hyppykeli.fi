@@ -37,7 +37,8 @@ const prerenderedCSS = fs
     .readFileSync(__dirname + "/../static/dist/prerender.css")
     .toString();
 
-const renderHtml = ({mainBundlePath, css, html}) => `
+const renderHtml = ({mainBundlePath, css, html}) =>
+    `
 <!doctype html>
 <html>
     <head>

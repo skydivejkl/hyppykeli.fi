@@ -44,9 +44,9 @@ const Value = simple(WindTitle, {
 });
 
 const ValueOrSpinner = ({children}) =>
-    children
+    (children
         ? <Value>{children}</Value>
-        : <SpinnerContainer><Spinner /></SpinnerContainer>;
+        : <SpinnerContainer><Spinner /></SpinnerContainer>);
 
 const gustLimitWarning = gust => {
     if (gust >= GUST_LIMIT_B) {

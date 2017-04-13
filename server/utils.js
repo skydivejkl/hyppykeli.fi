@@ -11,15 +11,16 @@ const extendUrlQuery = (url, query) => {
     return format(o);
 };
 
-const xml2js = xml => new Promise((resove, reject) => {
-    parseString(xml, (err, result) => {
-        if (err) {
-            reject(err);
-        } else {
-            resove(result);
-        }
+const xml2js = xml =>
+    new Promise((resove, reject) => {
+        parseString(xml, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resove(result);
+            }
+        });
     });
-});
 
 const fmiRequestCache = {};
 
@@ -39,7 +40,7 @@ const fmiRawRequest = async (url, options) => {
 
     var stats = fmiStats[moment().format("YYYY-MM-DD")];
     if (!stats) {
-        stats = (fmiStats[moment().format("YYYY-MM-DD")] = createStatsBase());
+        stats = fmiStats[moment().format("YYYY-MM-DD")] = createStatsBase();
     }
 
     stats.requests++;

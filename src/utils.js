@@ -5,16 +5,17 @@ import {withRouter} from "react-router-dom";
 import moment from "moment";
 import gpsDistanceKm from "gps-distance";
 
-export const withRouterProps = mapper => compose(
-    mapProps(props => ({originalProps: props})),
-    withRouter,
-    mapProps(({originalProps, ...router}) => {
-        return {
-            ...originalProps,
-            ...mapper(router, originalProps),
-        };
-    })
-);
+export const withRouterProps = mapper =>
+    compose(
+        mapProps(props => ({originalProps: props})),
+        withRouter,
+        mapProps(({originalProps, ...router}) => {
+            return {
+                ...originalProps,
+                ...mapper(router, originalProps),
+            };
+        })
+    );
 
 export const gpsDistance = (from, to) => {
     const km = gpsDistanceKm(
@@ -23,7 +24,6 @@ export const gpsDistance = (from, to) => {
 
     return km;
 };
-
 
 export const withBrowserEvent = (source, eventName, cb, capture) => {
     return Component => class BrowserEvent extends React.Component {
@@ -92,4 +92,5 @@ export function addSetTimeout(Component) {
 export const fromNowWithClock = t =>
     ` ${moment(t).fromNow()} (klo ${moment(t).format("HH:mm")})`;
 
-export const getWindowOr = (mock) => typeof window !== "undefined" ? window : mock;
+export const getWindowOr = mock =>
+    (typeof window !== "undefined" ? window : mock);
