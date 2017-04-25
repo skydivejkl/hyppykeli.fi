@@ -9,5 +9,4 @@ chmod +x .git/hooks/post-receive
 # update deps, bundles and prerenders
 make
 
-# restart (lol)
-killall node
+sudo systemctl restart hyppykeli
