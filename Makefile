@@ -39,3 +39,4 @@ deploy: assert-clean-git
 install-git-production-hooks:
 	cp extra/post-receive .git/hooks/
 	chmod +x .git/hooks/post-receive
+
