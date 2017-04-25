@@ -1,12 +1,24 @@
 const router = require("koa-router")();
 const dropzones = require("../dropzones");
 
+const h2pushJSON = path => `<${path}>; rel=preload; as=json`;
+
 router.get("/dz/:dz", (ctx, next) => {
-    ctx.set("X-dz", ctx.params.dz);
+    const dz = dropzones[ctx.params.dz.toUpperCase()];
+
     ctx.set(
         "Link",
-        "</api/forecasts/62.40739,25.66362/enn-s-1-1-windgust>; rel=preload; as=json"
+        [
+            `/api/observations/${dz.fmisid}/fi-1-1-windgust`,
+            `/api/observations/${dz.fmisid}/fi-1-1-windspeedms`,
+            `/api/forecasts/${dz.lat},${dz.lon}/enn-s-1-1-windgust`,
+            `/api/forecasts/${dz.lat},${dz.lon}/enn-s-1-1-windspeedms`,
+            `/api/metars/${dz.icaocode}`,
+        ]
+            .map(h2pushJSON)
+            .join(", ")
     );
+
     next();
 });
 
