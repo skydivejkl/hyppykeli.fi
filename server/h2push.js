@@ -1,7 +1,20 @@
 const router = require("koa-router")();
 const dropzones = require("../dropzones");
+const {bundlePath, gitRev} = require("./bundle-path");
 
 const h2pushJSON = path => `<${path}>; rel=preload; as=json`;
+const h2pushJS = path => `<${path}>; rel=preload; as=script`;
+
+const pushStaticAssets = (ctx, next) => {
+    if (ctx.cookies.get("h2push") !== gitRev) {
+        ctx.cookies.set("h2push", gitRev);
+        ctx.append("Link", h2pushJS(bundlePath));
+    }
+    next();
+};
+
+router.get("/", pushStaticAssets);
+router.get("/dz/:dz", pushStaticAssets);
 
 router.get("/dz/:dz", (ctx, next) => {
     const dz = dropzones[ctx.params.dz.toUpperCase()];

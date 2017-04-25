@@ -11,6 +11,7 @@ const config = require("../config");
 
 const app = new Koa();
 
+const {bundlePath} = require("./bundle-path");
 const {fmiStats} = require("./utils");
 const metar = require("./metar");
 const fmi = require("./fmi");
@@ -114,7 +115,7 @@ router.get("/*", (ctx, next) => {
         Object.assign(
             {
                 mainBundlePath: PRODUCTION
-                    ? "/dist/bundle.js?v=" + gitRev
+                    ? bundlePath
                     : `http://${hostname}:${process.env.JS_SERVER_PORT || "JS_SERVER_PORT empty"}/dist/bundle.js`,
             },
             prerender
