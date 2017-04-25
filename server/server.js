@@ -14,6 +14,7 @@ const app = new Koa();
 const {fmiStats} = require("./utils");
 const metar = require("./metar");
 const fmi = require("./fmi");
+const h2push = require("./h2push");
 
 app.use((ctx, next) => {
     ctx.state.fmiApikey = config.fmiApikey;
@@ -126,6 +127,7 @@ app.use(fmi.routes());
 
 app.use(serveStatic("static"));
 
+app.use(h2push.routes());
 app.use(router.routes());
 
 app.listen(8080);
