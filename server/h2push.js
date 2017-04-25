@@ -16,7 +16,7 @@ router.get("/dz/:dz", (ctx, next) => {
             `/api/metars/${dz.icaocode}`,
         ]
             .map(h2pushJSON)
-            .join(", ")
+            .join(",")
     );
 
     next();
