@@ -21,6 +21,7 @@ router.get("/", pushStaticAssets);
 router.get("/dz/:dz", pushStaticAssets);
 
 router.get("/dz/:dz", (ctx, next) => {
+    // Weather data needs to be always fresh so always push it
     const dz = dropzones[ctx.params.dz.toUpperCase()];
 
     [
