@@ -2,6 +2,8 @@ const router = require("koa-router")();
 const dropzones = require("../dropzones");
 const {bundlePath, gitRev} = require("./bundle-path");
 
+const YEAR = 1000 * 60 * 60 * 24 * 365;
+
 const h2pushJSON = path => `<${path}>; rel=preload; as=json`;
 const h2pushJS = path => `<${path}>; rel=preload; as=script`;
 
@@ -10,7 +12,7 @@ const pushStaticAssets = (ctx, next) => {
     // Http2 pushing will skip browser caches so push the assets only
     // when we are sure that it's not in cache
     if (ctx.cookies.get("h2push") !== gitRev) {
-        ctx.cookies.set("h2push", gitRev);
+        ctx.cookies.set("h2push", gitRev, {maxAge: YEAR});
         ctx.append("Link", h2pushJS(bundlePath));
         ctx.append("Link", h2pushJS("/vendor/tracker.js"));
     }
