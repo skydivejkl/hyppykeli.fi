@@ -6,9 +6,6 @@ set -eu
 cp extra/post-receive .git/hooks/post-receive
 chmod +x .git/hooks/post-receive
 
-# Use local n
-PATH=$HOME/n/bin:$PATH
-
 # update deps, bundles and prerenders
 make
 
