@@ -31,7 +31,7 @@ assert-clean-git:
 	@test -z "$(shell git status . --porcelain)" || (echo "Dirty git tree: " && git status . --porcelain ; exit 1)
 
 add-production:
-	git remote add production hyppykeli@skydivejkl.fi:hyppykeli
+	git remote add production hyppykeli@hyppykeli.fi:/apps/hyppykeli/hyppykeli.fi
 
 deploy: assert-clean-git
 	git push production HEAD:master
