@@ -6,6 +6,9 @@ const h2pushJSON = path => `<${path}>; rel=preload; as=json`;
 const h2pushJS = path => `<${path}>; rel=preload; as=script`;
 
 const pushStaticAssets = (ctx, next) => {
+    // "Cache aware" push hack
+    // Http2 pushing will skip browser caches so push the assets only
+    // when we are sure that it's not in cache
     if (ctx.cookies.get("h2push") !== gitRev) {
         ctx.cookies.set("h2push", gitRev);
         ctx.append("Link", h2pushJS(bundlePath));
