@@ -35,3 +35,7 @@ add-production:
 
 deploy: assert-clean-git
 	git push production HEAD:master
+
+install-git-production-hooks:
+	cp extra/post-receive .git/hooks/
+	chmod +x .git/hooks/post-receive
