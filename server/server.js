@@ -24,7 +24,7 @@ app.use((ctx, next) => {
 
 const trackJSTags = `
 <script type="text/javascript">window._trackJs = { token: '3333e432505347958ec3649474d80ef4' };</script>
-<script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
+<script type="text/javascript" src="/vendor/tracker.js"></script>
 `.trim();
 
 const bootstrapScript = fs

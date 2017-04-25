@@ -9,6 +9,7 @@ const pushStaticAssets = (ctx, next) => {
     if (ctx.cookies.get("h2push") !== gitRev) {
         ctx.cookies.set("h2push", gitRev);
         ctx.append("Link", h2pushJS(bundlePath));
+        ctx.append("Link", h2pushJS("/vendor/tracker.js"));
     }
     next();
 };
