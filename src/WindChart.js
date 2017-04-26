@@ -234,7 +234,7 @@ class WindChart extends React.Component {
         return (
             <Flex>
                 <HoveredValues />
-                <canvas height="400" ref={el => this.canvas = el} />
+                <canvas height="400" ref={el => (this.canvas = el)} />
             </Flex>
         );
     }

@@ -1,6 +1,7 @@
 var webpack = require("webpack");
 var {execSync} = require("child_process");
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+    .BundleAnalyzerPlugin;
 
 var gitRev = execSync("git rev-parse HEAD").toString().trim();
 var gitMessageShort = execSync("git log -1 --pretty=%s").toString().trim();
