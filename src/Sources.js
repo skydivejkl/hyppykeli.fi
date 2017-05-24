@@ -107,7 +107,11 @@ var Sources = ({
                 {" "}
                 <Link href="https://ilmatieteenlaitos.fi/avoin-data">
                     avoimista rajapinnoista
-                </Link>
+                </Link>.
+                Myös tuuliennustus tulee Ilmatieteenlaitokselta taulukkona
+                jossa on suoraan kellonaika ja ennustettu tuulilukema.
+                Hyppykeli.fi piirtää vain kuvaajan tästä tiedosta eikä sen
+                enempää tulkitse sitä.
             </SourceText>
 
             {gusts &&
