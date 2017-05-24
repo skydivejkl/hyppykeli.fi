@@ -29,6 +29,12 @@
     "lon": 25.358608,
     "fmisid": 101799
   },
+  "EFKE": {
+    "icaocode": "EFOU",
+    "lat": 65.781324,
+    "lon": 24.582350,
+    "fmisid": 101840
+  },
   "EFTU": {
     "icaocode": "EFTU",
     "lat": 60.508105,
