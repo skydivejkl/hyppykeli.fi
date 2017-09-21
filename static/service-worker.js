@@ -1,5 +1,5 @@
 importScripts(
-    "https://unpkg.com/workbox-sw@0.0.2/build/importScripts/workbox-sw.dev.v0.0.2.js",
+    "https://unpkg.com/workbox-sw@0.0.2/build/importScripts/workbox-sw.prod.v0.0.2.js",
 );
 
 /**
