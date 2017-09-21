@@ -49,4 +49,17 @@ const container = document.getElementById("app-container");
 
 ReactDOM.render(<Root />, container);
 
+window.addEventListener("beforeinstallprompt", function(e) {
+    ga("send", "event", "AddToHomeScreen", "install-started");
+    e.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome == "dismissed") {
+            console.log("User cancelled home screen install");
+            ga("send", "event", "AddToHomeScreen", "install-cancelled");
+        } else {
+            console.log("User added to home screen");
+            ga("send", "event", "AddToHomeScreen", "install-completed");
+        }
+    });
+});
+
 registerServiceWorker();
