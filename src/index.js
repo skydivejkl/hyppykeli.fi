@@ -26,6 +26,7 @@ moment.locale("fi");
 
 import Main from "./Main";
 import ScrollToTop from "./ScrollToTop";
+import registerServiceWorker from "./register-service-worker";
 
 const store = createStore(
     leanReducer,
@@ -48,31 +49,4 @@ const container = document.getElementById("app-container");
 
 ReactDOM.render(<Root />, container);
 
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker
-            .register("/sw.js")
-            .then(function(registration) {
-                console.log(
-                    "ServiceWorker registration successful with scope: ",
-                    registration.scope,
-                );
-            })
-            .catch(function(err) {
-                console.log("ServiceWorker registration failed: ", err);
-            });
-    });
-}
-
-window.addEventListener("beforeinstallprompt", function(e) {
-    ga("send", "event", "AddToHomeScreen", "install-started");
-    e.userChoice.then(function(choiceResult) {
-        if (choiceResult.outcome == "dismissed") {
-            console.log("User cancelled home screen install");
-            ga("send", "event", "AddToHomeScreen", "install-cancelled");
-        } else {
-            console.log("User added to home screen");
-            ga("send", "event", "AddToHomeScreen", "install-completed");
-        }
-    });
-});
+registerServiceWorker();
