@@ -1,5 +1,5 @@
 {
-bracketSpacing: false,
-trailingComma: "all",
-tabWidth: 4
+    bracketSpacing: false,
+    trailingComma: "all",
+    tabWidth: 4
 }
