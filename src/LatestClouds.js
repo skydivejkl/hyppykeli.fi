@@ -83,9 +83,7 @@ var LatestClouds = ({metar}) => {
             <LatestCloudsContainer>
                 <CloudTitle>Pilvikerrokset</CloudTitle>
                 <Cloud>Ei pilviä alle 1500M (CAVOK)</Cloud>
-                <TimeContainer>
-                    {fromNowWithClock(metar.time)}
-                </TimeContainer>
+                <TimeContainer>{fromNowWithClock(metar.time)}</TimeContainer>
             </LatestCloudsContainer>
         );
     }
@@ -94,13 +92,14 @@ var LatestClouds = ({metar}) => {
         <LatestCloudsContainer>
             <CloudTitle>Pilvikerrokset</CloudTitle>
 
-            {isEmpty(metar.clouds) &&
+            {isEmpty(metar.clouds) && (
                 <Cloud>
                     Ei tietoa.
                     <NoteLink warning href="#metar">
                         Tarkista METAR.
                     </NoteLink>
-                </Cloud>}
+                </Cloud>
+            )}
 
             {!isEmpty(metar.clouds) &&
                 metar.clouds.map((cloud, i) => {
@@ -113,15 +112,14 @@ var LatestClouds = ({metar}) => {
                     return (
                         <Cloud key={i}>
                             {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
-                            {`${getHumanMeaning(cloud.abbreviation)} ${altText}`}
+                            {`${getHumanMeaning(
+                                cloud.abbreviation,
+                            )} ${altText}`}
                         </Cloud>
                     );
                 })}
 
-            <TimeContainer>
-                {fromNowWithClock(metar.time)}
-            </TimeContainer>
-
+            <TimeContainer>{fromNowWithClock(metar.time)}</TimeContainer>
         </LatestCloudsContainer>
     );
 };
@@ -130,7 +128,7 @@ LatestClouds = compose(
     addWeatherData,
     mapProps(({metars}) => {
         return {metar: last(metars)};
-    })
+    }),
 )(LatestClouds);
 
 export default LatestClouds;

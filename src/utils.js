@@ -14,50 +14,51 @@ export const withRouterProps = mapper =>
                 ...originalProps,
                 ...mapper(router, originalProps),
             };
-        })
+        }),
     );
 
 export const gpsDistance = (from, to) => {
     const km = gpsDistanceKm(
-        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10))
+        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10)),
     );
 
     return km;
 };
 
 export const withBrowserEvent = (source, eventName, cb, capture) => {
-    return Component => class BrowserEvent extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {};
-        }
+    return Component =>
+        class BrowserEvent extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {};
+            }
 
-        componentDidMount() {
-            this.wrap = event => {
-                const newProps = cb({
-                    event,
-                    state: this.state,
-                    props: this.props,
-                    setProps: props => {
-                        this.setState(props);
-                    },
-                });
-                if (newProps) {
-                    this.setState(newProps);
-                }
-            };
+            componentDidMount() {
+                this.wrap = event => {
+                    const newProps = cb({
+                        event,
+                        state: this.state,
+                        props: this.props,
+                        setProps: props => {
+                            this.setState(props);
+                        },
+                    });
+                    if (newProps) {
+                        this.setState(newProps);
+                    }
+                };
 
-            source.addEventListener(eventName, this.wrap, capture);
-        }
+                source.addEventListener(eventName, this.wrap, capture);
+            }
 
-        componentWillUnmount() {
-            source.removeEventListener(eventName, this.wrap, capture);
-        }
+            componentWillUnmount() {
+                source.removeEventListener(eventName, this.wrap, capture);
+            }
 
-        render() {
-            return <Component {...this.props} {...this.state} />;
-        }
-    };
+            render() {
+                return <Component {...this.props} {...this.state} />;
+            }
+        };
 };
 
 export function addSetTimeout(Component) {
@@ -93,4 +94,4 @@ export const fromNowWithClock = t =>
     ` ${moment(t).fromNow()} (klo ${moment(t).format("HH:mm")})`;
 
 export const getWindowOr = mock =>
-    (typeof window !== "undefined" ? window : mock);
+    typeof window !== "undefined" ? window : mock;

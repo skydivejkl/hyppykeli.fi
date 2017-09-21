@@ -38,7 +38,9 @@ const TitleLinkContainer = simple(View.create(Link), {
 const TitleLink = ({children, ...props}) => (
     <TitleLinkContainer {...props}>
         <Row>
-            <BackArrowIcon /><Sep />{children}
+            <BackArrowIcon />
+            <Sep />
+            {children}
         </Row>
     </TitleLinkContainer>
 );

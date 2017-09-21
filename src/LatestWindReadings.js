@@ -44,25 +44,21 @@ const Value = simple(WindTitle, {
 });
 
 const ValueOrSpinner = ({children}) =>
-    (children
-        ? <Value>{children}</Value>
-        : <SpinnerContainer><Spinner /></SpinnerContainer>);
+    children ? (
+        <Value>{children}</Value>
+    ) : (
+        <SpinnerContainer>
+            <Spinner />
+        </SpinnerContainer>
+    );
 
 const gustLimitWarning = gust => {
     if (gust >= GUST_LIMIT_B) {
-        return (
-            <Note warning>
-                Tuuliraja B+ ylittyy
-            </Note>
-        );
+        return <Note warning>Tuuliraja B+ ylittyy</Note>;
     }
 
     if (gust >= GUST_LIMIT) {
-        return (
-            <Note warning>
-                Tuuliraja ylittyy
-            </Note>
-        );
+        return <Note warning>Tuuliraja ylittyy</Note>;
     }
 
     return null;
@@ -77,10 +73,11 @@ export var LatestGust = ({time, value, distance}) => (
 
         {gustLimitWarning(value)}
 
-        {Boolean(distance > DISTANCE_WARN_THRESHOLD) &&
+        {Boolean(distance > DISTANCE_WARN_THRESHOLD) && (
             <NoteLink important href="#sources">
                 Etäisyys havaintoasemalle {Math.round(distance)} km
-            </NoteLink>}
+            </NoteLink>
+        )}
     </WindReading>
 );
 LatestGust = compose(
@@ -94,7 +91,7 @@ LatestGust = compose(
         }
 
         return {...gust, distance};
-    })
+    }),
 )(LatestGust);
 
 export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
@@ -105,15 +102,17 @@ export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
 
         {Boolean(time) && <Note>{fromNowWithClock(time)}</Note>}
 
-        {Boolean(gust >= 5 && difference > 30) &&
+        {Boolean(gust >= 5 && difference > 30) && (
             <Note warning={difference >= 50}>
                 Puuska on {difference}% voimakkaampi
-            </Note>}
+            </Note>
+        )}
 
-        {Boolean(distance > DISTANCE_WARN_THRESHOLD) &&
+        {Boolean(distance > DISTANCE_WARN_THRESHOLD) && (
             <NoteLink important href="#sources">
                 Etäisyys havaintoasemalle {Math.round(distance)} km
-            </NoteLink>}
+            </NoteLink>
+        )}
     </WindReading>
 );
 LatestWindAvg = compose(
@@ -134,7 +133,7 @@ LatestWindAvg = compose(
             gust: gust ? gust.value : 0,
             difference,
         };
-    })
+    }),
 )(LatestWindAvg);
 
 export const addLatestGust = compose(
@@ -144,5 +143,5 @@ export const addLatestGust = compose(
             return findLatestProperValue(gusts.points);
         }
         return {value: 0};
-    })
+    }),
 );

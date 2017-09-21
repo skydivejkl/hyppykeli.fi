@@ -60,7 +60,7 @@ RefreshButton = compose(
             props.clearWeatherData();
             props.fetchAllWeatherData();
         },
-    })
+    }),
 )(RefreshButton);
 
 export default addWeatherData(RefreshButton);

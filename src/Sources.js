@@ -62,19 +62,9 @@ Link = defaultProps({target: "_blank"})(Link);
 
 const StationDesc = ({name, from, to}) => (
     <span>
-        <Link href={createMapLink(from)}>
-            {name}
-        </Link>
-        {" "}
-        <Bold>
-            {gpsDistance(from, to).toFixed(1)}
-            {" "}
-            km
-        </Bold>{" "}
-        päässä{" "}
-        <Link href={createMapLink(to)}>
-            laskeutumisalueesta
-        </Link>
+        <Link href={createMapLink(from)}>{name}</Link>{" "}
+        <Bold>{gpsDistance(from, to).toFixed(1)} km</Bold> päässä{" "}
+        <Link href={createMapLink(to)}>laskeutumisalueesta</Link>
     </span>
 );
 
@@ -103,18 +93,16 @@ var Sources = ({
             <SourcesTitle id="sources">Lähteet</SourcesTitle>
 
             <SourceText>
-                Kaikki data on haettu Ilmatieteen laitoksen
-                {" "}
+                Kaikki data on haettu Ilmatieteen laitoksen{" "}
                 <Link href="https://ilmatieteenlaitos.fi/avoin-data">
                     avoimista rajapinnoista
-                </Link>.
-                Myös tuuliennustus tulee Ilmatieteenlaitokselta taulukkona
-                jossa on suoraan kellonaika ja ennustettu tuulilukema.
-                Hyppykeli.fi piirtää vain kuvaajan tästä tiedosta eikä sen
-                enempää tulkitse sitä.
+                </Link>. Myös tuuliennustus tulee Ilmatieteenlaitokselta
+                taulukkona jossa on suoraan kellonaika ja ennustettu
+                tuulilukema. Hyppykeli.fi piirtää vain kuvaajan tästä tiedosta
+                eikä sen enempää tulkitse sitä.
             </SourceText>
 
-            {gusts &&
+            {gusts && (
                 <SourceText>
                     Puuskatiedot saatiin havaintoasemalta{" "}
                     <StationDesc
@@ -122,9 +110,10 @@ var Sources = ({
                         from={gusts.stationCoordinates}
                         to={dzProps}
                     />
-                </SourceText>}
+                </SourceText>
+            )}
 
-            {windAvg &&
+            {windAvg && (
                 <SourceText>
                     Keskituulitiedot saatiin havaintoasemalta{" "}
                     <StationDesc
@@ -132,42 +121,43 @@ var Sources = ({
                         from={windAvg.stationCoordinates}
                         to={dzProps}
                     />
-                </SourceText>}
+                </SourceText>
+            )}
 
-            {gustForecasts &&
+            {gustForecasts && (
                 <SourceText>
-                    Puuskaennustus on annettu alueelle
-                    {" "}
+                    Puuskaennustus on annettu alueelle{" "}
                     <Bold>{gustForecasts.locationName}</Bold>
-                </SourceText>}
+                </SourceText>
+            )}
 
-            {windAvgForecasts &&
+            {windAvgForecasts && (
                 <SourceText>
-                    Keskituuliennustus on annettu alueelle
-                    {" "}
+                    Keskituuliennustus on annettu alueelle{" "}
                     <Bold>{windAvgForecasts.locationName}</Bold>
-                </SourceText>}
+                </SourceText>
+            )}
 
-            {Boolean(metars && metars.length > 0) &&
+            {Boolean(metars && metars.length > 0) && (
                 <SourceText id="metar">
                     Pilvikerrokset parsittiin METAR-sanomasta:
                     <br />
                     <br />
                     <Metar>{last(metars).raw}</Metar>
-                </SourceText>}
+                </SourceText>
+            )}
 
             <SourcesTitle>Tietoja</SourcesTitle>
 
             <SourceText>
                 Tällä sivulla annettujen tietojen käyttö omalla vastuulla.
-                Kukaan tai mikään ei takaa, että lähdetiedot tai niiden
-                tulkinta olisi millään tapaan järjellistä. Muistetaan jatkossakin
+                Kukaan tai mikään ei takaa, että lähdetiedot tai niiden tulkinta
+                olisi millään tapaan järjellistä. Muistetaan jatkossakin
                 katsella sitä tuulipussia ja käyttää omia aivoja.
             </SourceText>
 
             <SourceText>
-                Tämän tunkin rakensi
-                {" "}
+                Tämän tunkin rakensi{" "}
                 <Link href="https://www.facebook.com/esamattisuuronen">
                     Esa-Matti Suuronen.
                 </Link>
@@ -180,7 +170,6 @@ var Sources = ({
                     <GithubIcon />
                 </Link>
             </SourceText>
-
         </SourcesContent>
     </SourcesContainer>
 );

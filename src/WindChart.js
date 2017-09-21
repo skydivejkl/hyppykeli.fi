@@ -55,7 +55,7 @@ const PointValue = simple(
         transparent: {
             color: "transparent",
         },
-    }
+    },
 );
 
 const asFloat = i => parseFloat(i, 10);
@@ -82,17 +82,19 @@ const getObservations = data =>
 var HoveredValues = ({gust, avg}) => (
     <Row>
         {!gust && <PointValue transparent>|</PointValue>}
-        {gust &&
+        {gust && (
             <PointValue>
                 Puuska <Bold>{gust.value} m/s</Bold>
                 {` ${fromNowWithClock(gust.time)}`}
-            </PointValue>}
+            </PointValue>
+        )}
 
-        {avg &&
+        {avg && (
             <PointValue>
                 Keskituuli <Bold>{avg.value} m/s</Bold>
                 {` ${fromNowWithClock(avg.time)}`}
-            </PointValue>}
+            </PointValue>
+        )}
     </Row>
 );
 HoveredValues = connect(state => state.hoveredWindValues || {})(HoveredValues);
@@ -208,7 +210,7 @@ class WindChart extends React.Component {
                             const index = chartElement[0]._index;
                             this.throttledSetWindPoint(
                                 this.props.gusts[index],
-                                this.props.avg[index]
+                                this.props.avg[index],
                             );
                         }
                     },
@@ -259,17 +261,23 @@ const combineObsFore = (obs, avg) =>
             type: "observation",
         }))
         .concat(
-            getPoints(avg).slice(0, 6).map(d => ({
-                ...d,
-                type: "forecast",
-            }))
+            getPoints(avg)
+                .slice(0, 6)
+                .map(d => ({
+                    ...d,
+                    type: "forecast",
+                })),
         );
 
 var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
     <WindChartContainer>
-        {hasSomeChartData
-            ? <WindChart key={instanceKey} {...props} />
-            : <SpinnerContainer><Spinner color="black" /></SpinnerContainer>}
+        {hasSomeChartData ? (
+            <WindChart key={instanceKey} {...props} />
+        ) : (
+            <SpinnerContainer>
+                <Spinner color="black" />
+            </SpinnerContainer>
+        )}
         }
     </WindChartContainer>
 );
@@ -288,7 +296,7 @@ WindChartWrap = compose(
             ].some(Boolean);
 
             return {hasSomeChartData, gusts: combinedGusts, avg: combinedAvg};
-        }
+        },
     ),
     withProps({instanceKey: getWindowOr({innerWidth: 0}).innerWidth}),
     withBrowserEvent(
@@ -297,10 +305,10 @@ WindChartWrap = compose(
         debounce(100, ({setProps}) =>
             setProps({
                 instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
-            })
-        )
+            }),
+        ),
     ),
-    pure
+    pure,
 )(WindChartWrap);
 
 export default WindChartWrap;

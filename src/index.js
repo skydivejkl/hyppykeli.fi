@@ -3,7 +3,7 @@ console.log("git date", GIT_COMMIT_DATE);
 console.log("git message", GIT_COMMIT_MESSAGE);
 console.log(
     "git rev https://github.com/skydivejkl/hyppykeli.fi/commit/" +
-        GIT_COMMIT_REV
+        GIT_COMMIT_REV,
 );
 
 if (window.trackjs && typeof window.trackJs.addMetadata === "function") {
@@ -30,7 +30,8 @@ import ScrollToTop from "./ScrollToTop";
 const store = createStore(
     leanReducer,
     {},
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 const Root = () => (
@@ -54,7 +55,7 @@ if ("serviceWorker" in navigator) {
             .then(function(registration) {
                 console.log(
                     "ServiceWorker registration successful with scope: ",
-                    registration.scope
+                    registration.scope,
                 );
             })
             .catch(function(err) {

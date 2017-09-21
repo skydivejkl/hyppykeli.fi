@@ -26,11 +26,7 @@ const Wrap = simple(View, {
     width: "100%",
 });
 
-const NotFound = () => (
-    <View>
-        Tuntematon näkymä
-    </View>
-);
+const NotFound = () => <View>Tuntematon näkymä</View>;
 
 const Main = () => (
     <Container>
@@ -45,7 +41,7 @@ const Main = () => (
                             "send",
                             "event",
                             "HomeScreen",
-                            "start-from-home-screen-app"
+                            "start-from-home-screen-app",
                         );
 
                         const previous = store.get("previous");

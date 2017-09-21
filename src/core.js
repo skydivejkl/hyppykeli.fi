@@ -45,5 +45,5 @@ export const Note = simple(
             backgroundColor: "red",
             color: "yellow",
         },
-    }
+    },
 );

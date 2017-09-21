@@ -82,9 +82,7 @@ var Dz = ({dzProps}) => {
                 <Background>
                     <CloudContainer>
                         <Cloud>
-                            <CloudText>
-                                {dzProps.name}
-                            </CloudText>
+                            <CloudText>{dzProps.name}</CloudText>
                         </Cloud>
                     </CloudContainer>
                     <ParachuteContainer>
@@ -99,14 +97,14 @@ var Dz = ({dzProps}) => {
 
                 <Row>
                     {Boolean(dzProps.icaocode) && <LatestClouds />}
-                    {Boolean(!dzProps.icaocode) &&
+                    {Boolean(!dzProps.icaocode) && (
                         <NoClouds>
                             Ei tietoa pilvistä.
                             <br />
                             Kentälle ei tiedettävästi tehdä METAR-sanomia :(
-                        </NoClouds>}
+                        </NoClouds>
+                    )}
                 </Row>
-
             </Header>
 
             <Details>
@@ -123,9 +121,7 @@ var Dz = ({dzProps}) => {
                 <Sources />
             </Details>
 
-            <TitleLink to="/">
-                Hyppykeli.fi
-            </TitleLink>
+            <TitleLink to="/">Hyppykeli.fi</TitleLink>
 
             <RefreshButton />
         </View>
@@ -140,7 +136,7 @@ Dz = compose(
                 console.log("ACTUAL REFRESH");
                 props.fetchAllWeatherData();
             },
-            {trailing: false}
+            {trailing: false},
         );
 
         return {
@@ -158,7 +154,7 @@ Dz = compose(
         componentDidMount() {
             store.set(
                 "previous",
-                window.location.pathname + window.location.search
+                window.location.pathname + window.location.search,
             );
 
             this.props.fetchAllWeatherData({force: true});
@@ -185,7 +181,7 @@ Dz = compose(
             props.throttledRefresh();
         }
     }),
-    pure
+    pure,
 )(Dz);
 
 export default Dz;

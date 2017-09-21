@@ -37,7 +37,7 @@ const selectMetars = createSelector(
                 ...parseMetar(raw),
             };
         });
-    }
+    },
 );
 
 const parseStationCoordinates = u({
@@ -102,14 +102,15 @@ export const addWeatherData = compose(
                 error => {
                     this._dec();
                     throw error;
-                }
+                },
             );
         },
 
         fetchGusts() {
             if (this.props.dzProps.fmisid) {
                 return this.request(
-                    `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windgust`
+                    `/api/observations/${this.props.dzProps
+                        .fmisid}/fi-1-1-windgust`,
                 ).then(res => {
                     console.log("setting gust observations");
                     this.setState(
@@ -119,7 +120,7 @@ export const addWeatherData = compose(
                                     gusts: parseStationCoordinates(res.data),
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -130,7 +131,8 @@ export const addWeatherData = compose(
         fetchWindAvg() {
             if (this.props.dzProps.fmisid) {
                 return this.request(
-                    `/api/observations/${this.props.dzProps.fmisid}/fi-1-1-windspeedms`
+                    `/api/observations/${this.props.dzProps
+                        .fmisid}/fi-1-1-windspeedms`,
                 ).then(res => {
                     console.log("setting avg observations");
                     this.setState(
@@ -140,7 +142,7 @@ export const addWeatherData = compose(
                                     windAvg: parseStationCoordinates(res.data),
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -151,7 +153,9 @@ export const addWeatherData = compose(
         fetchGustForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
-                    `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windgust`
+                    `/api/forecasts/${asLatLonPair(
+                        this.props.dzProps,
+                    )}/enn-s-1-1-windgust`,
                 ).then(res => {
                     console.log("setting gust forcecasts");
                     this.setState(
@@ -161,7 +165,7 @@ export const addWeatherData = compose(
                                     gustForecasts: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -172,7 +176,9 @@ export const addWeatherData = compose(
         fetchWindAvgForecasts() {
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
-                    `/api/forecasts/${asLatLonPair(this.props.dzProps)}/enn-s-1-1-windspeedms`
+                    `/api/forecasts/${asLatLonPair(
+                        this.props.dzProps,
+                    )}/enn-s-1-1-windspeedms`,
                 ).then(res => {
                     console.log("setting avg forcecasts");
                     this.setState(
@@ -182,7 +188,7 @@ export const addWeatherData = compose(
                                     windAvgForecasts: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -193,7 +199,7 @@ export const addWeatherData = compose(
         fetchMetars() {
             if (this.props.dzProps.icaocode) {
                 return this.request(
-                    `/api/metars/${this.props.dzProps.icaocode}`
+                    `/api/metars/${this.props.dzProps.icaocode}`,
                 ).then(res => {
                     console.log("setting metar data");
                     this.setState(
@@ -203,7 +209,7 @@ export const addWeatherData = compose(
                                     metars: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -224,5 +230,5 @@ export const addWeatherData = compose(
                 this.fetchMetars();
             });
         },
-    })
+    }),
 );

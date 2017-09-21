@@ -5,9 +5,7 @@ import {View} from "./core";
 import Parachute from "./Parachute";
 
 const Header = ({children, ...props}) => (
-    <HeaderContainer {...props}>
-        {children}
-    </HeaderContainer>
+    <HeaderContainer {...props}>{children}</HeaderContainer>
 );
 
 export default Header;

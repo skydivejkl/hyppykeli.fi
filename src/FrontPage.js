@@ -60,7 +60,9 @@ const DZLinkStyled = simple(View.create(Link), {
 
 const DZLink = ({dz, children}) => (
     <DZLinkStyled to={"/dz/" + dz}>
-        <Cloud><LinkText>{children}</LinkText></Cloud>
+        <Cloud>
+            <LinkText>{children}</LinkText>
+        </Cloud>
     </DZLinkStyled>
 );
 
@@ -74,9 +76,7 @@ const FrontPage = () => (
         <Sep />
         <Sep />
 
-        <Title>
-            Hyppykeli.fi
-        </Title>
+        <Title>Hyppykeli.fi</Title>
 
         <Sep />
 
@@ -87,7 +87,6 @@ const FrontPage = () => (
                 </DZLink>
             ))}
         </LinkListWrap>
-
     </Center>
 );
 
