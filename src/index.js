@@ -6,6 +6,8 @@ console.log(
         GIT_COMMIT_REV,
 );
 
+ga("send", "event", "started-version", "version:" + GIT_COMMIT_REV);
+
 if (window.trackjs && typeof window.trackJs.addMetadata === "function") {
     window.trackJs.addMetadata("gitrev", GIT_COMMIT_REV);
     window.trackJs.addMetadata("gitmessage", GIT_COMMIT_MESSAGE);
