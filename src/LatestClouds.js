@@ -18,6 +18,7 @@ const Bolt = simple(View.create(Bolt_), {
 
 const CLOUDS = {
     NCD: "Ei pilviä",
+    VV: "SUMUA PERKELE",
     NSC: "Yksittäisiä",
     FEW: "Muutamia",
     SCT: "Hajanaisia",
