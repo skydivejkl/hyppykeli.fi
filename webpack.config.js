@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var {execSync} = require("child_process");
 var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
+const WorkboxBuildWebpackPlugin = require("workbox-webpack-plugin");
 
 var gitRev = execSync("git rev-parse HEAD")
     .toString()
@@ -52,6 +53,13 @@ var config = {
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fi/),
         new BundleAnalyzerPlugin({
             analyzerMode: "static",
+        }),
+        new WorkboxBuildWebpackPlugin({
+            globDirectory: "static/",
+            globPatterns: ["**/*.{js,css,html,json,ico,svg,png}"],
+            swDest: "static/service-worker.js",
+            swSrc: "src/service-worker.js",
+            globIgnores: ["*/report.html"],
         }),
     ],
 };
