@@ -10,7 +10,7 @@ const App = () => (
         <head>
             <meta charset="utf-8" />
             <title>Hyppykeli.fi</title>
-            <link href="/parachute.ico" rel="icon" />
+            <link href="/parachute192.png" rel="icon" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta
                 name="viewport"
