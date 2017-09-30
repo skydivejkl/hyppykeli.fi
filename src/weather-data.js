@@ -112,7 +112,6 @@ export const addWeatherData = compose(
                     `/api/observations/${this.props.dzProps
                         .fmisid}/fi-1-1-windgust`,
                 ).then(res => {
-                    console.log("setting gust observations");
                     this.setState(
                         u({
                             data: {
@@ -134,7 +133,6 @@ export const addWeatherData = compose(
                     `/api/observations/${this.props.dzProps
                         .fmisid}/fi-1-1-windspeedms`,
                 ).then(res => {
-                    console.log("setting avg observations");
                     this.setState(
                         u({
                             data: {
@@ -157,7 +155,6 @@ export const addWeatherData = compose(
                         this.props.dzProps,
                     )}/enn-s-1-1-windgust`,
                 ).then(res => {
-                    console.log("setting gust forcecasts");
                     this.setState(
                         u({
                             data: {
@@ -180,7 +177,6 @@ export const addWeatherData = compose(
                         this.props.dzProps,
                     )}/enn-s-1-1-windspeedms`,
                 ).then(res => {
-                    console.log("setting avg forcecasts");
                     this.setState(
                         u({
                             data: {
@@ -201,7 +197,6 @@ export const addWeatherData = compose(
                 return this.request(
                     `/api/metars/${this.props.dzProps.icaocode}`,
                 ).then(res => {
-                    console.log("setting metar data");
                     this.setState(
                         u({
                             data: {

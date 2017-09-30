@@ -175,7 +175,6 @@ class WindChart extends React.Component {
         this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
         this.debouncedChartUpdate = debounce(400, this.updateChart.bind(this));
 
-        console.log("Creating Chart.js instance");
         this.chart = new Chart(this.canvas, {
             type: "line",
             data: this.getChartData(this.props),
@@ -220,7 +219,6 @@ class WindChart extends React.Component {
     }
 
     updateChart(props) {
-        console.log("Updating WindChart canvas");
         this.chart.config.data = this.getChartData(props);
         this.chart.update(0);
     }
