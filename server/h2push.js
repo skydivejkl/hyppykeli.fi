@@ -17,8 +17,8 @@ const pushStaticAssets = (ctx, next) => {
     // when we are sure that it's not in cache
     if (ctx.cookies.get("h2push") !== gitRev) {
         ctx.cookies.set("h2push", gitRev, {maxAge: YEAR});
-        ctx.append("Link", h2pushJS("/dist/bundle.js"));
         ctx.append("Link", h2pushJS("/vendor/tracker.js"));
+        ctx.append("Link", h2pushJS("/dist/bundle.js"));
     }
     next();
 };
