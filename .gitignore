@@ -1,3 +1,5 @@
 node_modules
 config.json
 static/dist/*
+static/workbox-sw.*
+static/shell.html

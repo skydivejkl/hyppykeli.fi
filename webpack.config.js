@@ -3,10 +3,18 @@ var {execSync} = require("child_process");
 var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
 
-var gitRev = execSync("git rev-parse HEAD").toString().trim();
-var gitMessageShort = execSync("git log -1 --pretty=%s").toString().trim();
-var gitMessageFull = execSync("git log -1 --pretty=%B").toString().trim();
-var gitDate = execSync("git log -1 --format=%cd ").toString().trim();
+var gitRev = execSync("git rev-parse HEAD")
+    .toString()
+    .trim();
+var gitMessageShort = execSync("git log -1 --pretty=%s")
+    .toString()
+    .trim();
+var gitMessageFull = execSync("git log -1 --pretty=%B")
+    .toString()
+    .trim();
+var gitDate = execSync("git log -1 --format=%cd ")
+    .toString()
+    .trim();
 
 var config = {
     entry: {

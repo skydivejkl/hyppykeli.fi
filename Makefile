@@ -4,7 +4,15 @@ export JS_SERVER_PORT := 8081
 bundle = static/dist/bundle.js
 
 
-all: deps prerender js
+all: deps build
+
+build: app-shell js service-worker
+
+service-worker:
+	workbox inject:manifest
+
+app-shell:
+	babel-node src/build-shell.js > static/shell.html
 
 deps:
 	yarn
@@ -12,12 +20,10 @@ deps:
 js:
 	NODE_ENV=production webpack -p --progress
 
-prerender:
-	babel-node ssr/mock.js
-
 server-production:
 	NODE_ENV=production node server/server.js
 
+.PHONY: server
 server:
 	node server/server.js
 
