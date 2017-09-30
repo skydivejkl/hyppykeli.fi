@@ -62,13 +62,13 @@ export const withBrowserEvent = (source, eventName, cb, capture) => {
 };
 
 export function addSetTimeout(Component) {
-    return React.createClass({
-        displayName: "addSetTimeout",
-
-        componentWillMount() {
+    return class AddSetTimeout extends React.Component {
+        constructor(props) {
+            super(props);
             this.counter = 0;
             this.timeouts = {};
-        },
+            this.setTimeout = this.setTimeout.bind(this);
+        }
 
         setTimeout(cb, t) {
             const i = this.counter++;
@@ -78,16 +78,16 @@ export function addSetTimeout(Component) {
             };
 
             this.timeouts[i] = setTimeout(wrap, t);
-        },
+        }
 
         componentWillUnmount() {
             values(this.timeouts).forEach(clearTimeout);
-        },
+        }
 
         render() {
             return <Component {...this.props} setTimeout={this.setTimeout} />;
-        },
-    });
+        }
+    };
 }
 
 export const fromNowWithClock = t =>
