@@ -8,8 +8,11 @@ all: deps build
 
 build: app-shell js service-worker
 
-service-worker:
+service-worker: copy-workbox-scripts
 	workbox inject:manifest
+
+copy-workbox-scripts:
+	cp node_modules/workbox-sw/build/importScripts/* static/vendor
 
 app-shell:
 	babel-node src/build-shell.js > static/shell.html

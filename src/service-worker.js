@@ -1,5 +1,5 @@
 /* global self */
-importScripts("workbox-sw.prod.v2.0.3.js");
+importScripts("/vendor/workbox-sw.prod.v2.0.3.js");
 
 function log(...args) {
     console.log("SW", ...args);

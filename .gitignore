@@ -1,6 +1,6 @@
 node_modules
 config.json
 static/dist/*
-static/workbox-sw.*
 static/shell.html
 static/service-worker.js
+static/vendor/workbox-sw.*
