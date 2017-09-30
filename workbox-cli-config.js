@@ -3,5 +3,9 @@ module.exports = {
     globPatterns: ["**/*.{js,css,html,json,ico,svg,png}"],
     swDest: "static/service-worker.js",
     swSrc: "src/service-worker.js",
-    globIgnores: ["../workbox-cli-config.js", "*/report.html"],
+    globIgnores: [
+        "../workbox-cli-config.js",
+        "*/report.html",
+        "*/workbox-sw.dev*",
+    ],
 };
