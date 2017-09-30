@@ -17,6 +17,7 @@ function sendShell(req) {
 }
 
 workboxSW.router.registerRoute("/dz/:dz", sendShell);
+workboxSW.router.registerRoute("/previous", sendShell);
 workboxSW.router.registerRoute("/", sendShell);
 
 self.addEventListener("install", () => self.skipWaiting());
