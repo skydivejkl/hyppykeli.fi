@@ -6,7 +6,10 @@ bundle = static/dist/bundle.js
 
 all: deps build
 
-build: app-shell js
+build: app-shell js service-worker
+
+service-worker:
+	workbox inject:manifest
 
 app-shell:
 	babel-node src/build-shell.js > static/shell.html
