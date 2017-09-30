@@ -3,3 +3,4 @@ config.json
 static/dist/*
 static/workbox-sw.*
 static/shell.html
+static/service-worker.js
