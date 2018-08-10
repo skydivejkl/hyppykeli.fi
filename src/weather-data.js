@@ -37,7 +37,7 @@ const selectMetars = createSelector(
                 ...parseMetar(raw),
             };
         });
-    },
+    }
 );
 
 const parseStationCoordinates = u({
@@ -102,7 +102,7 @@ export const addWeatherData = compose(
                 error => {
                     this._dec();
                     throw error;
-                },
+                }
             );
         },
 
@@ -111,7 +111,7 @@ export const addWeatherData = compose(
                 return this.request(
                     `/api/observations/${
                         this.props.dzProps.fmisid
-                    }/fi-1-1-windgust`,
+                    }/fi-1-1-windgust`
                 ).then(res => {
                     this.setState(
                         u({
@@ -120,7 +120,7 @@ export const addWeatherData = compose(
                                     gusts: parseStationCoordinates(res.data),
                                 },
                             },
-                        }),
+                        })
                     );
                 });
             }
@@ -133,7 +133,7 @@ export const addWeatherData = compose(
                 return this.request(
                     `/api/observations/${
                         this.props.dzProps.fmisid
-                    }/fi-1-1-windspeedms`,
+                    }/fi-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
                         u({
@@ -142,7 +142,7 @@ export const addWeatherData = compose(
                                     windAvg: parseStationCoordinates(res.data),
                                 },
                             },
-                        }),
+                        })
                     );
                 });
             }
@@ -154,8 +154,8 @@ export const addWeatherData = compose(
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
                     `/api/forecasts/${asLatLonPair(
-                        this.props.dzProps,
-                    )}/enn-s-1-1-windgust`,
+                        this.props.dzProps
+                    )}/enn-s-1-1-windgust`
                 ).then(res => {
                     this.setState(
                         u({
@@ -164,7 +164,7 @@ export const addWeatherData = compose(
                                     gustForecasts: res.data,
                                 },
                             },
-                        }),
+                        })
                     );
                 });
             }
@@ -176,8 +176,8 @@ export const addWeatherData = compose(
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
                     `/api/forecasts/${asLatLonPair(
-                        this.props.dzProps,
-                    )}/enn-s-1-1-windspeedms`,
+                        this.props.dzProps
+                    )}/enn-s-1-1-windspeedms`
                 ).then(res => {
                     this.setState(
                         u({
@@ -186,7 +186,7 @@ export const addWeatherData = compose(
                                     windAvgForecasts: res.data,
                                 },
                             },
-                        }),
+                        })
                     );
                 });
             }
@@ -197,7 +197,7 @@ export const addWeatherData = compose(
         fetchMetars() {
             if (this.props.dzProps.icaocode) {
                 return this.request(
-                    `/api/metars/${this.props.dzProps.icaocode}`,
+                    `/api/metars/${this.props.dzProps.icaocode}`
                 ).then(res => {
                     this.setState(
                         u({
@@ -206,7 +206,7 @@ export const addWeatherData = compose(
                                     metars: res.data,
                                 },
                             },
-                        }),
+                        })
                     );
                 });
             }
@@ -227,5 +227,5 @@ export const addWeatherData = compose(
                 this.fetchMetars();
             });
         },
-    }),
+    })
 );

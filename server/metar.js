@@ -11,7 +11,7 @@ const query = "fmi::avi::observations::iwxxm";
 
 const getPoints = get("wfs:FeatureCollection.wfs:member");
 const getMetar = get(
-    "avi:VerifiableMessage[0].avi:metadata[0].avi:MessageMetadata[0].avi:source[0].avi:Process[0].avi:input[0]",
+    "avi:VerifiableMessage[0].avi:metadata[0].avi:MessageMetadata[0].avi:source[0].avi:Process[0].avi:input[0]"
 );
 
 router.get("/api/metars/:icaocode", async ctx => {

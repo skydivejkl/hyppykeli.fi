@@ -91,7 +91,7 @@ LatestGust = compose(
         }
 
         return {...gust, distance};
-    }),
+    })
 )(LatestGust);
 
 export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
@@ -133,7 +133,7 @@ LatestWindAvg = compose(
             gust: gust ? gust.value : 0,
             difference,
         };
-    }),
+    })
 )(LatestWindAvg);
 
 export const addLatestGust = compose(
@@ -143,5 +143,5 @@ export const addLatestGust = compose(
             return findLatestProperValue(gusts.points);
         }
         return {value: 0};
-    }),
+    })
 );

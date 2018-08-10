@@ -136,7 +136,7 @@ Dz = compose(
                 console.log("ACTUAL REFRESH");
                 props.fetchAllWeatherData();
             },
-            {trailing: false},
+            {trailing: false}
         );
 
         return {
@@ -154,7 +154,7 @@ Dz = compose(
         componentDidMount() {
             store.set(
                 "previous",
-                window.location.pathname + window.location.search,
+                window.location.pathname + window.location.search
             );
 
             this.props.fetchAllWeatherData({force: true});
@@ -181,7 +181,7 @@ Dz = compose(
             props.throttledRefresh();
         }
     }),
-    pure,
+    pure
 )(Dz);
 
 export default Dz;

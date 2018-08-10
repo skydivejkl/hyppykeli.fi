@@ -114,7 +114,7 @@ var LatestClouds = ({metar}) => {
                         <Cloud key={i}>
                             {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
                             {`${getHumanMeaning(
-                                cloud.abbreviation,
+                                cloud.abbreviation
                             )} ${altText}`}
                         </Cloud>
                     );
@@ -129,7 +129,7 @@ LatestClouds = compose(
     addWeatherData,
     mapProps(({metars}) => {
         return {metar: last(metars)};
-    }),
+    })
 )(LatestClouds);
 
 export default LatestClouds;

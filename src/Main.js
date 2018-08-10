@@ -41,7 +41,7 @@ const Main = () => (
                             "send",
                             "event",
                             "HomeScreen",
-                            "start-from-home-screen-app",
+                            "start-from-home-screen-app"
                         );
 
                         const previous = store.get("previous");

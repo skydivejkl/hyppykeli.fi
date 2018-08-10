@@ -16,21 +16,21 @@ const getStartTime = () =>
 const getFeatures = get("wfs:FeatureCollection.wfs:member");
 
 const getFeatureId = get(
-    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].$.gml:id",
+    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].$.gml:id"
 );
 const getFeatureStationName = get(
-    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:Point[0].gml:name[0]",
+    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:Point[0].gml:name[0]"
 );
 const getFeatureStationCoordinates = get(
-    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:Point[0].gml:pos[0]",
+    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:Point[0].gml:pos[0]"
 );
 
 const getFeatureDescriptionHref = get(
-    "omso:PointTimeSeriesObservation[0].om:observedProperty[0].$.xlink:href",
+    "omso:PointTimeSeriesObservation[0].om:observedProperty[0].$.xlink:href"
 );
 
 const getPoints = get(
-    "omso:PointTimeSeriesObservation[0].om:result[0].wml2:MeasurementTimeseries[0].wml2:point",
+    "omso:PointTimeSeriesObservation[0].om:result[0].wml2:MeasurementTimeseries[0].wml2:point"
 );
 
 const getTime = get("wml2:MeasurementTVP[0].wml2:time[0]");
@@ -39,10 +39,10 @@ const getValue = get("wml2:MeasurementTVP[0].wml2:value[0]");
 const getDescription = get("ObservableProperty.label[0]");
 
 const getForecastLocationName = get(
-    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:MultiPoint[0].gml:pointMembers[0].gml:Point[0].gml:name[0]",
+    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:MultiPoint[0].gml:pointMembers[0].gml:Point[0].gml:name[0]"
 );
 const getForecastLocationCoordinates = get(
-    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:MultiPoint[0].gml:pointMembers[0].gml:Point[0].gml:pos[0]",
+    "omso:PointTimeSeriesObservation[0].om:featureOfInterest[0].sams:SF_SpatialSamplingFeature[0].sams:shape[0].gml:MultiPoint[0].gml:pointMembers[0].gml:Point[0].gml:pos[0]"
 );
 
 const OBSERVATION_PARAMETERS = [
@@ -71,7 +71,7 @@ router.get("/api/observations/:fmisid", async ctx => {
                 featureDescriptionHref,
                 {
                     cacheKey: featureDescriptionHref,
-                },
+                }
             );
 
             return {
@@ -81,10 +81,10 @@ router.get("/api/observations/:fmisid", async ctx => {
                 stationCoordinates: getFeatureStationCoordinates(feature),
                 googleMaps: url.resolve(
                     "https://www.google.fi/maps/place/",
-                    getFeatureStationCoordinates(feature),
+                    getFeatureStationCoordinates(feature)
                 ),
             };
-        }),
+        })
     );
 
     ctx.body = {

@@ -4,7 +4,7 @@ console.log("git date", GIT_COMMIT_DATE);
 console.log("git message", GIT_COMMIT_MESSAGE);
 console.log(
     "git rev https://github.com/skydivejkl/hyppykeli.fi/commit/" +
-        GIT_COMMIT_REV,
+        GIT_COMMIT_REV
 );
 
 ga("send", "event", "started-version", "version:" + GIT_COMMIT_REV);
@@ -34,8 +34,7 @@ import registerServiceWorker from "./register-service-worker";
 const store = createStore(
     leanReducer,
     {},
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__(),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const Root = () => (

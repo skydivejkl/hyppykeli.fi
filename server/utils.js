@@ -98,8 +98,8 @@ const fmiRequest = ({apikey, query, params, cacheKey, cacheAge}) => {
             {
                 storedquery_id: query,
             },
-            params,
-        ),
+            params
+        )
     );
 
     return fmiRawRequest(finalURL, {cacheKey, cacheAge});

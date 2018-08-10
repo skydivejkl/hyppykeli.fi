@@ -35,7 +35,7 @@ const Parachute = simple(
             animation: `${rotate} 1s linear infinite`,
             transformOrigin: "50% 15%",
         },
-    },
+    }
 );
 
 var ConnectedParachute = ({value}) => {

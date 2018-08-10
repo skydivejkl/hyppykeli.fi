@@ -14,12 +14,12 @@ export const withRouterProps = mapper =>
                 ...originalProps,
                 ...mapper(router, originalProps),
             };
-        }),
+        })
     );
 
 export const gpsDistance = (from, to) => {
     const km = gpsDistanceKm(
-        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10)),
+        ...[from.lat, from.lon, to.lat, to.lon].map(s => parseFloat(s, 10))
     );
 
     return km;
