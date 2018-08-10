@@ -17,6 +17,9 @@ copy-workbox-scripts:
 app-shell:
 	babel-node src/build-shell.js > static/shell.html
 
+copy-config:
+	scp hyppykeli@hyppykeli.fi:/apps/hyppykeli/hyppykeli.fi/config.json .
+
 deps:
 	yarn
 
