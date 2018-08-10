@@ -198,10 +198,20 @@ router.get("/api/forecasts/:latlon/:feature", async ctx => {
     ctx.body = {
         locationName: getForecastLocationName(feature),
         locationCoordinates: getForecastLocationCoordinates(feature),
-        points: getPoints(feature).map(point => ({
-            time: getTime(point),
-            value: getValue(point),
-        })),
+        points: getPoints(feature)
+            .map(point => ({
+                time: getTime(point),
+                value: getValue(point),
+            }))
+            .filter(point => {
+                const pointTime = moment(point.time);
+                return (
+                    pointTime.unix() >
+                    moment()
+                        .add(45, "minutes")
+                        .unix()
+                );
+            }),
     };
 });
 
