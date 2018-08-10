@@ -124,7 +124,7 @@ LatestWindAvg = compose(
         let gust = null;
         if (gusts && avg !== null) {
             gust = findLatestProperValue(gusts.points);
-            difference = Math.round(gust.value / avg.value * 100 - 100);
+            difference = Math.round((gust.value / avg.value) * 100 - 100);
         }
 
         return {

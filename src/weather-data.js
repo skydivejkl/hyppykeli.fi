@@ -109,8 +109,9 @@ export const addWeatherData = compose(
         fetchGusts() {
             if (this.props.dzProps.fmisid) {
                 return this.request(
-                    `/api/observations/${this.props.dzProps
-                        .fmisid}/fi-1-1-windgust`,
+                    `/api/observations/${
+                        this.props.dzProps.fmisid
+                    }/fi-1-1-windgust`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -130,8 +131,9 @@ export const addWeatherData = compose(
         fetchWindAvg() {
             if (this.props.dzProps.fmisid) {
                 return this.request(
-                    `/api/observations/${this.props.dzProps
-                        .fmisid}/fi-1-1-windspeedms`,
+                    `/api/observations/${
+                        this.props.dzProps.fmisid
+                    }/fi-1-1-windspeedms`,
                 ).then(res => {
                     this.setState(
                         u({
