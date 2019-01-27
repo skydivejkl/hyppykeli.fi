@@ -1,16 +1,13 @@
 import React from "react";
 import Chart from "chart.js";
 import dayjs from "dayjs";
-import {throttle, debounce, getOr, maxBy} from "lodash/fp";
+import {throttle, debounce, maxBy} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
-import {withProps, withPropsOnChange, compose, pure} from "recompose";
 import simple from "react-simple";
 
-import {addWeatherData} from "./weather-data";
-import {fromNowWithClock, withBrowserEvent, getWindowOr} from "./utils";
+import {fromNowWithClock} from "./utils";
 import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
-import Spinner from "./Spinner";
 
 const getLongestArray = maxBy(a => a.length);
 
@@ -29,19 +26,8 @@ const Bold = simple(View, {
     paddingRight: 3,
 });
 
-const SpinnerContainer = simple(View, {
-    alignSelf: "center",
-    width: 40,
-    height: 40,
-});
-
 const Flex = simple(View, {
     flex: 1,
-});
-
-const WindChartContainer = simple(View, {
-    width: "100%",
-    height: 420,
 });
 
 const PointValue = simple(
@@ -242,7 +228,7 @@ class WindChart extends React.Component {
         );
     }
 }
-WindChart = connectLean({
+const WindChartConnected = connectLean({
     scope: () => "hoveredWindValues",
 
     setWindPoint(gust, avg) {
@@ -253,62 +239,4 @@ WindChart = connectLean({
     },
 })(WindChart);
 
-const getPoints = getOr([], ["points"]);
-
-const combineObsFore = (obs, avg) =>
-    getPoints(obs)
-        .map(d => ({
-            ...d,
-            type: "observation",
-        }))
-        .concat(
-            getPoints(avg)
-                .slice(0, 6)
-                .map(d => ({
-                    ...d,
-                    type: "forecast",
-                })),
-        );
-
-var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
-    <WindChartContainer>
-        {hasSomeChartData ? (
-            <WindChart key={instanceKey} {...props} />
-        ) : (
-            <SpinnerContainer>
-                <Spinner color="black" />
-            </SpinnerContainer>
-        )}
-    </WindChartContainer>
-);
-WindChartWrap = compose(
-    addWeatherData,
-    withPropsOnChange(
-        ["gusts", "windAvg", "gustForecasts", "windAvgForecasts"],
-        ({gusts, windAvg, gustForecasts, windAvgForecasts}) => {
-            // console.log("mapping data");
-            const combinedGusts = combineObsFore(gusts, gustForecasts);
-            const combinedAvg = combineObsFore(windAvg, windAvgForecasts);
-
-            const hasSomeChartData = [
-                combinedGusts.length > 0,
-                combinedAvg.length > 0,
-            ].some(Boolean);
-
-            return {hasSomeChartData, gusts: combinedGusts, avg: combinedAvg};
-        },
-    ),
-    withProps({instanceKey: getWindowOr({innerWidth: 0}).innerWidth}),
-    withBrowserEvent(
-        getWindowOr(null),
-        "resize",
-        debounce(100, ({setProps}) =>
-            setProps({
-                instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
-            }),
-        ),
-    ),
-    pure,
-)(WindChartWrap);
-
-export default WindChartWrap;
+export default WindChartConnected;

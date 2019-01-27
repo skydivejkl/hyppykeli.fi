@@ -12,6 +12,10 @@ css.global(".color-black .react-spinner_bar", {
     backgroundColor: "black !important",
 });
 
+css.global(".color-red .react-spinner_bar", {
+    backgroundColor: "red !important",
+});
+
 var Spinner = simple(ReactSpinner, {
     width: "100% !important",
     height: "100% !important",
