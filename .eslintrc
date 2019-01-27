@@ -40,6 +40,7 @@
     "rules": {
         "react/prop-types": 0,
         "no-console": 0,
+        "react/no-deprecated": 0,
         "react/display-name": 0
     }
 }
