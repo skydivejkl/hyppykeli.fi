@@ -30,7 +30,12 @@
     },
     "plugins": ["react", "import"],
     "settings": {
-        "import/core-modules": ["react-simple"]
+        "import/core-modules": ["react-simple"],
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     },
     "rules": {
         "react/prop-types": 0,

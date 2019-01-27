@@ -2,13 +2,12 @@ import React from "react";
 import {Link} from "gatsby";
 import simple from "react-simple";
 
-import dropzones from "./dropzones";
-
 import {ParachutePlain} from "./Parachute";
 import BrowserTitle from "./BrowserTitle";
 import Cloud from "./Cloud";
 
 import {View} from "./core";
+import {Dropzones} from "../../DropzoneData";
 
 const ParachuteContainer = simple(View, {
     position: "fixed",
@@ -80,7 +79,7 @@ const FrontPage = () => (
         <Sep />
 
         <LinkListWrap>
-            {Object.keys(dropzones).map(dz => (
+            {Object.keys(Dropzones).map(dz => (
                 <DZLink key={dz} dz={dz}>
                     {dz}
                 </DZLink>

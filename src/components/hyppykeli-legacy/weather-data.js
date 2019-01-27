@@ -2,13 +2,12 @@ import React from "react";
 import {connectLean} from "lean-redux";
 import {Location} from "@reach/router";
 import {createSelector} from "reselect";
-import {compose, withProps} from "recompose";
+import {compose} from "recompose";
 import {getOr} from "lodash/fp";
 import u from "updeep";
 import axios from "axios";
 import parseMetar from "metar";
-
-import dropzones from "./dropzones";
+import {Dropzones} from "../../DropzoneData";
 
 const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 
@@ -57,7 +56,7 @@ function addDzProps(Component) {
         <Location>
             {router => {
                 const dz =
-                    dropzones[parseIcaocodeFromPath(router.location.pathname)];
+                    Dropzones[parseIcaocodeFromPath(router.location.pathname)];
                 return <Component {...props} dzProps={dz} />;
             }}
         </Location>
@@ -70,7 +69,6 @@ export const addWeatherData = compose(
         scope: "weatherData",
 
         mapState(state, props) {
-            console.log("gettin data for", props.dzProps.icaocode);
             return {
                 metars: selectMetars(state, props),
                 requestCount: state.requestCount,

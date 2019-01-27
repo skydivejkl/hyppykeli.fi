@@ -1,28 +1,14 @@
 const path = require("path");
 
-exports.onCreateNode = ({node}) => {
-    // console.log("wat", node.internal.type);
-};
+const dropzones = require("./dropzones.json");
 
-exports.createPages = async function({graphql, actions}) {
-    console.log("CREATE");
+exports.createPages = async function({actions}) {
     const {createPage} = actions;
-    const res = await graphql(`
-        {
-            site {
-                siteMetadata {
-                    dropzones {
-                        icaocode
-                    }
-                }
-            }
-        }
-    `);
 
-    for (const dz of res.data.site.siteMetadata.dropzones) {
+    for (const dz of Object.values(dropzones)) {
         createPage({
             path: "/dz/" + dz.icaocode,
-            component: path.resolve(`./src/templates/wp-page.tsx`),
+            component: path.resolve(`./src/templates/dz-page.tsx`),
             context: {icaocode: dz.icaocode},
         });
     }
