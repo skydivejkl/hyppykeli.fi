@@ -10,9 +10,9 @@ module.exports = {
             resolve: "gatsby-source-graphql",
             options: {
                 // This type will contain remote schema Query type
-                typeName: "DING",
+                typeName: "WP",
                 // This is field under which it's accessible
-                fieldName: "ding",
+                fieldName: "wp",
                 // Url to query from
                 url: "http://graphql.valudata-fi.test/graphql",
             },

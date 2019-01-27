@@ -11,7 +11,7 @@ export type FuckQuery = {
 
     site: Maybe<FuckSite>;
 
-    ding: Maybe<FuckDing>;
+    wp: Maybe<FuckWp>;
 };
 
 export type FuckSite = {
@@ -26,26 +26,26 @@ export type FuckSiteMetadata = {
     loljee: Maybe<string>;
 };
 
-export type FuckDing = {
-    __typename?: "DING";
+export type FuckWp = {
+    __typename?: "WP";
 
     pages: Maybe<FuckPages>;
 };
 
 export type FuckPages = {
-    __typename?: "DING_RootQueryToPageConnection";
+    __typename?: "WP_RootQueryToPageConnection";
 
     edges: Maybe<FuckEdges[]>;
 };
 
 export type FuckEdges = {
-    __typename?: "DING_RootQueryToPageConnectionEdge";
+    __typename?: "WP_RootQueryToPageConnectionEdge";
 
     node: Maybe<FuckNode>;
 };
 
 export type FuckNode = {
-    __typename?: "DING_Page";
+    __typename?: "WP_Page";
 
     title: Maybe<string>;
 };

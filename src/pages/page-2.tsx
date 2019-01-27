@@ -21,7 +21,7 @@ export const Fuck = gql`
                 loljee: title
             }
         }
-        ding {
+        wp {
             pages {
                 edges {
                     node {
