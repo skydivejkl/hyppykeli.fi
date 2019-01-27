@@ -7,7 +7,7 @@ import simple from "react-simple";
 import {View, Title, Sep} from "./core";
 import {withBrowserEvent, addSetTimeout, getWindowOr} from "./utils";
 import {addWeatherData} from "./weather-data";
-// import WindChart from "./WindChart";
+import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
 import BrowserTitle from "./BrowserTitle";
@@ -112,10 +112,7 @@ const Dz = ({dzProps}) => {
                     <Row>
                         <Title>Tuulihavainnot ja -ennusteet</Title>
                     </Row>
-                    {/* <WindChart /> */}
-                    {/* <Location>
-                        {loc => <pre>{JSON.stringify(loc, null, "    ")}</pre>}
-                    </Location> */}
+                    <WindChart />
 
                     <Sep />
                     <Sep />

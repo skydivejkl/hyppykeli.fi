@@ -8,6 +8,8 @@
         "@emotion/core": "^10.0.6",
         "@emotion/styled": "^10.0.6",
         "axios": "^0.18.0",
+        "chart.js": "^2.7.3",
+        "dayjs": "^1.8.0",
         "eslint": "^5.12.1",
         "eslint-config-prettier": "^4.0.0",
         "eslint-plugin-import": "^2.15.0",

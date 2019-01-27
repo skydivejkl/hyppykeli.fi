@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "chart.js";
+import dayjs from "dayjs";
 import {throttle, debounce, getOr, maxBy} from "lodash/fp";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
@@ -55,7 +56,7 @@ const PointValue = simple(
         transparent: {
             color: "transparent",
         },
-    }
+    },
 );
 
 const asFloat = i => parseFloat(i, 10);
@@ -192,7 +193,9 @@ class WindChart extends React.Component {
                             ticks: {
                                 callback: (value, index, values) => {
                                     if (values[index]) {
-                                        return values[index].format("HH:mm");
+                                        return dayjs(
+                                            values[index].value,
+                                        ).format("HH:mm");
                                     }
                                     return value;
                                 },
@@ -209,7 +212,7 @@ class WindChart extends React.Component {
                             const index = chartElement[0]._index;
                             this.throttledSetWindPoint(
                                 this.props.gusts[index],
-                                this.props.avg[index]
+                                this.props.avg[index],
                             );
                         }
                     },
@@ -264,7 +267,7 @@ const combineObsFore = (obs, avg) =>
                 .map(d => ({
                     ...d,
                     type: "forecast",
-                }))
+                })),
         );
 
 var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
@@ -294,7 +297,7 @@ WindChartWrap = compose(
             ].some(Boolean);
 
             return {hasSomeChartData, gusts: combinedGusts, avg: combinedAvg};
-        }
+        },
     ),
     withProps({instanceKey: getWindowOr({innerWidth: 0}).innerWidth}),
     withBrowserEvent(
@@ -303,10 +306,10 @@ WindChartWrap = compose(
         debounce(100, ({setProps}) =>
             setProps({
                 instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
-            })
-        )
+            }),
+        ),
     ),
-    pure
+    pure,
 )(WindChartWrap);
 
 export default WindChartWrap;
