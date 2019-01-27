@@ -279,7 +279,6 @@ var WindChartWrap = ({instanceKey, hasSomeChartData, ...props}) => (
                 <Spinner color="black" />
             </SpinnerContainer>
         )}
-        }
     </WindChartContainer>
 );
 WindChartWrap = compose(
