@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        ".cache": true,
+        "node_modules": true,
+        "public": true
+    }
+}

@@ -1,0 +1,9 @@
+overwrite: true
+schema: "http://localhost:8000/___graphql"
+documents: src/**/*.{ts,tsx}
+generates:
+    src/graphql-generated.ts:
+        - add:
+              - "export type Maybe<T> = T | null;"
+        - typescript-client:
+              noNamespaces: true
