@@ -15,10 +15,10 @@ const rotate = css.keyframes({
     "100%": {transform: "rotate(360deg)"},
 });
 
-const Parachute = simple(
+export const ParachutePlain = simple(
     View,
     {
-        background: "url(/parachute.svg)",
+        background: "url(https://hyppykeli.fi/parachute.svg)",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat !important",
         backgroundPosition: "center",
@@ -35,21 +35,21 @@ const Parachute = simple(
             animation: `${rotate} 1s linear infinite`,
             transformOrigin: "50% 15%",
         },
-    }
+    },
 );
 
 var ConnectedParachute = ({value}) => {
     // value = 8;
     var gust = parseFloat(value, 10);
     if (gust >= 11) {
-        return <Parachute rotate />;
+        return <ParachutePlain rotate />;
     }
 
     if (gust >= 8) {
-        return <Parachute swing />;
+        return <ParachutePlain swing />;
     }
 
-    return <Parachute />;
+    return <ParachutePlain />;
 };
 ConnectedParachute = addLatestGust(ConnectedParachute);
 

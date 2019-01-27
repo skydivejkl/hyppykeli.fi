@@ -1,6 +1,6 @@
 import React from "react";
 import simple from "react-simple";
-import {Link} from "react-router-dom";
+import {Link} from "gatsby";
 import BackArrowIcon_ from "react-icons/lib/fa/backward";
 
 import {View} from "./core";

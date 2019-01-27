@@ -1,14 +1,14 @@
+import React from "react";
 import {connectLean} from "lean-redux";
-import {withRouterProps} from "./utils";
+import {Location} from "@reach/router";
 import {createSelector} from "reselect";
-import {compose} from "recompose";
+import {compose, withProps} from "recompose";
 import {getOr} from "lodash/fp";
-import qs from "querystring";
 import u from "updeep";
 import axios from "axios";
 import parseMetar from "metar";
 
-import dropzones from "../dropzones";
+import dropzones from "./dropzones";
 
 const asLatLonPair = ({lat, lon}) => `${lat},${lon}`;
 
@@ -22,7 +22,6 @@ const parseFmiLatLon = s => {
         lon: parseFloat(lonS, 10),
     };
 };
-const wait = t => new Promise(r => setTimeout(r, t));
 
 const emptyArray = [];
 const emptyObject = {};
@@ -37,32 +36,41 @@ const selectMetars = createSelector(
                 ...parseMetar(raw),
             };
         });
-    }
+    },
 );
 
 const parseStationCoordinates = u({
     stationCoordinates: parseFmiLatLon,
 });
 
-export const addWeatherData = compose(
-    withRouterProps(router => {
-        var predifedProps = null;
-        if (router.match.params.dz) {
-            predifedProps = dropzones[router.match.params.dz];
-        }
+function parseIcaocodeFromPath(pathname) {
+    const match = /dz\/([a-zA-Z]{4})/.exec(pathname);
+    if (match) {
+        return match[1];
+    }
 
-        return {
-            dzProps: {
-                name: router.match.params.dz,
-                ...predifedProps,
-                ...qs.parse(router.location.search.slice(1)),
-            },
-        };
-    }),
+    throw new Error("bad DZ path: " + pathname);
+}
+
+function addDzProps(Component) {
+    return props => (
+        <Location>
+            {router => {
+                const dz =
+                    dropzones[parseIcaocodeFromPath(router.location.pathname)];
+                return <Component {...props} dzProps={dz} />;
+            }}
+        </Location>
+    );
+}
+
+export const addWeatherData = compose(
+    addDzProps,
     connectLean({
         scope: "weatherData",
 
         mapState(state, props) {
+            console.log("gettin data for", props.dzProps.icaocode);
             return {
                 metars: selectMetars(state, props),
                 requestCount: state.requestCount,
@@ -94,7 +102,7 @@ export const addWeatherData = compose(
         request(url) {
             this._inc();
 
-            return axios(url).then(
+            return axios("http://localhost:8080" + url).then(
                 res => {
                     this._dec();
                     return res;
@@ -102,7 +110,7 @@ export const addWeatherData = compose(
                 error => {
                     this._dec();
                     throw error;
-                }
+                },
             );
         },
 
@@ -111,7 +119,7 @@ export const addWeatherData = compose(
                 return this.request(
                     `/api/observations/${
                         this.props.dzProps.fmisid
-                    }/fi-1-1-windgust`
+                    }/fi-1-1-windgust`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -120,7 +128,7 @@ export const addWeatherData = compose(
                                     gusts: parseStationCoordinates(res.data),
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -133,7 +141,7 @@ export const addWeatherData = compose(
                 return this.request(
                     `/api/observations/${
                         this.props.dzProps.fmisid
-                    }/fi-1-1-windspeedms`
+                    }/fi-1-1-windspeedms`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -142,7 +150,7 @@ export const addWeatherData = compose(
                                     windAvg: parseStationCoordinates(res.data),
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -154,8 +162,8 @@ export const addWeatherData = compose(
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
                     `/api/forecasts/${asLatLonPair(
-                        this.props.dzProps
-                    )}/enn-s-1-1-windgust`
+                        this.props.dzProps,
+                    )}/enn-s-1-1-windgust`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -164,7 +172,7 @@ export const addWeatherData = compose(
                                     gustForecasts: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -176,8 +184,8 @@ export const addWeatherData = compose(
             if (this.props.dzProps.lat && this.props.dzProps.lon) {
                 return this.request(
                     `/api/forecasts/${asLatLonPair(
-                        this.props.dzProps
-                    )}/enn-s-1-1-windspeedms`
+                        this.props.dzProps,
+                    )}/enn-s-1-1-windspeedms`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -186,7 +194,7 @@ export const addWeatherData = compose(
                                     windAvgForecasts: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -197,7 +205,7 @@ export const addWeatherData = compose(
         fetchMetars() {
             if (this.props.dzProps.icaocode) {
                 return this.request(
-                    `/api/metars/${this.props.dzProps.icaocode}`
+                    `/api/metars/${this.props.dzProps.icaocode}`,
                 ).then(res => {
                     this.setState(
                         u({
@@ -206,7 +214,7 @@ export const addWeatherData = compose(
                                     metars: res.data,
                                 },
                             },
-                        })
+                        }),
                     );
                 });
             }
@@ -227,5 +235,5 @@ export const addWeatherData = compose(
                 this.fetchMetars();
             });
         },
-    })
+    }),
 );

@@ -1,0 +1,40 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "prettier",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        }
+    },
+    "env": {
+        "serviceworker": true,
+        "node": true,
+        "jest": true,
+        "browser": true
+    },
+    "globals": {
+        "Promise": true,
+        "ga": true,
+        "GIT_COMMIT_DATE": true,
+        "GIT_COMMIT_REV": true,
+        "GIT_COMMIT_MESSAGE": true
+    },
+    "plugins": ["react", "import"],
+    "settings": {
+        "import/core-modules": ["react-simple"]
+    },
+    "rules": {
+        "react/prop-types": 0,
+        "no-console": 0,
+        "react/display-name": 0
+    }
+}

@@ -9,24 +9,21 @@ exports.createPages = async function({graphql, actions}) {
     const {createPage} = actions;
     const res = await graphql(`
         {
-            wp {
-                pages {
-                    edges {
-                        node {
-                            pageId
-                            slug
-                        }
+            site {
+                siteMetadata {
+                    dropzones {
+                        icaocode
                     }
                 }
             }
         }
     `);
 
-    for (const edge of res.data.wp.pages.edges) {
+    for (const dz of res.data.site.siteMetadata.dropzones) {
         createPage({
-            path: edge.node.slug,
+            path: "/dz/" + dz.icaocode,
             component: path.resolve(`./src/templates/wp-page.tsx`),
-            context: {pageId: edge.node.pageId},
+            context: {icaocode: dz.icaocode},
         });
     }
 };

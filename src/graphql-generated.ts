@@ -4,6 +4,38 @@ export type Maybe<T> = T | null;
 // Documents
 // ====================================================
 
+export type DropzonesListVariables = {};
+
+export type DropzonesListQuery = {
+    __typename?: "Query";
+
+    site: Maybe<DropzonesListSite>;
+};
+
+export type DropzonesListSite = {
+    __typename?: "Site";
+
+    siteMetadata: Maybe<DropzonesListSiteMetadata>;
+};
+
+export type DropzonesListSiteMetadata = {
+    __typename?: "siteMetadata_2";
+
+    dropzones: Maybe<DropzonesListDropzones[]>;
+};
+
+export type DropzonesListDropzones = {
+    __typename?: "dropzones_2";
+
+    icaocode: Maybe<string>;
+
+    lat: Maybe<number>;
+
+    lon: Maybe<number>;
+
+    fmisid: Maybe<number>;
+};
+
 export type FuckVariables = {};
 
 export type FuckQuery = {
@@ -48,4 +80,36 @@ export type FuckNode = {
     __typename?: "WP_Page";
 
     title: Maybe<string>;
+};
+
+export type DropzonesVariables = {};
+
+export type DropzonesQuery = {
+    __typename?: "Query";
+
+    site: Maybe<DropzonesSite>;
+};
+
+export type DropzonesSite = {
+    __typename?: "Site";
+
+    siteMetadata: Maybe<DropzonesSiteMetadata>;
+};
+
+export type DropzonesSiteMetadata = {
+    __typename?: "siteMetadata_2";
+
+    dropzones: Maybe<DropzonesDropzones[]>;
+};
+
+export type DropzonesDropzones = {
+    __typename?: "dropzones_2";
+
+    icaocode: Maybe<string>;
+
+    lat: Maybe<number>;
+
+    lon: Maybe<number>;
+
+    fmisid: Maybe<number>;
 };

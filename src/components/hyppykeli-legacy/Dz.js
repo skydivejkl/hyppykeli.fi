@@ -1,5 +1,4 @@
 import React from "react";
-import store from "store";
 import {pure, compose, lifecycle, withPropsOnChange} from "recompose";
 import {throttle} from "lodash/fp";
 const throttleWithOptions = throttle.convert({fixed: false});
@@ -8,7 +7,7 @@ import simple from "react-simple";
 import {View, Title, Sep} from "./core";
 import {withBrowserEvent, addSetTimeout, getWindowOr} from "./utils";
 import {addWeatherData} from "./weather-data";
-import WindChart from "./WindChart";
+// import WindChart from "./WindChart";
 import LatestClouds from "./LatestClouds";
 import {LatestGust, LatestWindAvg} from "./LatestWindReadings";
 import BrowserTitle from "./BrowserTitle";
@@ -74,15 +73,15 @@ const NoClouds = simple(View, {
     textAlign: "center",
 });
 
-var Dz = ({dzProps}) => {
+const Dz = ({dzProps}) => {
     return (
         <View>
-            <BrowserTitle title={dzProps.name} />
+            <BrowserTitle title={dzProps.icaocode} />
             <Header>
                 <Background>
                     <CloudContainer>
                         <Cloud>
-                            <CloudText>{dzProps.name}</CloudText>
+                            <CloudText>{dzProps.icaocode}</CloudText>
                         </Cloud>
                     </CloudContainer>
                     <ParachuteContainer>
@@ -113,7 +112,10 @@ var Dz = ({dzProps}) => {
                     <Row>
                         <Title>Tuulihavainnot ja -ennusteet</Title>
                     </Row>
-                    <WindChart />
+                    {/* <WindChart /> */}
+                    {/* <Location>
+                        {loc => <pre>{JSON.stringify(loc, null, "    ")}</pre>}
+                    </Location> */}
 
                     <Sep />
                     <Sep />
@@ -127,7 +129,7 @@ var Dz = ({dzProps}) => {
         </View>
     );
 };
-Dz = compose(
+const DzConnected = compose(
     addWeatherData,
     withPropsOnChange(["fetchAllWeatherData"], props => {
         const throttledRefresh = throttleWithOptions(
@@ -136,7 +138,7 @@ Dz = compose(
                 console.log("ACTUAL REFRESH");
                 props.fetchAllWeatherData();
             },
-            {trailing: false}
+            {trailing: false},
         );
 
         return {
@@ -152,11 +154,6 @@ Dz = compose(
     addSetTimeout,
     lifecycle({
         componentDidMount() {
-            store.set(
-                "previous",
-                window.location.pathname + window.location.search
-            );
-
             this.props.fetchAllWeatherData({force: true});
 
             const scheduleRefresh = () => {
@@ -181,7 +178,7 @@ Dz = compose(
             props.throttledRefresh();
         }
     }),
-    pure
+    pure,
 )(Dz);
 
-export default Dz;
+export default DzConnected;

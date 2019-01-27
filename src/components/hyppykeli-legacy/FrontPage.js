@@ -1,11 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link} from "gatsby";
 import simple from "react-simple";
-import qs from "querystring";
 
-import dropzones from "../dropzones";
+import dropzones from "./dropzones";
 
-import Parachute from "./Parachute";
+import {ParachutePlain} from "./Parachute";
 import BrowserTitle from "./BrowserTitle";
 import Cloud from "./Cloud";
 
@@ -70,7 +69,7 @@ const FrontPage = () => (
     <Center>
         <BrowserTitle full title="Hyppykeli.fi" />
         <ParachuteContainer>
-            <Parachute />
+            <ParachutePlain />
         </ParachuteContainer>
 
         <Sep />
