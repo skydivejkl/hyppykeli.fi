@@ -2,7 +2,7 @@ const {parse, format} = require("url");
 const qs = require("querystring");
 const {parseString} = require("xml2js");
 const axios = require("axios");
-const moment = require("moment");
+const moment = require("dayjs");
 
 const extendUrlQuery = (url, query) => {
     const o = parse(url, true);

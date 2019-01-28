@@ -1,6 +1,6 @@
 const router = require("koa-router")();
 const {get} = require("lodash/fp");
-const moment = require("moment");
+const moment = require("dayjs");
 
 const {fmiRequest} = require("./utils");
 
