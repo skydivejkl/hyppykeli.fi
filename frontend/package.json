@@ -1,9 +1,6 @@
 {
-    "name": "gatsby-starter-default",
+    "name": "hyppykeli.fi",
     "private": true,
-    "description": "A simple starter to get up and developing quickly with Gatsby",
-    "version": "0.1.0",
-    "author": "Kyle Mathews <mathews.kyle@gmail.com>",
     "dependencies": {
         "@emotion/core": "^10.0.6",
         "@emotion/styled": "^10.0.6",
@@ -48,10 +45,6 @@
         "typescript": "^3.2.4",
         "updeep": "^1.1.0"
     },
-    "keywords": [
-        "gatsby"
-    ],
-    "license": "MIT",
     "browserslist": [
         "last 2 chrome versions"
     ],
@@ -63,7 +56,6 @@
         "develop": "gatsby develop",
         "start": "npm run develop",
         "format": "prettier --write \"src/**/*.js\"",
-        "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
         "codegen": "gql-gen --config codegen.yml"
     },
     "devDependencies": {
@@ -71,12 +63,5 @@
         "graphql-codegen-typescript-react-apollo": "0.16.0",
         "prettier": "^1.16.1",
         "tslint": "^5.12.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-    },
-    "bugs": {
-        "url": "https://github.com/gatsbyjs/gatsby/issues"
     }
 }
