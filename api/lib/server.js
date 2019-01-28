@@ -24,12 +24,17 @@ app.use((ctx, next) => {
 
 const started = new Date();
 
-router.get("/uptime", ctx => {
+router.get("/api/uptime", ctx => {
     ctx.type = "text/html";
     ctx.body = started.toString();
 });
 
-router.get("/stats", ctx => {
+router.get("/api/hello", ctx => {
+    ctx.type = "text/html";
+    ctx.body = "hello1";
+});
+
+router.get("/api/stats", ctx => {
     ctx.body = fmiStats;
 });
 
