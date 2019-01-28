@@ -100,7 +100,7 @@ export const addWeatherData = compose(
         request(url) {
             this._inc();
 
-            return axios("http://localhost:8080" + url).then(
+            return axios(url).then(
                 res => {
                     this._dec();
                     return res;

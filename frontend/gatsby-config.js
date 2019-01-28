@@ -2,6 +2,10 @@ module.exports = {
     siteMetadata: {
         title: "Hyppykeli",
     },
+    proxy: {
+        prefix: "/api",
+        url: "http://localhost:" + (process.env.API_PORT || 32944),
+    },
     plugins: [
         "gatsby-plugin-lodash",
         "gatsby-plugin-glamor",
