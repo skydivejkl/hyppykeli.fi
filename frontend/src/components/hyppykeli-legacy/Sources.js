@@ -171,6 +171,8 @@ var Sources = ({
                     <GithubIcon />
                 </Link>
             </SourceText>
+
+            <SourceText>2019 version</SourceText>
         </SourcesContent>
     </SourcesContainer>
 );
