@@ -57,6 +57,7 @@
     ],
     "scripts": {
         "build": "gatsby build",
+        "deploy": "rsync -Pah public/ hyppykeli@hyppykeli.fi:/apps/hyppykeli/hyppykeli.fi-gatsby",
         "analyze": "sh -c 'ANALYZE=1 gatsby build'",
         "serve": "gatsby serve",
         "develop": "gatsby develop",
