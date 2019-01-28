@@ -1,5 +1,5 @@
 import React from "react";
-import simple, {css} from "react-simple";
+import simple from "react-simple";
 import {compose, withHandlers} from "recompose";
 
 import Spinner from "./Spinner";
@@ -56,11 +56,10 @@ RefreshButton = compose(
     withHandlers({
         refresh: props => e => {
             e.preventDefault();
-            ga("send", "event", "Refresh", "manual-button");
             props.clearWeatherData();
             props.fetchAllWeatherData();
         },
-    })
+    }),
 )(RefreshButton);
 
 export default addWeatherData(RefreshButton);
