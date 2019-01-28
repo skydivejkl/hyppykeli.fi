@@ -41,6 +41,11 @@ const combineObsFore = (obs, avg) =>
                 })),
         );
 
+const ScrollInfo = simple(View, {
+    textAlign: "center",
+    marginTop: 25,
+});
+
 var WindChartLazy = ({instanceKey, hasSomeChartData, ...props}) => {
     const [show, setShow] = useState(false);
 
@@ -63,7 +68,7 @@ var WindChartLazy = ({instanceKey, hasSomeChartData, ...props}) => {
     return (
         <OnVisible percent={80} onChange={handleOnVisible}>
             <WindChartContainer>
-                {show && (
+                {show ? (
                     <Suspense
                         fallback={
                             <SpinnerContainer>
@@ -73,6 +78,8 @@ var WindChartLazy = ({instanceKey, hasSomeChartData, ...props}) => {
                     >
                         <WindChart key={instanceKey} {...props} />
                     </Suspense>
+                ) : (
+                    <ScrollInfo>Skrollaa alemmaksi!</ScrollInfo>
                 )}
             </WindChartContainer>
         </OnVisible>
