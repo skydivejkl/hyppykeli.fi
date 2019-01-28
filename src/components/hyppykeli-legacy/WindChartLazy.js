@@ -1,14 +1,17 @@
-import React, {Suspense} from "react";
-import {debounce, getOr, maxBy} from "lodash/fp";
+import React, {Suspense, useState} from "react";
+import {debounce, getOr} from "lodash/fp";
 import {withProps, withPropsOnChange, compose, pure} from "recompose";
 import simple from "react-simple";
+import OnVisible from "react-on-visible";
 
 import {addWeatherData} from "./weather-data";
 import {withBrowserEvent, getWindowOr} from "./utils";
 import {View} from "./core";
 import Spinner from "./Spinner";
 
-const WindChart = React.lazy(() => import("./WindChart"));
+const WindChart = React.lazy(() =>
+    import(/* webpackPrefetch: true */ "./WindChart"),
+);
 
 const getPoints = getOr([], ["points"]);
 
@@ -38,25 +41,43 @@ const combineObsFore = (obs, avg) =>
                 })),
         );
 
-var WindChartLazy = ({instanceKey, hasSomeChartData, ...props}) => (
-    <WindChartContainer>
-        {hasSomeChartData ? (
-            <Suspense
-                fallback={
-                    <SpinnerContainer>
-                        <Spinner color="red" />
-                    </SpinnerContainer>
-                }
-            >
-                <WindChart key={instanceKey} {...props} />
-            </Suspense>
-        ) : (
-            <SpinnerContainer>
-                <Spinner color="black" />
-            </SpinnerContainer>
-        )}
-    </WindChartContainer>
-);
+var WindChartLazy = ({instanceKey, hasSomeChartData, ...props}) => {
+    const [show, setShow] = useState(false);
+
+    const handleOnVisible = visible => {
+        if (visible) {
+            setShow(true);
+        }
+    };
+
+    if (!hasSomeChartData) {
+        return (
+            <WindChartContainer>
+                <SpinnerContainer>
+                    <Spinner color="black" />
+                </SpinnerContainer>
+            </WindChartContainer>
+        );
+    }
+
+    return (
+        <OnVisible percent={80} onChange={handleOnVisible}>
+            <WindChartContainer>
+                {show && (
+                    <Suspense
+                        fallback={
+                            <SpinnerContainer>
+                                <Spinner color="red" />
+                            </SpinnerContainer>
+                        }
+                    >
+                        <WindChart key={instanceKey} {...props} />
+                    </Suspense>
+                )}
+            </WindChartContainer>
+        </OnVisible>
+    );
+};
 WindChartLazy = compose(
     addWeatherData,
     withPropsOnChange(
