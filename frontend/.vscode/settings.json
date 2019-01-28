@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        ".cache": true,
+        "node_modules": true,
+        "public": true
+    },
+    "editor.formatOnSave": true,
+    "tslint.autoFixOnSave": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
+}

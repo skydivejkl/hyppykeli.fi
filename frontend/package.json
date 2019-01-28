@@ -1,0 +1,81 @@
+{
+    "name": "gatsby-starter-default",
+    "private": true,
+    "description": "A simple starter to get up and developing quickly with Gatsby",
+    "version": "0.1.0",
+    "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+    "dependencies": {
+        "@emotion/core": "^10.0.6",
+        "@emotion/styled": "^10.0.6",
+        "axios": "^0.18.0",
+        "chart.js": "^2.7.3",
+        "dayjs": "^1.8.0",
+        "eslint": "^5.12.1",
+        "eslint-config-prettier": "^4.0.0",
+        "eslint-plugin-import": "^2.15.0",
+        "gatsby": "^2.0.76",
+        "gatsby-image": "^2.0.20",
+        "gatsby-plugin-emotion": "^4.0.1",
+        "gatsby-plugin-glamor": "^2.0.7",
+        "gatsby-plugin-lodash": "^3.0.3",
+        "gatsby-plugin-manifest": "^2.0.9",
+        "gatsby-plugin-offline": "^2.0.16",
+        "gatsby-plugin-react-helmet": "^3.0.2",
+        "gatsby-plugin-sharp": "^2.0.14",
+        "gatsby-plugin-typescript": "^2.0.3",
+        "gatsby-plugin-webpack-bundle-analyzer": "^1.0.4",
+        "gatsby-source-filesystem": "^2.0.8",
+        "gatsby-source-graphql": "^2.0.8",
+        "gatsby-transformer-sharp": "^2.1.8",
+        "gps-distance": "0.0.4",
+        "graphql-code-generator": "^0.16.0",
+        "graphql-codegen-add": "^0.16.0",
+        "graphql-codegen-typescript-client": "^0.16.0",
+        "graphql-codegen-typescript-template": "^0.16.0",
+        "lean-redux": "^3.3.1",
+        "lodash": "^4.17.11",
+        "metar": "^1.0.0",
+        "prop-types": "^15.6.2",
+        "react": "^16.8.0-alpha.1",
+        "react-dom": "^16.8.0-alpha.1",
+        "react-helmet": "^5.2.0",
+        "react-icons": "^2.2.7",
+        "react-on-visible": "^1.6.0",
+        "react-simple": "^1.2.3",
+        "react-spinner": "^0.2.7",
+        "recompose": "^0.30.0",
+        "reselect": "^4.0.0",
+        "typescript": "^3.2.4",
+        "updeep": "^1.1.0"
+    },
+    "keywords": [
+        "gatsby"
+    ],
+    "license": "MIT",
+    "browserslist": [
+        "last 2 chrome versions"
+    ],
+    "scripts": {
+        "build": "gatsby build",
+        "analyze": "sh -c 'ANALYZE=1 gatsby build'",
+        "serve": "gatsby serve",
+        "develop": "gatsby develop",
+        "start": "npm run develop",
+        "format": "prettier --write \"src/**/*.js\"",
+        "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+        "codegen": "gql-gen --config codegen.yml"
+    },
+    "devDependencies": {
+        "graphql-codegen-typescript-common": "0.16.0",
+        "graphql-codegen-typescript-react-apollo": "0.16.0",
+        "prettier": "^1.16.1",
+        "tslint": "^5.12.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    },
+    "bugs": {
+        "url": "https://github.com/gatsbyjs/gatsby/issues"
+    }
+}

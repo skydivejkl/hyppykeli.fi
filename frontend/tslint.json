@@ -1,0 +1,26 @@
+{
+    "rules": {
+        "no-shadowed-variable": true,
+        "prefer-const": true,
+        "no-namespace": true,
+        "no-debugger": true,
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-for-in-array": true,
+        "no-unused-expression": true,
+        "triple-equals": true,
+        "no-duplicate-imports": true,
+        "class-name": true,
+        "no-var-requires": true,
+        "prefer-for-of": true,
+        "no-conditional-assignment": true,
+        "no-duplicate-super": true,
+        "no-duplicate-switch-case": true,
+        "ordered-imports": [
+            true,
+            {
+                "grouped-imports": true
+            }
+        ]
+    }
+}
