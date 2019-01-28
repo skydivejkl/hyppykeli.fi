@@ -16,7 +16,12 @@ const fmi = require("./fmi");
 const h2push = require("./h2push");
 
 app.use((ctx, next) => {
-    ctx.state.fmiApikey = config.fmiApikey;
+    ctx.state.fmiApikey = process.env.FMI_API_KEY;
+
+    if (ctx.state.fmiApikey) {
+        console.error("FMI_API_KEY not defined");
+    }
+
     return next();
 });
 
