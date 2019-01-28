@@ -7,7 +7,8 @@
         "start": "node lib/server.js",
         "build": "pkg -t node10-linux -o hyppykeli-api lib/server.js",
         "upload": "rsync -Pah hyppykeli-api hyppykeli@hyppykeli.fi:/apps/hyppykeli/hyppykeli-api",
-        "deploy": "npm run build && npm run upload"
+        "restart": "ssh hyppykeli@hyppykeli.fi systemctl --user restart hyppykeli-api.service",
+        "deploy": "npm run build && npm run upload && npm run restart"
     },
     "author": "",
     "license": "ISC",
