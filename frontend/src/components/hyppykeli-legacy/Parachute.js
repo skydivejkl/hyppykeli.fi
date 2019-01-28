@@ -18,7 +18,7 @@ const rotate = css.keyframes({
 export const ParachutePlain = simple(
     View,
     {
-        background: "url(https://hyppykeli.fi/parachute.svg)",
+        background: "url(/parachute.svg)",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat !important",
         backgroundPosition: "center",
