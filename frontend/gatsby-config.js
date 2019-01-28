@@ -49,11 +49,11 @@ module.exports = {
         {
             resolve: "gatsby-plugin-manifest",
             options: {
-                name: "gatsby-starter-default",
-                short_name: "starter",
+                name: "Hyppykeli.fi",
+                short_name: "Hyppykeli.fi",
                 start_url: "/",
-                background_color: "#663399",
-                theme_color: "#663399",
+                background_color: "skyblue",
+                theme_color: "skyblue",
                 display: "minimal-ui",
                 icon: "src/images/parachute-icon.png", // This path is relative to the root of the site.
             },
