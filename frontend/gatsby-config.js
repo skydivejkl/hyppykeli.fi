@@ -19,17 +19,6 @@ module.exports = {
               }
             : null,
         {
-            resolve: "gatsby-source-graphql",
-            options: {
-                // This type will contain remote schema Query type
-                typeName: "WP",
-                // This is field under which it's accessible
-                fieldName: "wp",
-                // Url to query from
-                url: "http://graphql.valudata-fi.test/graphql",
-            },
-        },
-        {
             resolve: `gatsby-plugin-emotion`,
             options: {
                 // Accepts all options defined by `babel-plugin-emotion` plugin.
