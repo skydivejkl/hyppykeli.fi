@@ -2,7 +2,7 @@ import React from "react";
 import {compose, mapProps} from "recompose";
 import simple from "react-simple";
 import {last, isEmpty} from "lodash/fp";
-import Bolt_ from "react-icons/lib/fa/bolt";
+import {FaBolt as Bolt_} from "react-icons/fa";
 
 import {addWeatherData} from "./weather-data";
 import {View, Note} from "./core";
@@ -114,7 +114,7 @@ var LatestClouds = ({metar}) => {
                         <Cloud key={i}>
                             {cloud.cumulonimbus && <Bolt title="Ukkospilvi!" />}
                             {`${getHumanMeaning(
-                                cloud.abbreviation
+                                cloud.abbreviation,
                             )} ${altText}`}
                         </Cloud>
                     );
@@ -129,7 +129,7 @@ LatestClouds = compose(
     addWeatherData,
     mapProps(({metars}) => {
         return {metar: last(metars)};
-    })
+    }),
 )(LatestClouds);
 
 export default LatestClouds;

@@ -1,7 +1,7 @@
 import React from "react";
 import simple from "react-simple";
 import {last} from "lodash/fp";
-import GithubIcon_ from "react-icons/lib/fa/github";
+import {FaGithub as GithubIcon_} from "react-icons/fa";
 import {defaultProps} from "recompose";
 
 import {gpsDistance} from "./utils";

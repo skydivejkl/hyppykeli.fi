@@ -7,10 +7,11 @@ import {View} from "./core";
 import * as colors from "./colors";
 
 import {addWeatherData} from "./weather-data";
-import RefreshIcon_ from "react-icons/lib/fa/refresh";
+import {FaSyncAlt as RefreshIcon_} from "react-icons/fa";
 
 const RefreshIcon = simple(View.create(RefreshIcon_), {
     color: colors.gray,
+    padding: 5,
     width: "100%",
     height: "100%",
 });

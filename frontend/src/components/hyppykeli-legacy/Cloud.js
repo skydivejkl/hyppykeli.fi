@@ -1,10 +1,10 @@
 import React from "react";
 import simple from "react-simple";
-import CloudFa from "react-icons/lib/fa/cloud";
+import {FaCloud} from "react-icons/fa";
 
 import {View} from "./core";
 
-const CloudFlex = simple(View.create(CloudFa), {
+const CloudFlex = simple(View.create(FaCloud), {
     color: "white",
     height: "100%",
     width: "100%",

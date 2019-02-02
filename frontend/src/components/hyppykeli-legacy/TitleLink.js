@@ -1,7 +1,7 @@
 import React from "react";
 import simple from "react-simple";
 import {Link} from "gatsby";
-import BackArrowIcon_ from "react-icons/lib/fa/backward";
+import {FaBackward as BackArrowIcon_} from "react-icons/fa";
 
 import {View} from "./core";
 import * as colors from "./colors";
