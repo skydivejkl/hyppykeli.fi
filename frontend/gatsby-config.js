@@ -8,7 +8,6 @@ module.exports = {
     },
     plugins: [
         "gatsby-plugin-lodash",
-        "gatsby-plugin-glamor",
         process.env.ANALYZE
             ? {
                   resolve: "gatsby-plugin-webpack-bundle-analyzer",

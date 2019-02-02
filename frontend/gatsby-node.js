@@ -13,3 +13,13 @@ exports.createPages = async function({actions}) {
         });
     }
 };
+
+exports.onCreateWebpackConfig = function(gatsby) {
+    gatsby.actions.setWebpackConfig({
+        resolve: {
+            alias: {
+                "react-simple": __dirname + "/src/simple.js",
+            },
+        },
+    });
+};
