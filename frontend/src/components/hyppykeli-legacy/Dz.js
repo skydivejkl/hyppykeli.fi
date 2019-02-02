@@ -43,9 +43,9 @@ const Row = simple(View, {
 
 const CloudContainer = simple(View, {
     position: "absolute",
-    top: -40,
+    top: -20,
     width: "100%",
-    height: 240,
+    height: 200,
     left: 0,
     right: 0,
 });
