@@ -1,22 +1,32 @@
 import React from "react";
-import simple, {css} from "react-simple";
+import styled from "@emotion/styled";
+import {keyframes} from "@emotion/core";
 
 import {View} from "./core";
 import {addLatestGust} from "./LatestWindReadings";
 
-const swing = css.keyframes({
-    "0%": {transform: "rotate(30deg)"},
-    "50%": {transform: "rotate(-30deg)"},
-    "100%": {transform: "rotate(30deg)"},
-});
+const swing = keyframes`
+    0% {
+        transform: rotate(30deg);
+    }
+    50% {
+        transform: rotate(-30deg);
+    }
+    100% {
+        transform: rotate(30deg);
+    }
+`;
 
-const rotate = css.keyframes({
-    "0%": {transform: "rotate(0deg)"},
-    "100%": {transform: "rotate(360deg)"},
-});
+const rotate = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`;
 
-export const ParachutePlain = simple(
-    View,
+export const ParachutePlain = styled(View)(
     {
         background: "url(/parachute.svg)",
         backgroundSize: "contain",
@@ -26,15 +36,22 @@ export const ParachutePlain = simple(
         marginTop: 10,
         opacity: 0.08,
     },
-    {
-        swing: {
-            animation: `${swing} 2s ease-in-out infinite`,
-            transformOrigin: "50% 0%",
-        },
-        rotate: {
-            animation: `${rotate} 1s linear infinite`,
-            transformOrigin: "50% 15%",
-        },
+    props => {
+        if (props.swing) {
+            return {
+                animation: `${swing} 2s ease-in-out infinite`,
+                transformOrigin: "50% 0%",
+            };
+        }
+
+        if (props.rotate) {
+            return {
+                animation: `${rotate} 1s linear infinite`,
+                transformOrigin: "50% 15%",
+            };
+        }
+
+        return {};
     },
 );
 
