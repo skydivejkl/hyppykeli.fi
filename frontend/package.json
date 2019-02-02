@@ -23,7 +23,6 @@
         "gatsby-source-filesystem": "^2.0.8",
         "gatsby-source-graphql": "^2.0.8",
         "gatsby-transformer-sharp": "^2.1.8",
-        "glamor": "^2.20.40",
         "gps-distance": "0.0.4",
         "graphql-code-generator": "^0.16.0",
         "graphql-codegen-add": "^0.16.0",
