@@ -1,7 +1,6 @@
 import React from "react";
+import {throttle} from "lodash-es";
 import {pure, compose, lifecycle, withPropsOnChange} from "recompose";
-import {throttle} from "lodash/fp";
-const throttleWithOptions = throttle.convert({fixed: false});
 import simple from "react-simple";
 
 import {View, Title, Sep} from "./core";
@@ -130,12 +129,12 @@ const Dz = ({dzProps}) => {
 const DzConnected = compose(
     addWeatherData,
     withPropsOnChange(["fetchAllWeatherData"], props => {
-        const throttledRefresh = throttleWithOptions(
-            1000 * 60,
+        const throttledRefresh = throttle(
             () => {
                 console.log("ACTUAL REFRESH");
                 props.fetchAllWeatherData();
             },
+            1000 * 60,
             {trailing: false},
         );
 

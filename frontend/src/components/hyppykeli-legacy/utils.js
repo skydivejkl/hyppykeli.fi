@@ -1,5 +1,5 @@
 import React from "react";
-import {values, omit} from "lodash/fp";
+import {values, omit} from "lodash-es";
 import dayjs from "dayjs";
 import gpsDistanceKm from "gps-distance";
 
@@ -63,7 +63,7 @@ export function addSetTimeout(Component) {
         setTimeout(cb, t) {
             const i = this.counter++;
             const wrap = () => {
-                this.timeouts = omit(i, this.timeouts);
+                this.timeouts = omit(this.timeouts, i);
                 cb();
             };
 

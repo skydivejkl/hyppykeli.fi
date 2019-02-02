@@ -3,7 +3,7 @@ import {connectLean} from "lean-redux";
 import {Location} from "@reach/router";
 import {createSelector} from "reselect";
 import {compose} from "recompose";
-import {getOr} from "lodash/fp";
+import {get} from "lodash-es";
 import u from "updeep";
 import axios from "axios";
 import parseMetar from "metar";
@@ -27,7 +27,7 @@ const emptyObject = {};
 
 const selectMetars = createSelector(
     (state, props) =>
-        getOr(emptyArray, ["data", props.dzProps.icaocode, "metars"], state),
+        get(state, ["data", props.dzProps.icaocode, "metars"]) || emptyArray,
     metars => {
         return metars.map(raw => {
             return {

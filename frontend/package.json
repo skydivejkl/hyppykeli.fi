@@ -29,7 +29,7 @@
         "graphql-codegen-typescript-client": "^0.16.0",
         "graphql-codegen-typescript-template": "^0.16.0",
         "lean-redux": "^3.3.1",
-        "lodash": "^4.17.11",
+        "lodash-es": "^4.17.11",
         "metar": "^1.0.0",
         "prop-types": "^15.6.2",
         "react": "^16.8.0-alpha.1",

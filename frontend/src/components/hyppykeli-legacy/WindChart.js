@@ -1,7 +1,7 @@
 import React from "react";
 import Chart from "chart.js";
 import dayjs from "dayjs";
-import {throttle, debounce, maxBy} from "lodash/fp";
+import {throttle, debounce, maxBy} from "lodash-es";
 import {connectLean} from "lean-redux";
 import {connect} from "react-redux";
 import simple from "react-simple";
@@ -9,7 +9,7 @@ import simple from "react-simple";
 import {fromNowWithClock} from "./utils";
 import {GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 
-const getLongestArray = maxBy(a => a.length);
+const getLongestArray = arr => maxBy(arr, a => a.length);
 
 const Row = simple(View, {
     marginTop: 10,
@@ -159,8 +159,8 @@ class WindChart extends React.Component {
     }
 
     componentDidMount() {
-        this.throttledSetWindPoint = throttle(200, this.props.setWindPoint);
-        this.debouncedChartUpdate = debounce(400, this.updateChart.bind(this));
+        this.throttledSetWindPoint = throttle(this.props.setWindPoint, 200);
+        this.debouncedChartUpdate = debounce(this.updateChart.bind(this), 400);
 
         this.chart = new Chart(this.canvas, {
             type: "line",

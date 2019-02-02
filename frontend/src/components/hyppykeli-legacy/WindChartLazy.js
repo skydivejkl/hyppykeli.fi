@@ -1,5 +1,5 @@
 import React, {Suspense, useState} from "react";
-import {debounce, getOr} from "lodash/fp";
+import {debounce} from "lodash-es";
 import {withProps, withPropsOnChange, compose, pure} from "recompose";
 import simple from "react-simple";
 import OnVisible from "react-on-visible";
@@ -13,7 +13,7 @@ const WindChart = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./WindChart"),
 );
 
-const getPoints = getOr([], ["points"]);
+const getPoints = data => (data && data.points) || [];
 
 const WindChartContainer = simple(View, {
     width: "100%",
@@ -106,11 +106,11 @@ WindChartLazy = compose(
     withBrowserEvent(
         getWindowOr(null),
         "resize",
-        debounce(100, ({setProps}) =>
-            setProps({
+        debounce(({setProps}) => {
+            return setProps({
                 instanceKey: getWindowOr({innerWidth: 0}).innerWidth,
-            }),
-        ),
+            });
+        }, 100),
     ),
     pure,
 )(WindChartLazy);

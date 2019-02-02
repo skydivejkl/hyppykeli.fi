@@ -1,7 +1,7 @@
 import React from "react";
 import {compose, mapProps} from "recompose";
 import simple from "react-simple";
-import {last, isEmpty} from "lodash/fp";
+import {last, isEmpty} from "lodash-es";
 import {FaBolt as Bolt_} from "react-icons/fa";
 
 import {addWeatherData} from "./weather-data";

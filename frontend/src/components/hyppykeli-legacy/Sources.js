@@ -1,6 +1,6 @@
 import React from "react";
 import simple from "react-simple";
-import {last} from "lodash/fp";
+import {last} from "lodash-es";
 import {FaGithub as GithubIcon_} from "react-icons/fa";
 import {defaultProps} from "recompose";
 

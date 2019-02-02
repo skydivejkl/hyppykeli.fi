@@ -2,14 +2,15 @@ import React from "react";
 
 import Spinner from "./Spinner";
 import {compose, mapProps} from "recompose";
-import {findLast} from "lodash/fp";
+import {findLast} from "lodash-es";
 import simple from "react-simple";
 
 import {Note, GUST_LIMIT, GUST_LIMIT_B, View} from "./core";
 import {fromNowWithClock, gpsDistance} from "./utils";
 import {addWeatherData} from "./weather-data";
 
-const findLatestProperValue = findLast(point => !isNaN(point.value));
+const findLatestProperValue = arr =>
+    findLast(arr, point => !isNaN(point.value));
 
 const DISTANCE_WARN_THRESHOLD = 5;
 
@@ -91,7 +92,7 @@ LatestGust = compose(
         }
 
         return {...gust, distance};
-    })
+    }),
 )(LatestGust);
 
 export var LatestWindAvg = ({time, value, distance, difference, gust}) => (
@@ -133,7 +134,7 @@ LatestWindAvg = compose(
             gust: gust ? gust.value : 0,
             difference,
         };
-    })
+    }),
 )(LatestWindAvg);
 
 export const addLatestGust = compose(
@@ -143,5 +144,5 @@ export const addLatestGust = compose(
             return findLatestProperValue(gusts.points);
         }
         return {value: 0};
-    })
+    }),
 );
