@@ -19,6 +19,7 @@ exports.onCreateWebpackConfig = function(gatsby) {
         resolve: {
             alias: {
                 "react-simple": __dirname + "/src/simple.js",
+                "lodash-es": "lodash",
             },
         },
     });
