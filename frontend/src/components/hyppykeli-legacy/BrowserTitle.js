@@ -1,16 +1,14 @@
-import {pure} from "recompose";
+import React from "react";
+import {Helmet} from "react-helmet";
 
-var BrowserTitle = ({title, full}) => {
-    if (typeof document === "undefined") {
-        return null;
-    }
-
-    if (full) {
-        document.title = title;
-    } else {
-        document.title = title + " | Hyppykeli.fi";
-    }
-    return null;
+var BrowserTitle = props => {
+    return (
+        <Helmet>
+            <title>
+                {props.full ? props.title : props.title + " | Hyppykeli.fi"}
+            </title>
+        </Helmet>
+    );
 };
 
-export default pure(BrowserTitle);
+export default React.memo(BrowserTitle);
