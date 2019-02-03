@@ -39,7 +39,7 @@ module.exports = {
             options: {
                 name: "Hyppykeli.fi",
                 short_name: "Hyppykeli.fi",
-                start_url: "/",
+                start_url: "/pwa-start",
                 background_color: "skyblue",
                 theme_color: "skyblue",
                 display: "minimal-ui",

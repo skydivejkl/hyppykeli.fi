@@ -28,6 +28,7 @@
         "graphql-codegen-add": "^0.16.0",
         "graphql-codegen-typescript-client": "^0.16.0",
         "graphql-codegen-typescript-template": "^0.16.0",
+        "idb-keyval": "^3.1.0",
         "lean-redux": "^3.3.1",
         "lodash-es": "^4.17.11",
         "metar": "^1.0.0",
