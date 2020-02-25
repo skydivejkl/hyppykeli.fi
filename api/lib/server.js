@@ -10,15 +10,8 @@ const fmi = require("./fmi");
 
 const API_PORT = process.env.API_PORT || 32944;
 
-if (!process.env.FMI_API_KEY) {
-    console.error("FMI_API_KEY not defined");
-    process.exit(1);
-} else {
-    console.log("using api key", process.env.FMI_API_KEY);
-}
-
 app.use((ctx, next) => {
-    ctx.state.fmiApikey = process.env.FMI_API_KEY;
+//    ctx.state.fmiApikey = process.env.FMI_API_KEY;
     return next();
 });
 

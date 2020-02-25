@@ -19,7 +19,6 @@ router.get("/api/metars/:icaocode", async ctx => {
 
     try {
         data = await fmiRequest({
-            apikey: ctx.state.fmiApikey,
             query,
             cacheKey: ctx.params.icaocode,
             params: {

@@ -89,8 +89,8 @@ const fmiRawRequest = async (url, options) => {
     return promise;
 };
 
-const fmiRequest = ({apikey, query, params, cacheKey, cacheAge}) => {
-    const metarURL = `http://data.fmi.fi/fmi-apikey/${apikey}/wfs?request=getFeature`;
+const fmiRequest = ({query, params, cacheKey, cacheAge}) => {
+    const metarURL = `http://opendata.fmi.fi/wfs?request=getFeature`;
 
     const finalURL = extendUrlQuery(
         metarURL,

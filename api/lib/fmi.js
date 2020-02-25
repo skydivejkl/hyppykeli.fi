@@ -53,7 +53,6 @@ const OBSERVATION_PARAMETERS = [
 ];
 router.get("/api/observations/:fmisid", async ctx => {
     const data = await fmiRequest({
-        apikey: ctx.state.fmiApikey,
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
@@ -96,7 +95,6 @@ router.get("/api/observations/:fmisid", async ctx => {
 
 router.get("/api/observations/:fmisid/:feature", async ctx => {
     const data = await fmiRequest({
-        apikey: ctx.state.fmiApikey,
         query: "fmi::observations::weather::timevaluepair",
         cacheKey: "observations:" + ctx.params.fmisid,
         params: {
@@ -148,7 +146,6 @@ const FORECAST_PAREMETERS = [
 
 router.get("/api/forecasts/:latlon", async ctx => {
     const data = await fmiRequest({
-        apikey: ctx.state.fmiApikey,
         query: "fmi::forecast::hirlam::surface::point::timevaluepair",
         cacheKey: "forecasts:" + ctx.params.latlon,
         params: {
@@ -168,7 +165,6 @@ router.get("/api/forecasts/:latlon", async ctx => {
 
 router.get("/api/forecasts/:latlon/:feature", async ctx => {
     const data = await fmiRequest({
-        apikey: ctx.state.fmiApikey,
         query: "fmi::forecast::hirlam::surface::point::timevaluepair",
         cacheKey: "forecasts:" + ctx.params.latlon,
         params: {
