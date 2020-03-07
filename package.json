@@ -1,0 +1,37 @@
+{
+    "name": "hyppykeli.fi",
+    "version": "1.0.0",
+    "description": "Skydiving weather for Finnish Dropzones. All data is obtained from the open data APIs of the [Finnish Meteorological Institute][fmi]. The application is free and open source under the GPLv3 license. It's live at https://hyppykeli.fi/. The application is currently available only in Finnish.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skydivejkl/hyppykeli.fi.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/skydivejkl/hyppykeli.fi/issues"
+    },
+    "homepage": "https://github.com/skydivejkl/hyppykeli.fi#readme",
+    "dependencies": {
+        "@types/lodash": "^4.14.149",
+        "@types/node": "^13.9.0",
+        "@types/react": "^16.9.23",
+        "@types/react-dom": "^16.9.5",
+        "axios": "^0.18.0",
+        "dayjs": "^1.8.0",
+        "dotenv": "^6.2.0",
+        "koa": "^2.7.0",
+        "koa-router": "^7.4.0",
+        "lodash": "^4.17.15",
+        "next": "^9.2.2",
+        "prettier": "^1.19.1",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "typescript": "^3.8.3",
+        "xml2js": "^0.4.19"
+    }
+}
