@@ -6,9 +6,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 // const query = "fmi::avi::observations::finland::iwxxm";
 // const query = "fmi::avi::observations::finland::latest::iwxxm";
 // const query = "fmi::avi::observations::latest::iwxxm";
-const query = "fmi::avi::observations::iwxxm";
+const observationQuery = "fmi::avi::observations::iwxxm";
 
 const getPoints = get("wfs:FeatureCollection.wfs:member");
+
 const getMetar = get(
     "avi:VerifiableMessage[0].avi:metadata[0].avi:MessageMetadata[0].avi:source[0].avi:Process[0].avi:input[0]",
 );
@@ -18,7 +19,7 @@ async function fetchMetar(icaocode: string) {
 
     try {
         data = await fmiRequest({
-            query,
+            storedQuery: observationQuery,
             cacheKey: icaocode,
             params: {
                 icaocode: icaocode,
