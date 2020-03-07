@@ -5,6 +5,7 @@ import { Layout } from "../../components/Layout";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import { Dropzones } from "../../DropzoneData";
 const { leanReducer } = require("lean-redux");
 
 declare const __REDUX_DEVTOOLS_EXTENSION__: any;
@@ -27,8 +28,21 @@ function DzPage() {
     );
 }
 
-DzPage.getInitialProps = async () => {
-    return { disableStatic: true };
-};
+export async function getStaticPaths() {
+    return {
+        fallback: false,
+        paths: Object.keys(Dropzones).map(icaocode => ({
+            params: {
+                icaocode,
+            },
+        })),
+    };
+}
+
+export async function getStaticProps() {
+    return {
+        props: {},
+    };
+}
 
 export default DzPage;
