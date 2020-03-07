@@ -1,8 +1,7 @@
-import {Location} from "@reach/router";
-import {set} from "idb-keyval";
-import React, {useEffect} from "react";
+import { set } from "idb-keyval";
+import React, { useEffect } from "react";
 
-function Saver(props: {path: string}) {
+function Saver(props: { path: string }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             set("last-location", props.path);
@@ -17,9 +16,5 @@ function Saver(props: {path: string}) {
 }
 
 export function SavePWAStart() {
-    return (
-        <Location>
-            {router => <Saver path={router.location.pathname} />}
-        </Location>
-    );
+    return null;
 }
