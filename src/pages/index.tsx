@@ -1,5 +1,10 @@
 import React from "react";
 
-export default function Hello() {
-    return <div>hello</div>;
-}
+import FrontPage from "../components/hyppykeli-legacy/FrontPage";
+import { Layout } from "../components/Layout";
+
+export default () => (
+    <Layout>
+        <FrontPage />
+    </Layout>
+);
