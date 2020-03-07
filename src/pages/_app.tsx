@@ -1,4 +1,5 @@
 import "react-spinner/react-spinner.css";
+import "../styles.css";
 
 import React from "react";
 
