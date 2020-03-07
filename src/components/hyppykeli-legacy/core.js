@@ -1,6 +1,8 @@
-import simple from "react-simple";
+import simple from "../../simple";
 
 import * as colors from "./colors";
+
+export { simple };
 
 export const GUST_LIMIT = 8;
 export const GUST_LIMIT_B = 11;
@@ -45,5 +47,5 @@ export const Note = simple(
             backgroundColor: "red",
             color: "yellow",
         },
-    }
+    },
 );

@@ -1,8 +1,7 @@
 import React from "react";
-import simple from "react-simple";
-import {FaCloud} from "react-icons/fa";
+import { FaCloud } from "react-icons/fa";
 
-import {View} from "./core";
+import { View, simple } from "./core";
 
 const CloudFlex = simple(View.create(FaCloud), {
     color: "white",
@@ -27,7 +26,7 @@ const CloudContainer = simple(View, {
     width: "100%",
 });
 
-const Cloud = ({children}) => (
+const Cloud = ({ children }) => (
     <CloudContainer>
         <CloudBackground>
             <CloudFlex />

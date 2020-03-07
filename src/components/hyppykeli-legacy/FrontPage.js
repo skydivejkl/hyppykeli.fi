@@ -1,13 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
-import simple from "react-simple";
 
 import { ParachutePlain } from "./Parachute";
 import BrowserTitle from "./BrowserTitle";
 import Cloud from "./Cloud";
 
-import { View } from "./core";
+import { View, simple } from "./core";
 import { Dropzones } from "../../DropzoneData";
 
 const ParachuteContainer = simple(View, {

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 // export {css} from "glamor";
 
-function simple(component, styles) {
+export function simple(component, styles) {
     const comp = styled(component)(styles);
 
     comp.create = newComp => {

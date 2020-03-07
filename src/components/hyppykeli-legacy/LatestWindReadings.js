@@ -3,9 +3,8 @@ import React from "react";
 import Spinner from "./Spinner";
 import { compose, mapProps } from "recompose";
 import { findLast } from "lodash";
-import simple from "react-simple";
 
-import { Note, GUST_LIMIT, GUST_LIMIT_B, View } from "./core";
+import { Note, GUST_LIMIT, GUST_LIMIT_B, View, simple } from "./core";
 import { fromNowWithClock, gpsDistance } from "./utils";
 import { addWeatherData } from "./weather-data";
 
