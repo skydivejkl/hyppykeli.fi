@@ -24,7 +24,7 @@ async function xml2js(xml: any) {
 
 const fmiRequestCache: Record<string, any> = {};
 
-async function fmiRawRequest(
+export async function fmiRawRequest(
     url: string,
     options: { cacheAge?: number; cacheKey: string },
 ) {
