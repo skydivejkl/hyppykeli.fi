@@ -28,7 +28,7 @@
         "@types/react-redux": "^5.x",
         "axios": "^0.18.0",
         "babel-plugin-emotion": "^10.0.29",
-        "chart.js": "^2.9.3",
+        "chart.js": "~2.8.0",
         "dayjs": "^1.8.0",
         "dotenv": "^6.2.0",
         "gps-distance": "0.0.4",
