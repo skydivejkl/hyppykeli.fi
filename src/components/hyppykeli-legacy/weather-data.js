@@ -54,7 +54,6 @@ function parseIcaocodeFromPath(pathname) {
 function addDzProps(Component) {
     return props => {
         const router = useRouter();
-        console.log("router QQQ", router.query.icaocode);
         const dz = Dropzones[parseIcaocodeFromPath(router.asPath)];
         return <Component {...props} dzProps={dz} />;
     };
