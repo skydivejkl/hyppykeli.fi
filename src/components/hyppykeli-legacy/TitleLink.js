@@ -1,9 +1,8 @@
 import React from "react";
-import simple from "react-simple";
-import {Link} from "gatsby";
-import {FaBackward as BackArrowIcon_} from "react-icons/fa";
+import Link from "next/link";
+import { FaBackward as BackArrowIcon_ } from "react-icons/fa";
 
-import {View} from "./core";
+import { View, simple } from "./core";
 import * as colors from "./colors";
 
 const BackArrowIcon = simple(View.create(BackArrowIcon_), {
@@ -23,7 +22,7 @@ const Sep = simple(View, {
     height: 10,
 });
 
-const TitleLinkContainer = simple(View.create(Link), {
+const TitleLinkContainer = simple("a", {
     color: colors.gray,
     flexDirection: "row",
     position: "fixed",
@@ -35,14 +34,16 @@ const TitleLinkContainer = simple(View.create(Link), {
     textDecoration: "none",
 });
 
-const TitleLink = ({children, ...props}) => (
-    <TitleLinkContainer {...props}>
-        <Row>
-            <BackArrowIcon />
-            <Sep />
-            {children}
-        </Row>
-    </TitleLinkContainer>
+const TitleLink = ({ children, to, ...props }) => (
+    <Link href={to}>
+        <TitleLinkContainer {...props}>
+            <Row>
+                <BackArrowIcon />
+                <Sep />
+                {children}
+            </Row>
+        </TitleLinkContainer>
+    </Link>
 );
 
 export default TitleLink;

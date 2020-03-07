@@ -1,12 +1,11 @@
 import React, { Suspense, useState } from "react";
 import { debounce } from "lodash";
 import { withProps, withPropsOnChange, compose, pure } from "recompose";
-import simple from "react-simple";
 import OnVisible from "react-on-visible";
 
 import { addWeatherData } from "./weather-data";
 import { withBrowserEvent, getWindowOr } from "./utils";
-import { View } from "./core";
+import { View, simple } from "./core";
 import Spinner from "./Spinner";
 
 const WindChart = React.lazy(() =>

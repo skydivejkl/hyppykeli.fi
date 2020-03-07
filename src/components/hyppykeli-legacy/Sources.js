@@ -1,11 +1,10 @@
 import React from "react";
-import simple from "react-simple";
 import { last } from "lodash";
 import { FaGithub as GithubIcon_ } from "react-icons/fa";
 import { defaultProps } from "recompose";
 
 import { gpsDistance } from "./utils";
-import { View, Title, Sep } from "./core";
+import { View, Title, Sep, simple } from "./core";
 import { addWeatherData } from "./weather-data";
 import * as colors from "./colors";
 

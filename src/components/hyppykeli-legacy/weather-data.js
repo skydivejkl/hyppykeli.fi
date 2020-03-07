@@ -1,7 +1,7 @@
 import React from "react";
 import { connectLean } from "lean-redux";
-import { Location } from "@reach/router";
 import { createSelector } from "reselect";
+import { useRouter } from "next/router";
 import { compose } from "recompose";
 import { get } from "lodash";
 import u from "updeep";
@@ -52,15 +52,12 @@ function parseIcaocodeFromPath(pathname) {
 }
 
 function addDzProps(Component) {
-    return props => (
-        <Location>
-            {router => {
-                const dz =
-                    Dropzones[parseIcaocodeFromPath(router.location.pathname)];
-                return <Component {...props} dzProps={dz} />;
-            }}
-        </Location>
-    );
+    return props => {
+        const router = useRouter();
+        console.log("router QQQ", router.query.icaocode);
+        const dz = Dropzones[parseIcaocodeFromPath(router.asPath)];
+        return <Component {...props} dzProps={dz} />;
+    };
 }
 
 export const addWeatherData = compose(

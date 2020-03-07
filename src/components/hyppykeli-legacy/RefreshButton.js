@@ -1,13 +1,12 @@
 import React from "react";
-import simple from "react-simple";
-import {compose, withHandlers} from "recompose";
+import { compose, withHandlers } from "recompose";
 
 import Spinner from "./Spinner";
-import {View} from "./core";
+import { View, simple } from "./core";
 import * as colors from "./colors";
 
-import {addWeatherData} from "./weather-data";
-import {FaSyncAlt as RefreshIcon_} from "react-icons/fa";
+import { addWeatherData } from "./weather-data";
+import { FaSyncAlt as RefreshIcon_ } from "react-icons/fa";
 
 const RefreshIcon = simple(View.create(RefreshIcon_), {
     color: colors.gray,
@@ -44,7 +43,7 @@ const Background = simple(View, {
     color: colors.gray,
 });
 
-var RefreshButton = ({requestCount, refresh}) => (
+var RefreshButton = ({ requestCount, refresh }) => (
     <RefreshButtonContainer href="#" onClick={refresh}>
         <SizeWrap>
             {requestCount !== 0 && <Background>{requestCount}</Background>}

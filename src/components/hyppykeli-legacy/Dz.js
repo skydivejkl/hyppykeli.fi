@@ -1,9 +1,8 @@
 import React from "react";
 import { throttle } from "lodash";
 import { pure, compose, lifecycle, withPropsOnChange } from "recompose";
-import simple from "react-simple";
 
-import { View, Title, Sep } from "./core";
+import { View, Title, Sep, simple } from "./core";
 import { withBrowserEvent, addSetTimeout, getWindowOr } from "./utils";
 import { addWeatherData } from "./weather-data";
 import WindChartLazy from "./WindChartLazy";

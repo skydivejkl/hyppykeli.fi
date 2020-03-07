@@ -1,11 +1,10 @@
 import React from "react";
 import { compose, mapProps } from "recompose";
-import simple from "react-simple";
 import { last, isEmpty } from "lodash";
 import { FaBolt as Bolt_ } from "react-icons/fa";
 
 import { addWeatherData } from "./weather-data";
-import { View, Note } from "./core";
+import { View, Note, simple } from "./core";
 import Spinner from "./Spinner";
 import { fromNowWithClock } from "./utils";
 import * as colors from "./colors";

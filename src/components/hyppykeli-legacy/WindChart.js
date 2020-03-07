@@ -4,10 +4,9 @@ import dayjs from "dayjs";
 import { throttle, debounce, maxBy } from "lodash";
 import { connectLean } from "lean-redux";
 import { connect } from "react-redux";
-import simple from "react-simple";
 
 import { fromNowWithClock } from "./utils";
-import { GUST_LIMIT, GUST_LIMIT_B, View } from "./core";
+import { GUST_LIMIT, GUST_LIMIT_B, View, simple } from "./core";
 
 const getLongestArray = arr => maxBy(arr, a => a.length);
 
