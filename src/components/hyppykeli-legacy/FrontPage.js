@@ -57,7 +57,7 @@ const DZLinkStyled = styled.a({
 });
 
 const DZLink = ({ dz, children }) => (
-    <Link href={"/dz/" + dz}>
+    <Link href="/dz/[icaocode]" as={"/dz/" + dz} prefetch={false}>
         <DZLinkStyled>
             <Cloud>
                 <LinkText>{children}</LinkText>
