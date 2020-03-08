@@ -23,6 +23,7 @@ legacy React libs and coding styles:
 -   Uses weird Redux abstraction lib with too many HOCs
 -   Uses two different css-in-js libs which is pretty awesome
 -   Is only partly migrated to TypeScript
+-   Half-assed it to run it on Next.js on spring 2020
 
 But at the time of writing (2020-03-08) it runs with the latest React and
 Next.js so it's not too bad to get running. Get node.js 12 and type following
