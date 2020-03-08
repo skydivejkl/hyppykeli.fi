@@ -7,8 +7,6 @@ The application is free and open source under the GPLv3 license. It's live at ht
 
 # Some devnotes
 
-## Hacking
-
 This app is currently a mess codewise and it needs a rewrite.
 
 It was first created back in 2013 and it basically has been my personal "test
@@ -23,17 +21,19 @@ legacy React libs and coding styles:
 -   Uses weird Redux abstraction lib with too many HOCs
 -   Uses two different css-in-js libs which is pretty awesome
 -   Is only partly migrated to TypeScript
--   Half-assed it to run it on Next.js on spring 2020
 
-But at the time of writing (2020-03-08) it runs with the latest React and
-Next.js so it's not too bad to get running. Get node.js 12 and type following
+In spring 2020 I half-assed it to run it on latest Next.js (it was using
+Gatsby) so it could be easily deployed using the free [zeit.co] plan.
+
+It also means it's not too bad to get running. Get node.js 12 and type
+following
 
     git clone git@github.com:skydivejkl/hyppykeli.fi.git
     cd hyppykeli.fi
     npm ci
     npm run dev
 
-The app is hosted on free [zeit.co](https://zeit.co/) plan.
+[zeit.co]: https://zeit.co/
 
 ## Havaintoasemat
 
