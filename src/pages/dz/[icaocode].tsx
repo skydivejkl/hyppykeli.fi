@@ -6,6 +6,7 @@ import { Layout } from "../../components/Layout";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { Dropzones } from "../../DropzoneData";
+import { SavePWAStart } from "../../components/SavePWAStart";
 const { leanReducer } = require("lean-redux");
 
 declare const __REDUX_DEVTOOLS_EXTENSION__: any;
@@ -22,6 +23,7 @@ function DzPage() {
     return (
         <Provider store={store}>
             <Layout>
+                <SavePWAStart></SavePWAStart>
                 <Dz />
             </Layout>
         </Provider>

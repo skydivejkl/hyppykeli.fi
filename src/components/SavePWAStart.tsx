@@ -1,20 +1,16 @@
 import { set } from "idb-keyval";
 import React, { useEffect } from "react";
 
-function Saver(props: { path: string }) {
+export function SavePWAStart() {
     useEffect(() => {
         const timer = setTimeout(() => {
-            set("last-location", props.path);
+            set("last-location", window.location.pathname);
         }, 3000);
 
         return () => {
             clearTimeout(timer);
         };
-    }, [props.path]);
+    }, []);
 
-    return null;
-}
-
-export function SavePWAStart() {
     return null;
 }
