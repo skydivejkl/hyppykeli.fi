@@ -171,7 +171,7 @@ var Sources = ({
                 </Link>
             </SourceText>
 
-            <SourceText>2019 version</SourceText>
+            <SourceText>2020 Next.js Version</SourceText>
         </SourcesContent>
     </SourcesContainer>
 );
