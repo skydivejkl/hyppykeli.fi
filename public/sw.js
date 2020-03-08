@@ -1,4 +1,4 @@
-console.log("service worker remover service-worker.js");
+console.log("service worker remover sw.js");
 
 self.addEventListener("install", function(e) {
     self.skipWaiting();
