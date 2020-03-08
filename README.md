@@ -32,6 +32,8 @@ Next.js so it's not too bad to get running. Get node.js 12 and type following
     npm ci
     npm run dev
 
+The app is hosted on free [zeit.co](https://zeit.co/) plan.
+
 ## Havaintoasemat
 
 <http://ilmatieteenlaitos.fi/havaintoasemat>
