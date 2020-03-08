@@ -17,9 +17,12 @@ time. For example in early 2014 I re-wrote it with this new tech called
 "Reactjs" which was released less than year ago at the time.
 
 Surprisingly it's still written with React but uses very weird combination of
-legacy React libs and coding styles: Mix of classes and hooks with some weird
-Redux abstraction thrown in. Also it uses two different css-in-js libs
-which is pretty awesome...
+legacy React libs and coding styles:
+
+-   Mix of classes and hooks
+-   Uses weird Redux abstraction lib with too many HOCs
+-   Uses two different css-in-js libs which is pretty awesome
+-   Is only partly migrated to TypeScript
 
 But at the time of writing (2020-03-08) it runs with the latest React and
 Next.js so it's not too bad to get running. Get node.js 12 and type following
