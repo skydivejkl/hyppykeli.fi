@@ -51,8 +51,8 @@ document.body.innerHTML =
             el =>
                 `${c(el, 0)} (${c(el, 1)}),${c(el, 4).replace(
                     ",",
-                    "."
-                )}0000,${c(el, 5).replace(",", ".")}0000`
+                    ".",
+                )}0000,${c(el, 5).replace(",", ".")}0000`,
         )
         .join("\n");
 ```
