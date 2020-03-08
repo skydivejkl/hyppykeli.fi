@@ -7,6 +7,28 @@ The application is free and open source under the GPLv3 license. It's live at ht
 
 # Some devnotes
 
+## Hacking
+
+This app is currently a mess codewise and it needs a rewrite.
+
+It was first created back in 2013 and it basically has been my personal "test
+bench" for whatever new web tech I happened to be interested at any given
+time. For example in early 2014 I re-wrote it with this new tech called
+"Reactjs" which was released less than year ago at the time.
+
+Surprisingly it's still written with React but uses very weird combination of
+legacy React libs and coding styles: Mix of classes and hooks with some weird
+Redux abstraction thrown in. Also it uses two different css-in-js libs
+which is pretty awesome...
+
+But at the time of writing (2020-03-08) it runs with the latest React and
+Next.js so it's not too bad to get running. Get node.js 12 and type following
+
+    git clone git@github.com:skydivejkl/hyppykeli.fi.git
+    cd hyppykeli.fi
+    npm ci
+    npm run dev
+
 ## Havaintoasemat
 
 <http://ilmatieteenlaitos.fi/havaintoasemat>

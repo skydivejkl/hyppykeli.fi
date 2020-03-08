@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 
-// export {css} from "glamor";
-
+/**
+ * Backwards compat for https://github.com/esamattis/react-simple
+ */
 export function simple(component, styles) {
     const comp = styled(component)(styles);
 
