@@ -33,7 +33,7 @@
         "gps-distance": "0.0.4",
         "idb-keyval": "^3.2.0",
         "lean-redux": "^3.3.1",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "metar": "^1.0.0",
         "next": "^9.3.0",
         "prettier": "^1.19.1",
