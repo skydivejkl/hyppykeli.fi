@@ -71,6 +71,12 @@
         "lon": 23.607258,
         "fmisid": 101118
     },
+    "EFKI": {
+        "icaocode": "EFKI",
+        "lat": 60.462661,
+        "lon":23.651367,
+        "fmisid": 100967
+    },
     "EFHF": {
         "icaocode": "EFHF",
         "lat": 60.251799,
