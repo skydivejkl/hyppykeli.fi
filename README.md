@@ -1,3 +1,6 @@
+🚨 Kehitys siirtynyt osoitteeseen <https://github.com/esamattis/hyppykeli>
+
+
 # Hyppykeli.fi
 
 Skydiving weather for Finnish Dropzones. All data is obtained from the open data APIs of the [Finnish Meteorological Institute][fmi].
